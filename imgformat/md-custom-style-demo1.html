@@ -869,15 +869,15 @@
 
 
     // 辅助：将 File[] 转为 Data URL（base64）
-    // async function filesToDataURLs(files) {
-    //     const tasks = files.map(file => new Promise((resolve, reject) => {
-    //         const reader = new FileReader();
-    //         reader.onload = () => resolve(reader.result); // "data:image/...;base64,..."
-    //         reader.onerror = reject;
-    //         reader.readAsDataURL(file);
-    //     }));
-    //     return Promise.all(tasks);
-    // }
+    async function filesToDataURLs(files) {
+        const tasks = files.map(file => new Promise((resolve, reject) => {
+            const reader = new FileReader();
+            reader.onload = () => resolve(reader.result); // "data:image/...;base64,..."
+            reader.onerror = reject;
+            reader.readAsDataURL(file);
+        }));
+        return Promise.all(tasks);
+    }
 
     // （可选）辅助：将 File[] 转为 Object URL（性能好，需手动释放）
     function filesToObjectURLs(files) {
@@ -989,15 +989,15 @@
          handleFiles(imageFiles)
     }
 
-    function handleFiles(files) {
+    async function handleFiles(files) {
         debugger
         imageFiles = [...imageFiles, ...files];
          
         // 方式一：Data URL（适合生成可拷贝的静态 HTML）
-        // const newSrcs = await filesToDataURLs(files);
+        const newSrcs = await filesToDataURLs(files);
 
         // 方式二：Object URL（更快）
-         const newSrcs = filesToObjectURLs(files);
+        //  const newSrcs = filesToObjectURLs(files);
 
         imageSrcList.push(...newSrcs);
 
