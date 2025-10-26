@@ -6,8 +6,8 @@
     <meta name="description" content="微信Markdown转换器">
     <title>MD转公众号HTML工具</title>
     <!-- Markdown解析和样式 -->
-    <script src="../js/marked.min.js"></script>
-    <link rel="stylesheet" href="../css/github.min.css">
+    <script src="../../js/marked.min.js"></script>
+    <link rel="stylesheet" href="../../css/github.min.css">
     <style>
         body {
             margin: 0;
@@ -168,7 +168,7 @@
     </style>
 </head>
 <body>
-    <a href="../index.html" class="back-home"> 返回主页</a>
+    <a href="../../index.html" class="back-home"> 返回主页</a>
     <div class="container">
         <div class="editor-box">
             <div class="options-bar">
@@ -180,6 +180,7 @@
                     <span>对齐：</span>
                     <label><input type="radio" name="alignMode" value="left" id="align-left" checked>居左</label>
                     <label><input type="radio" name="alignMode" value="center" id="align-center">居中</label>
+                    <label><input type="radio" name="alignMode" value="right" id="align-right">居右</label>
                     <span style="display: inline-block; width: 20px;margin: 10px 0px;"></span>
                 </div>
                 <div text-align: right;"><input type="button" name="clearEnter" value="删除空行" id="clear-enter"/></div>
@@ -202,7 +203,7 @@
             </div>
             <div class="options-bar" style="width: 100%;"> 
                  <div id="image-list" style="float: left; width: 100%; min-height:60px; border: #444 1px solid;"></div>
-
+                
             </div>
             <textarea id="editor" placeholder="输入Markdown内容..."></textarea>
         </div>
@@ -219,7 +220,7 @@
     // 段落模式和对齐方式的全局变量
     let paragraphMode = true; // true: 段落分割，false: 每行为一个块
     let alignMode = 'left';   // 'left' or 'center'
-
+    
     // 圖片列表
     let imageFiles = [];
 
@@ -252,6 +253,13 @@
                 updatePreview();
             }
         });
+        document.getElementById('align-right').addEventListener('change', function() {
+            if (this.checked) {
+                alignMode = 'right';
+                updatePreview();
+            }
+        });
+
         document.getElementById('clear-enter').addEventListener('click', function() {
             clearEnter()
         });
@@ -284,7 +292,7 @@
             textArea.value = text;
             updatePreview();
     } 
-
+    
     function periodLine(){
             // 删除多余的空行（连续两个及以上的空行变成一个空行），并去除首尾空白
             let textArea = document.getElementById('editor');
@@ -325,17 +333,70 @@
             updatePreview();
     } 
 
-    let imgLinks = [
-        "https://tencentcdna.production.link3.cc/user_create_images/link3_1741542924688/multiple_images/1752431221577",
-        "https://tencentcdna.production.link3.cc/user_create_images/link3_1741542924688/multiple_images/1752431221748",
-        "https://tencentcdna.production.link3.cc/user_create_images/link3_1741542924688/multiple_images/1752431221929",
-        "https://tencentcdna.production.link3.cc/user_create_images/link3_1741542924688/multiple_images/1752431222005",
-        "https://tencentcdna.production.link3.cc/user_create_images/link3_1741542924688/multiple_images/1752431222116",
-        "https://tencentcdna.production.link3.cc/user_create_images/link3_1741542924688/multiple_images/1752431221856",
-        "https://tencentcdna.production.link3.cc/user_create_images/link3_1741542924688/multiple_images/1752431222370",
-        "https://tencentcdna.production.link3.cc/user_create_images/link3_1741542924688/multiple_images/1752431222487",
-        "https://tencentcdna.production.link3.cc/user_create_images/link3_1741542924688/multiple_images/1752431222229"
-    ]
+    
+        
+        let imgtx = [
+            "https://tencentcdna.production.link3.cc/user_create_images/link3_1741542924688/multiple_images/1752400687305",   
+            "https://tencentcdna.production.link3.cc/user_create_images/link3_1741542924688/multiple_images/1752400687508",   
+            "https://tencentcdna.production.link3.cc/user_create_images/link3_1741542924688/multiple_images/1752400687629",   
+            "https://tencentcdna.production.link3.cc/user_create_images/link3_1741542924688/multiple_images/1752400687710",   
+            "https://tencentcdna.production.link3.cc/user_create_images/link3_1741542924688/multiple_images/1752400687826",   
+            "https://tencentcdna.production.link3.cc/user_create_images/link3_1741542924688/multiple_images/1752400743924",   
+            "https://tencentcdna.production.link3.cc/user_create_images/link3_1741542924688/multiple_images/1752400744121",   
+            "https://tencentcdna.production.link3.cc/user_create_images/link3_1741542924688/multiple_images/1752400744211",   
+            "https://tencentcdna.production.link3.cc/user_create_images/link3_1741542924688/multiple_images/1752400744290",   
+            "https://tencentcdna.production.link3.cc/user_create_images/link3_1741542924688/multiple_images/1752400744476",   
+            "https://tencentcdna.production.link3.cc/user_create_images/link3_1741542924688/multiple_images/1752400792184",   
+            "https://tencentcdna.production.link3.cc/user_create_images/link3_1741542924688/multiple_images/1752400792381",   
+            "https://tencentcdna.production.link3.cc/user_create_images/link3_1741542924688/multiple_images/1752401002298",   
+            "https://tencentcdna.production.link3.cc/user_create_images/link3_1741542924688/multiple_images/1752401002474",   
+            "https://tencentcdna.production.link3.cc/user_create_images/link3_1741542924688/multiple_images/1752401059143",   
+            "https://tencentcdna.production.link3.cc/user_create_images/link3_1741542924688/multiple_images/1752401059323",   
+            "https://tencentcdna.production.link3.cc/user_create_images/link3_1741542924688/multiple_images/1752401059410",   
+            "https://tencentcdna.production.link3.cc/user_create_images/link3_1741542924688/multiple_images/1752401059538",   
+            "https://tencentcdna.production.link3.cc/user_create_images/link3_1741542924688/multiple_images/1752401059708",   
+            "https://tencentcdna.production.link3.cc/user_create_images/link3_1741542924688/multiple_images/1752401059631",   
+            "https://tencentcdna.production.link3.cc/user_create_images/link3_1741542924688/multiple_images/1752401059802",   
+            "https://tencentcdna.production.link3.cc/user_create_images/link3_1741542924688/multiple_images/1752401059885",   
+            "https://tencentcdna.production.link3.cc/user_create_images/link3_1741542924688/multiple_images/1752401059997",   
+            "https://tencentcdna.production.link3.cc/user_create_images/link3_1741542924688/multiple_images/1752401111082",   
+            "https://tencentcdna.production.link3.cc/user_create_images/link3_1741542924688/multiple_images/1752401111208",   
+            "https://tencentcdna.production.link3.cc/user_create_images/link3_1741542924688/multiple_images/1752401111291",   
+            "https://tencentcdna.production.link3.cc/user_create_images/link3_1741542924688/multiple_images/1752401111388",   
+            "https://tencentcdna.production.link3.cc/user_create_images/link3_1741542924688/multiple_images/1752401111471",   
+            "https://tencentcdna.production.link3.cc/user_create_images/link3_1741542924688/multiple_images/1752401111558",   
+            "https://tencentcdna.production.link3.cc/user_create_images/link3_1741542924688/multiple_images/1752401111635",   
+            "https://tencentcdna.production.link3.cc/user_create_images/link3_1741542924688/multiple_images/1752401111744",   
+            "https://tencentcdna.production.link3.cc/user_create_images/link3_1741542924688/multiple_images/1752401137939", 
+            "https://tencentcdna.production.link3.cc/user_create_images/link3_1741542924688/multiple_images/1752400687024", 
+            "https://tencentcdna.production.link3.cc/user_create_images/link3_1741542924688/multiple_images/1752400687121", 
+            "https://tencentcdna.production.link3.cc/user_create_images/link3_1741542924688/multiple_images/1752400687217"   
+
+        ]
+
+        
+        let imgLinks = [
+            "https://tencentcdna.production.link3.cc/user_create_images/link3_1741542924688/multiple_images/1752400242579", 
+            "https://tencentcdna.production.link3.cc/user_create_images/link3_1741542924688/multiple_images/1752400242375", 
+            "https://tencentcdna.production.link3.cc/user_create_images/link3_1741542924688/multiple_images/1752400242155", 
+            "https://tencentcdna.production.link3.cc/user_create_images/link3_1741542924688/multiple_images/1752400242488", 
+            "https://tencentcdna.production.link3.cc/user_create_images/link3_1741542924688/multiple_images/1752400242881", 
+            "https://tencentcdna.production.link3.cc/user_create_images/link3_1741542924688/multiple_images/1752400242781", 
+            "https://tencentcdna.production.link3.cc/user_create_images/link3_1741542924688/multiple_images/1752400277068", 
+            "https://tencentcdna.production.link3.cc/user_create_images/link3_1741542924688/multiple_images/1752400277220", 
+            "https://tencentcdna.production.link3.cc/user_create_images/link3_1741542924688/multiple_images/1752400410984", 
+            "https://tencentcdna.production.link3.cc/user_create_images/link3_1741542924688/multiple_images/1752400500142", 
+            "https://tencentcdna.production.link3.cc/user_create_images/link3_1741542924688/multiple_images/1752400551667", 
+            "https://tencentcdna.production.link3.cc/user_create_images/link3_1741542924688/multiple_images/1752400551875", 
+            "https://tencentcdna.production.link3.cc/user_create_images/link3_1741542924688/multiple_images/1752400552275", 
+            "https://tencentcdna.production.link3.cc/user_create_images/link3_1741542924688/multiple_images/1752400552092", 
+            "https://tencentcdna.production.link3.cc/user_create_images/link3_1741542924688/multiple_images/1752400551984", 
+            "https://tencentcdna.production.link3.cc/user_create_images/link3_1741542924688/multiple_images/1752400586661", 
+            "https://tencentcdna.production.link3.cc/user_create_images/link3_1741542924688/multiple_images/1752400625211", 
+            "https://tencentcdna.production.link3.cc/user_create_images/link3_1741542924688/multiple_images/1752400625413", 
+            "https://tencentcdna.production.link3.cc/user_create_images/link3_1741542924688/multiple_images/1752400686838"  
+        ]
+
 
     function autoFormatText(rawText) {
         // 段落分割
@@ -399,7 +460,8 @@
             const symbol = getRandomItem(symbols);
             const name = getRandomItem(names);
             const time = getRandomItem(times);
-            const imgurl = getRandomItem(imgLinks);
+            const imgurl_1 = getRandomItem(imgLinks);
+            const imgurl_2 = getRandomItem(imgLinks);
 
             // 句子分割（可根据需要更细致分割）
             let sentenceHtmlArr = [];
@@ -409,125 +471,72 @@
                 sentences.forEach(sentence => {
                     const trimmed = processInlineMarkdown(sentence.trim());
                     if (trimmed !== '') {
-                        sentenceHtmlArr.push(`<p style="text-align: ${alignMode};text-indent: 2em;visibility: visible; margin:5px;"><span leaf=""
-                                                                                                          mpa-font-style="mcnioc8317ki"
-                                                                                                          style="font-size: 13px; visibility: visible;">${trimmed}</span>`);
+                        sentenceHtmlArr.push(`
+                        <section
+                        style="text-align: ${alignMode};margin-right: 8px; margin-bottom: 0px; margin-left: 8px; outline: 0px; text-wrap: wrap; visibility: visible;">
+                    <span style="outline: 0px; font-size: 12px; visibility: visible;">${trimmed}</span></section>
+                        `);
                     }
                 });
             });
 
-            const block = `
-<section label="xmyeditor" style="margin: 0em;outline: 0px;visibility: visible;" mpa-from-tpl="t">
-    <section
-            style="background-color: rgb(255, 255, 255); letter-spacing: 1px; box-sizing: border-box; max-width: 100% !important; visibility: visible;"
-            mpa-from-tpl="t">
-        <section style="box-sizing: border-box; max-width: 100% !important; visibility: visible;" mpa-from-tpl="t">
-            <section
-                    style="line-height: 25.6px; white-space: normal; overflow-wrap: break-word !important; visibility: visible;"
-                    mpa-from-tpl="t">
-                <section
-                        style="margin-right: auto; margin-left: auto; clear: both; width: 556px; overflow: hidden; overflow-wrap: break-word !important; visibility: visible;"
-                        mpa-from-tpl="t">
-                    <section data-id="86043"
-                             style="border-width: 0px; border-style: none; overflow-wrap: break-word !important; visibility: visible;"
-                             mpa-from-tpl="t">
-                        <section
-                                style="margin-top: 20px; margin-bottom: 20px; padding: 15px 20px; border-radius: 20px; word-break: break-all; border-width: 3px; border-style: groove; border-color: rgb(237, 237, 237); font-stretch: normal; overflow-wrap: break-word !important; visibility: visible;"
-                                mpa-from-tpl="t">
-                            <section style="color: rgb(85, 85, 86); font-size: 15px; visibility: visible;"
-                                     mpa-from-tpl="t">
-                                <section mpa-from-tpl="t" style="visibility: visible;">
-                                    <section mpa-from-tpl="t" style="visibility: visible;">
-                                        <section mpa-from-tpl="t" style="visibility: visible;">
-                                            <section style="display: inline-block; visibility: visible;" nodeleaf=""
-                                                     mpa-from-tpl="t"><img
-                                                    data-src="${imgurl}"
-                                                    alt="图片" class="rich_pages wxw-img" data-ratio="1.413888888888889"
-                                                    data-type="jpeg" data-w="1080"
-                                                    style="height: auto !important; visibility: visible !important; width: 510.093px !important;"
-                                                    data-original-style="height: auto !important;visibility: visible !important;width: 510.667px !important;"
-                                                    data-index="1"
-                                                    src="${imgurl}"
-                                                    _width="510.667px" data-report-img-idx="0" data-fail="0"></section>
-                                        </section>
-                                    </section>
-                                    <section mpa-from-tpl="t" style="visibility: visible;">
-                                        <section style="display: inline-block; visibility: visible;" mpa-from-tpl="t">
-                                            <span leaf="" style="visibility: visible;"><br style="visibility: visible;"></span>
-                                        </section>
-                                    </section>
-                                </section>
-                            </section>
-                            <section
-                                    style="text-align: center; color: rgb(85, 85, 86); line-height: 2em; visibility: visible;"
-                                    mpa-from-tpl="t" data-mpa-action-id="mcnioc9id4z" data-pm-slice="0 0 []">
-                                <section mpa-from-tpl="t" style="visibility: visible;"><span
-                                        style="font-size: 15px; visibility: visible;"></span></section>
-                                <p dir="ltr"
-                                   style="color: rgb(85, 85, 86); font-size: 15px; text-align: left; line-height: 1.92; visibility: visible;">
-                                    <span leaf="" style="visibility: visible;">◎&nbsp;</span><span leaf=""
-                                                                                                   style="visibility: visible;"><span
-                                        textstyle="" style="font-weight: bold; visibility: visible;">Part ${index}</span></span>
-                                </p>
-                                
-                                ${sentenceHtmlArr.join('\n')}
-                            <section
-                                    style="color: rgb(85, 85, 86);text-align: justify;line-height: 2em;margin-left: 32px;margin-right: 32px;"
-                                    mpa-from-tpl="t"><span style="font-size: 15px;"><span leaf=""
-                                                                                          style=""><br></span></span>
-                            </section>
-                            <section style="color: rgb(85, 85, 86);text-align: center;line-height: 2em;"
-                                     mpa-from-tpl="t"><span style="font-size: 15px;font-weight: 700;"></span></section>
-                        </section>
-                    </section>
-                </section>
-            </section>
-        </section>
-    </section>    
-            `;
-            html.push(block);
+            // const block = `
+            //       <section style="margin: 30px auto; text-align: center;padding: 0px; width: 680px; visibility: visible;" data-color="#08247f">
+            //         <section
+            //                 style="display: inline-block; width: 85%; vertical-align: top; border-style: solid; border-width: 1px; border-color: rgb(62, 62, 62); padding-top: 20px; padding-bottom: 20px; max-width: 85% !important; visibility: visible;">
+            //             <section style="">
+            //                 <section
+            //                         style="">
+            //                     <section
+            //                             style="margin-right: 0%; margin-left: 10px; text-align: left; transform: translate3d(-20px, 0px, 0px); visibility: visible;">
+            //                         <section
+            //                                 style="display: inline-block; border-width: 2px; border-style: solid; border-color: rgb(218, 109, 131); padding-right: 10px; padding-left: 10px; background-color: rgb(218, 109, 131); color: rgb(204, 204, 204); font-size: 12px; line-height: 2; letter-spacing: 1px; visibility: visible;">
+            //                             <p style="visibility: visible; padding-left: 5px;">${index}、</p></section>
+            //                     </section>
+            //                 </section>
+            //             </section>
+            //             <section style="margin-top: 20px; margin-right: 0%; margin-left: 0%; visibility: visible;">
+            //                 <section
+            //                         style="text-align: left; font-size: 12px; padding-right: 10px; padding-left: 10px; line-height: 2; letter-spacing: 1px; visibility: visible;">
+            //                         <p style="text-align: ${alignMode};">${symbol}</p>
+            //                          ${sentenceHtmlArr.join('\n')}
+            //                     <p style="margin-right: 8px; margin-bottom: 0px; margin-left: 8px; outline: 0px; color: rgb(0, 0, 0); font-family: system-ui, -apple-system, BlinkMacSystemFont, &quot;Helvetica Neue&quot;, &quot;PingFang SC&quot;, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei UI&quot;, &quot;Microsoft YaHei&quot;, Arial, sans-serif; font-size: 14px; text-wrap: wrap; background-color: rgb(255, 255, 255); letter-spacing: 0.578px; visibility: visible;">
+            //                         <br style="visibility: visible;"></p></section>
+            //             </section>
+            //         </section>
+            //     </section>
+            //     <section
+            //         style="font-size: 12px; text-align: center; border: 0px solid black; width: 680px; text-align: center;padding: 0px; box-sizing: border-box;  box-shadow: 5px 5px 10px rgba(0, 0, 0, 0.3);">
+            //         <img src="${imgurl}"
+            //             alt="ipad" style="width: 100%; height: 100%;">
+            //     </section>
+            // `;
+
+            html.push(htmlShuangPaiImg(imgurl_1,imgurl_2))
+            
+            html.push(htmlLineWord(sentenceHtmlArr,alignMode,symbol))
+            
         });
 
+        
+        html.push(htmlCardBeiYu())
 
- 
-        let beginHtml = `
-            <section style="text-align: left;-webkit-tap-highlight-color: transparent;margin: 0px 0px 24px;padding: 0px;outline: 0px;max-width: 100%;font-family: &quot;PingFang SC&quot;, system-ui, -apple-system, BlinkMacSystemFont, &quot;Helvetica Neue&quot;, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei UI&quot;, &quot;Microsoft YaHei&quot;, Arial, sans-serif;font-style: normal;font-variant-ligatures: normal;font-variant-caps: normal;font-weight: 400;letter-spacing: 0.544px;orphans: 2;text-indent: 2em;text-transform: none;widows: 2;word-spacing: 0px;-webkit-text-stroke-width: 0px;white-space: normal;background-color: rgb(255, 255, 255);text-decoration-thickness: initial;text-decoration-style: initial;text-decoration-color: initial;text-align: left;font-size: 13px;color: grey;visibility: visible;box-sizing: border-box !important;overflow-wrap: break-word !important;line-height: 1.75em;" data-pm-slice="0 0 []">
-                <span leaf="" style="-webkit-tap-highlight-color: transparent;margin: 0px;padding: 0px;outline: 0px;max-width: 100%;visibility: visible;box-sizing: border-box !important;overflow-wrap: break-word !important;"></span>
-            </section>
-        `
- 
-        let endHtml = `
-            <section style="text-align: center;">
-            <span style="color: rgb(178, 178, 178);font-family: &quot;PingFang SC&quot;, system-ui, -apple-system, BlinkMacSystemFont, &quot;Helvetica Neue&quot;, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei UI&quot;, &quot;Microsoft YaHei&quot;, Arial, sans-serif;font-size: 13px;font-style: normal;font-variant-ligatures: normal;font-variant-caps: normal;font-weight: 400;letter-spacing: 0.544px;orphans: 2;text-indent: 0px;text-transform: none;widows: 2;word-spacing: 0px;-webkit-text-stroke-width: 0px;background-color: rgb(255, 255, 255);text-decoration-thickness: initial;text-decoration-style: initial;text-decoration-color: initial;float: none;display: inline !important;" data-pm-slice="0 0 []"><span leaf=""><br></span></span>
-            </section>
-            <section style="max-width: 100%;box-sizing: border-box;margin-bottom: 0px;overflow-wrap: break-word !important;" mpa-from-tpl="t">
-            <section style="padding-right: 10px;padding-left: 10px;max-width: 100%;box-sizing: border-box;line-height: 1.6;overflow-wrap: break-word !important;" mpa-from-tpl="t">
-                <section style="max-width: 100%;box-sizing: border-box;overflow-wrap: break-word !important;" mpa-from-tpl="t">
-                <section style="" mpa-from-tpl="t">
-                    <section style="letter-spacing: 1px;background-color: rgb(255, 255, 255);color: rgb(62, 62, 62);font-size: 16px;white-space: normal;text-align: center;" mpa-from-tpl="t">
-                    <span style="color: rgb(136, 136, 136);font-size: 12px;letter-spacing: 1px;"><span leaf="">北屿的蓝色整编，仅供交流</span></span>
-                    </section>
-                    <section style="background-color: rgb(255, 255, 255);text-align: center;" mpa-from-tpl="t">
-                    <font color="#888888" face="system-ui, -apple-system, BlinkMacSystemFont, Helvetica Neue, PingFang SC, Hiragino Sans GB, Microsoft YaHei UI, Microsoft YaHei, Arial, sans-serif">
-                        <span style="font-size: 12px;letter-spacing: 1px;"><span leaf="">Shanhe Jingming</span></span>
-                    </font>
-                    </section>
-                    <section style="letter-spacing: 1px;background-color: rgb(255, 255, 255);color: rgb(62, 62, 62);font-size: 16px;white-space: normal;text-align: center;" mpa-from-tpl="t">
-                    <span style="color: rgb(136, 136, 136);font-size: 12px;caret-color: var(--weui-BRAND);"><span leaf="">转载请联系。</span></span>
-                    </section>
-                </section>
-                </section>
-            </section>
-            </section>
-        `
+        html.push(htmlWenan())
+        html.push(htmlCloudImg())
+        
+        
+
+
+        return htmlWxw(html)
+    }
+
+    function htmlWxw(htmlArray){
+        
         debugger
         document.getElementById('valueDisplay').value =  imgLinks.join('\r\n') ;
-
         return `
             <article class="wechat-article">
-                ${beginHtml}
-                ${html.join('')}
-                ${endHtml}
+                ${htmlArray.join('')}
             </article>
             <style>
                 .wechat-article {
@@ -656,7 +665,7 @@
                 img {
                     max-width: 100%;
                     height: auto;
-                    margin: 1em auto;
+                    margin: 0px;
                     display: block;
                     border-radius: 4px;
                 }
@@ -719,25 +728,30 @@
   
 
     // 一句话
-    function htmlLineWord(){
+    function htmlLineWord(sentenceHtmlArr,alignMode,symbol){
 
         return `
-            <p data-mq-box-wenan="1" data-mq-wenan-text="1" data-eusoft-scrollable-element="1" style="-webkit-tap-highlight-color: transparent;margin: 21px 0px 20px;padding: 0px 32px;outline: 0px;max-width: 100%;box-sizing: border-box !important;overflow-wrap: break-word !important;clear: both;min-height: 1em;font-family: &quot;PingFang SC&quot;, system-ui, -apple-system, BlinkMacSystemFont, &quot;Helvetica Neue&quot;, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei UI&quot;, &quot;Microsoft YaHei&quot;, Arial, sans-serif;font-style: normal;font-variant-ligatures: normal;font-variant-caps: normal;font-weight: normal;orphans: 2;text-indent: 0px;text-transform: none;widows: 2;word-spacing: 0px;-webkit-text-stroke-width: 0px;white-space: normal;background-color: rgb(255, 255, 255);text-decoration-thickness: initial;text-decoration-style: initial;text-decoration-color: initial;text-align: center;color: rgb(0, 0, 0);font-size: 15px;letter-spacing: 0px;line-height: 18px;">
-                <span leaf="">不徘徊、不退缩、不畏惧，大步迈向未知的远方。</span>
-            </p>
+            <section style="margin-top: 20px; margin-right: 0%; margin-left: 0%; visibility: visible;">
+                <section
+                        style="text-align: left; font-size: 12px; padding-right: 10px; padding-left: 10px; line-height: 2; letter-spacing: 1px; visibility: visible;">
+                        <p style="text-align: ${alignMode};">${symbol}</p>
+                            ${sentenceHtmlArr.join('\n')}
+                    <p style="margin-right: 8px; margin-bottom: 0px; margin-left: 8px; outline: 0px; color: rgb(0, 0, 0); font-family: system-ui, -apple-system, BlinkMacSystemFont, &quot;Helvetica Neue&quot;, &quot;PingFang SC&quot;, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei UI&quot;, &quot;Microsoft YaHei&quot;, Arial, sans-serif; font-size: 14px; text-wrap: wrap; background-color: rgb(255, 255, 255); letter-spacing: 0.578px; visibility: visible;">
+                        <br style="visibility: visible;"></p></section>
+            </section>
         `
     }
 
     // 双排图
-    function htmlShuangPaiImg(){
+    function htmlShuangPaiImg(src1,src2){
 
         return `
             <section data-mq-box-parent="1" style="-webkit-tap-highlight-color: transparent;margin: 21px 0px 20px;padding: 0px;outline: 0px;max-width: 100%;box-sizing: border-box !important;overflow-wrap: break-word !important;color: rgba(0, 0, 0, 0.9);font-family: &quot;PingFang SC&quot;, system-ui, -apple-system, BlinkMacSystemFont, &quot;Helvetica Neue&quot;, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei UI&quot;, &quot;Microsoft YaHei&quot;, Arial, sans-serif;font-size: 17px;font-style: normal;font-variant-ligatures: normal;font-variant-caps: normal;font-weight: 400;letter-spacing: 0.544px;orphans: 2;text-indent: 0px;text-transform: none;widows: 2;word-spacing: 0px;-webkit-text-stroke-width: 0px;white-space: normal;background-color: rgb(255, 255, 255);text-decoration-thickness: initial;text-decoration-style: initial;text-decoration-color: initial;display: flex;flex-flow: row;text-align: center;justify-content: center;">
                 <section style="-webkit-tap-highlight-color: transparent;margin: 10px 10px 10px 20px;padding: 0px;outline: 0px;max-width: 100%;box-sizing: border-box !important;overflow-wrap: break-word !important;flex: 1 1 0%;aspect-ratio: 1 / 1;border-radius: 2px;overflow: hidden;box-shadow: rgb(160, 160, 160) 1px 3px 5px 3px;" nodeleaf="">
-                    <img data-src="https://mmbiz.qpic.cn/sz_mmbiz_jpg/SafC09p6yPlU1x8plZfggicv1BvFJJUErykJJDp0tiaedoQfCAcqfvOSEQ7m8ZC4dNnwhT0FNNOMib2NYW3KrpuSg/640?wx_fmt=jpeg&amp;tp=webp&amp;wxfrom=5&amp;wx_lazy=1#imgIndex=10" alt="图片" class="rich_pages wxw-img" data-ratio="0.9851851851851852" data-w="1080" style="-webkit-tap-highlight-color: transparent;margin: 0px;padding: 0px;outline: 0px;max-width: 100%;box-sizing: border-box !important;overflow-wrap: break-word !important;height: auto !important;object-fit: cover;aspect-ratio: 1 / 1;width: 305.5px !important;vertical-align: bottom;min-height: 100%;visibility: visible !important;" data-imgqrcoded="1" src="https://mmbiz.qpic.cn/sz_mmbiz_jpg/SafC09p6yPlU1x8plZfggicv1BvFJJUErykJJDp0tiaedoQfCAcqfvOSEQ7m8ZC4dNnwhT0FNNOMib2NYW3KrpuSg/640?wx_fmt=jpeg&amp;tp=webp&amp;wxfrom=5&amp;wx_lazy=1#imgIndex=10">
+                    <img data-src="${src1}" src="${src1}">
                 </section>
                 <section style="-webkit-tap-highlight-color: transparent;margin: 10px 20px 10px 10px;padding: 0px;outline: 0px;max-width: 100%;box-sizing: border-box !important;overflow-wrap: break-word !important;flex: 1 1 0%;aspect-ratio: 1 / 1;border-radius: 3px;overflow: hidden;box-shadow: rgb(160, 160, 160) 1px 3px 5px 3px;" nodeleaf="">
-                    <img data-src="https://mmbiz.qpic.cn/sz_mmbiz_jpg/SafC09p6yPlU1x8plZfggicv1BvFJJUErrStUGuH3WI9nAVVcSaHsiastz8D5yaofHIZrLQVJErtV6icqLIicmzv7Q/640?wx_fmt=jpeg&amp;tp=webp&amp;wxfrom=5&amp;wx_lazy=1#imgIndex=11" alt="图片" class="rich_pages wxw-img" data-ratio="1" data-w="300" style="-webkit-tap-highlight-color: transparent;margin: 0px;padding: 0px;outline: 0px;max-width: 100%;box-sizing: border-box !important;overflow-wrap: break-word !important;height: auto !important;object-fit: cover;aspect-ratio: 1 / 1;width: 305.5px !important;vertical-align: bottom;min-height: 100%;visibility: visible !important;" data-imgqrcoded="1" src="https://mmbiz.qpic.cn/sz_mmbiz_jpg/SafC09p6yPlU1x8plZfggicv1BvFJJUErrStUGuH3WI9nAVVcSaHsiastz8D5yaofHIZrLQVJErtV6icqLIicmzv7Q/640?wx_fmt=jpeg&amp;tp=webp&amp;wxfrom=5&amp;wx_lazy=1#imgIndex=11">
+                    <img data-src="${src2}" src="${src2}">
                 </section>
             </section>
         `
@@ -800,7 +814,7 @@
          
         // 变更背景图片
         imgLinks = [...imageSrcList];
-
+ 
     }
     
 
@@ -925,7 +939,7 @@
     // 页面加载时，自动预览
     editor.value = rawText;
     updatePreview();
-
+    
     // 复制公众号兼容内容的html 用于代码push到公众号
     function copyWechatHTML() {
         const markdown = editor.value;
@@ -970,6 +984,6 @@
     </script>
     
     <!-- 代码高亮 -->
-    <script src="../js/highlight.min.js"></script>
+    <script src="../../js/highlight.min.js"></script>
 </body>
 </html>

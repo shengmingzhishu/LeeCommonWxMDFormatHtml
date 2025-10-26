@@ -6,8 +6,8 @@
     <meta name="description" content="微信Markdown转换器">
     <title>MD转公众号HTML工具</title>
     <!-- Markdown解析和样式 -->
-    <script src="../js/marked.min.js"></script>
-    <link rel="stylesheet" href="../css/github.min.css">
+    <script src="../../js/marked.min.js"></script>
+    <link rel="stylesheet" href="../../css/github.min.css">
     <style>
         body {
             margin: 0;
@@ -168,7 +168,7 @@
     </style>
 </head>
 <body>
-    <a href="../index.html" class="back-home"> 返回主页</a>
+    <a href="../../index.html" class="back-home"> 返回主页</a>
     <div class="container">
         <div class="editor-box">
             <div class="options-bar">
@@ -180,21 +180,27 @@
                     <span>对齐：</span>
                     <label><input type="radio" name="alignMode" value="left" id="align-left" >居左</label>
                     <label><input type="radio" name="alignMode" value="center" id="align-center" checked>居中</label>
+                    <span>乱序：</span>
+                    <label><input type="radio" name="sortMode" value="random" id="align-random" >随机</label>
+                    <label><input type="radio" name="sortMode" value="sort" id="align-sort" checked>顺序</label>
                 </div>
-                <div style="text-align: right;"><input type="button" name="clearEnter" value="删除空行" id="clear-enter"/></div>
-                <div style="text-align: right;"><input type="button" name="clearSort" value="内容乱序" id="clear-sort"/></div>
-                <div style="text-align: right;"><input type="button" name="clearShort" value="删除短词" id="clear-short"/></div>
-                <div style="text-align: right;"><input type="button" name="formatUrl" value="提取URL" id="format-url"/></div>
-                <div text-align: right;><input type="button" name="periodLine" value="句号换行" id="period-line"/></div>
             </div>
             <div class="options-bar">
-                <span style="display: inline-block; width: 20px;margin: 10px 0px;"></span>
-                    <span>URL：</span>
-                    <label><input type="radio" name="urlMode" value="qpic.cn" id="url-pic" checked>图片URL</label>
-                    <label><input type="radio" name="urlMode" value="mp.weixin.qq.com" id="url-wz">文章URL</label>
-                    <label><input type="radio" name="urlMode" value="fullurl" id="url-fullurl">全部URL</label>
                     <span style="display: inline-block; width: 20px;margin: 10px 0px;"></span>
-                <div class="mt-4">
+                    <span>URL：</span>
+                    <label><input type="radio" name="urlMode" value="qpic.cn" id="url-pic">图片URL</label>
+                    <label><input type="radio" name="urlMode" value="mp.weixin.qq.com" id="url-wz">文章URL</label>
+                    <label><input type="radio" name="urlMode" value="fullurl" id="url-fullurl" checked>全部URL</label>
+                    <span style="display: inline-block; width: 20px;margin: 10px 0px;"></span>
+                        
+                    <div style="text-align: right;"><input type="button" name="clearEnter" value="删除空行" id="clear-enter"/></div>
+                    <div style="text-align: right;"><input type="button" name="clearSort" value="内容乱序" id="clear-sort"/></div>
+                    <div style="text-align: right;"><input type="button" name="clearShort" value="删除短词" id="clear-short"/></div>
+                    <div style="text-align: right;"><input type="button" name="formatUrl" value="提取URL" id="format-url"/></div>
+                    <div text-align: right;><input type="button" name="periodLine" value="句号换行" id="period-line"/></div>
+            </div>
+            <div class="options-bar">
+                    <span style="display: inline-block; width: 20px;margin: 10px 0px;"></span>
                     <button id="pick-images-btn"
                             class="bg-primary hover:bg-primary/90 text-white font-medium py-2 px-4 rounded-lg shadow">
                         选择图片
@@ -205,18 +211,15 @@
                     </button>
                     <input id="file-input-btn" type="file" accept="image/*" multiple style="display: none;" />
                     <input id="file-src-array" type="textarea"/>
-                    <input id="valueDisplay" type="hidden" />
-                </div> 
-            </div>
-			<div class="options-bar">
-				<div style="text-align: right;">
-					<label for="user-id" style="margin-right: 5px;">用户ID：</label>
-					<input type="text" name="userid" value="MzI2OTQ4MDcxOA==" id="user-id" title="请输入用户ID" placeholder="请输入用户ID"/>
-				</div>
-				<div style="text-align: right;">
-					<label for="user-name" style="margin-right: 5px;">用户名：</label>
-					<input type="text" name="username" value="北屿的蓝色" id="user-name" title="请输入用户名" placeholder="请输入用户名"/>
-				</div>
+                    <input id="valueDisplay" type="hidden" /> 
+                    <div style="text-align: right;">
+                        <label for="user-id" style="margin-right: 5px;">用户ID：</label>
+                        <input type="text" name="userid" value="MzI2OTQ4MDcxOA==" id="user-id" title="请输入用户ID" placeholder="请输入用户ID"/>
+                    </div>
+                    <div style="text-align: right;">
+                        <label for="user-name" style="margin-right: 5px;">用户名：</label>
+                        <input type="text" name="username" value="北屿的蓝色" id="user-name" title="请输入用户名" placeholder="请输入用户名"/>
+                    </div>
             </div>
             <div class="options-bar" style="width: 100%;"> 
                  <div id="image-list" style="float: left; width: 100%; min-height:60px; border: #444 1px solid;"></div>
@@ -238,6 +241,7 @@
     // 段落模式和对齐方式的全局变量
     let paragraphMode = true; // true: 段落分割，false: 每行为一个块
     let alignMode = 'center';   // 'left' or 'center'
+    let sortMode = 'sort';      // 'sort' or 'random'
 
     // 圖片列表
     let imageFiles = [];
@@ -269,6 +273,24 @@
         document.getElementById('align-center').addEventListener('change', function() {
             if (this.checked) {
                 alignMode = 'center';
+                updatePreview();
+            }
+        });
+        document.getElementById('align-random').addEventListener('change', function() {
+            if (this.checked) {
+                sortMode = 'random';
+                updatePreview();
+            }
+        });
+        document.getElementById('align-random').addEventListener('click', function() {
+            if (this.checked) {
+                sortMode = 'random';
+                updatePreview();
+            }
+        });
+        document.getElementById('align-sort').addEventListener('change', function() {
+            if (this.checked) {
+                sortMode = 'sort';
                 updatePreview();
             }
         });
@@ -463,31 +485,35 @@
             return text;
         }
         
-        
-        html.push(htmlHead())
+         
 
         // 遍历每个段落或行
         paragraphs.forEach((para) => {
-            // // 段落内容按换行分句
-            // // 将段落内容按行分割，提取所有以 https:// 开头的图片链接
-            // let lines = para
-            //     .split('\n')
-            //     .map(line => line.trim())
-            //     .filter(line => line.length > 0);
+            // 段落内容按换行分句
+            // 将段落内容按行分割，提取所有以 https:// 开头的图片链接
+            let lines = para
+                .split('\n')
+                .map(line => line.trim())
+                .filter(line => line.length > 0);
 
-            // // 提取所有以 https:// 开头的图片链接
-            // let imageLinks = [];
-            // lines.forEach(line => {
-            //     // 允许一行有多个链接，用正则提取
-            //     const matches = line.match(/https:\/\/[^\s",]+/g);
-            //     if (matches) {
-            //         imageLinks.push(...matches);
-            //     }
-            // });
+            // 提取所有以 https:// 开头的图片链接
+            let imageLinks = [];
+            lines.forEach(line => {
+                // 允许一行有多个链接，用正则提取
+                const matches = line.match(/https:\/\/[^\s",]+/g);
+                if (matches) {
+                    imageLinks.push(...matches);
+                }
+            });
  
             debugger
-            if (imgLinks.length === 0) return;
+            if (imageLinks.length === 0) return;
  
+            // 显示小图
+            showImageList(imageLinks)
+
+            imageSrcList = [...imageLinks]
+
             index++; 
             // const name = getRandomItem(names);
             // const time = getRandomItem(times);
@@ -495,11 +521,14 @@
             
             
             let sentenceHtmlArr = [];
-            let sentenceUrlArr = imgLinks
+            let sentenceUrlArr = imageLinks
 
-            sentenceUrlArr = [...sentenceUrlArr]
-                .sort(() => Math.random() - 0.5)
-                .slice(0, 20);
+            if(sortMode === 'random'){
+                let  maxLength = sentenceUrlArr.length
+                sentenceUrlArr = [...sentenceUrlArr]
+                    .sort(() => Math.random() - 0.5)
+                    .slice(0, maxLength);
+            }
 
             debugger
             if(sentenceUrlArr.length>0 && sentenceUrlArr.length %2 !== 0){
@@ -555,17 +584,14 @@
                         </section>
                     </section>
                 </section>
-                <p style="font-size:16px;font-weight:400;font-style:normal;white-space:normal;margin:0;padding:0;box-sizing:border-box;visibility:visible;">
-                    <span leaf=""><br></span>
-                </p> 
                 `
                 sentenceHtmlArr.push(block)
             }
             html.push(sentenceHtmlArr.join(''))
         });
  
-        html.push(htmlWenan())
-        html.push(htmlCloudImg())
+        // html.push(htmlWenan())
+        // html.push(htmlCloudImg())
 
         return htmlWxw(html)        
     }
@@ -885,8 +911,14 @@
 
     function deleteImage(index){
          // 从数组中移除
-         imageSrcList.splice(index, 1);
-         showImageList(imageSrcList)
+
+        editor.value = editor.value.replace(imageSrcList[index], '')
+
+        // imageSrcList.splice(index, 1);
+        // showImageList(imageSrcList)
+
+        updatePreview();
+        
     }
 
     // 取得最新的图片imageSrcList=['data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAMIAAADDCAYAAADQvc6UAAAABHNCSVQICAgIfAhkiAAAAAlwSFlzAAALEgAACxIB0t1+/AAAADh0RVh0U29mdHdhcmUAbWF0cGxvdGxpYiB2ZXJzaW9uMy4yLjIsIGh0dHA6Ly9tYXRwbG90bGliLm9yZy+WH4yJAAAGFklEQVR4nO3deXxU1RnH8e9VpKqKqoqKqoqKqoqKqoqKqoqKqoqKqoqKqoqKqoqKqoqKqoqKqoqKqoqKqoqKqoqKqoqKqoqKqoqKqoqKqoqKqoqKqoqKqoqKqoqKqoqKqoqKq'] 生成预览 放入到id=image-list的div中,每个图片50*50
@@ -901,7 +933,7 @@
         }
         btnImageDiv.innerHTML = html
         btnImageSrcArray.value = '["' + imageSrcList.join('",\r\n"') + '"]'
-         
+          
         // 变更背景图片
         imgLinks = [...imageSrcList];
 
@@ -999,7 +1031,7 @@
 
 
         // 更新预览
-        updatePreview();
+        // updatePreview();
 
         // 允许再次选择同一文件
         btnFile.value = '';
@@ -1029,6 +1061,77 @@
     // 页面加载时，自动预览
     editor.value = rawText;
     updatePreview();
+
+    // 重新设置id="editor"的文本框内容，只保留去重后的url，每行一个
+    function setUniqueUrlsToEditor() {
+        debugger
+        // 匹配所有以 http 或 https 开头的 url
+        const urlRegex = /https?:\/\/[^\s",]+/g;
+        const textarea = document.getElementById('editor');
+        const text = textarea.value;
+        let urls = text.match(urlRegex) || [];
+
+        // 遍历处理每个URL
+        urls = urls.map(url => {
+            // 先移除末尾可能存在的 );
+            let processedUrl = url.replace(/\);$/, '');
+            
+            // 再移除末尾的 /300 或 /640
+            processedUrl = processedUrl.replace(/\/(300|640)*$/, '/');
+            console.log('url:', processedUrl)
+            
+            return processedUrl;
+        });
+        // 获取当前选中的urlMode
+        const urlMode = document.querySelector('input[name="urlMode"]:checked').value;
+
+        // 根据urlMode过滤url
+        if (urlMode !== 'fullurl') {
+            // 只保留包含选中value的url
+            urls = urls.filter(url => url.includes(urlMode));
+        }
+
+
+        // 去重
+        const uniqueUrls = Array.from(new Set(urls));
+
+
+        // 进一步去重：如果多个url图片名相同，只保留最短的那个
+        // 提取图片名的函数
+        function getImgName(url) {
+            // 仅处理 mmbiz.qpic.cn 的图片链接，其他直接返回url
+            if (!url.includes('mmbiz.qpic.cn')) {
+                return url;
+            }
+            // 用 / 分割，取分割后最长的部分作为图片名
+            let parts = url.split('/');
+            let maxPart = parts.reduce((a, b) => a.length >= b.length ? a : b, '');
+            return maxPart;
+        }
+        // 用Map存储图片名到url
+        const imgNameToUrl = new Map();
+        debugger
+        uniqueUrls.forEach(url => {
+            const imgName = getImgName(url);
+            if (!imgNameToUrl.has(imgName)) {
+                imgNameToUrl.set(imgName, url);
+            } else {
+                // 如果已存在，保留更短的url
+                if (url.length < imgNameToUrl.get(imgName).length) {
+                    imgNameToUrl.set(imgName, url);
+                }
+            }
+        });
+        // 最终只保留Map中的url
+        const finalUrls = Array.from(imgNameToUrl.values());
+        // 换行拼接
+        const result = finalUrls.join('\n');
+        textarea.value = result;
+        updatePreview();
+    }
+    // 你可以在需要的时候调用 setUniqueUrlsToEditor()
+    // setUniqueUrlsToEditor()
+
     // 复制公众号兼容内容的html 用于代码push到公众号
     function copyWechatHTML() {
         const markdown = editor.value;
@@ -1073,6 +1176,6 @@
     </script>
     
     <!-- 代码高亮 -->
-    <script src="../js/highlight.min.js"></script>
+    <script src="../../js/highlight.min.js"></script>
 </body>
 </html>
