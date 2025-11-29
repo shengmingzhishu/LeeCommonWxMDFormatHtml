@@ -209,14 +209,7 @@
     </style>
 </head>
 <body>
-    <!-- 样式选择器 -->
-    <div class="style-selector">
-        <h4>标题样式选择</h4>
-        <div class="style-option">
-            <input type="checkbox" id="enablePartStyle" checked>
-            <label for="enablePartStyle">H1装饰样式</label>
-        </div>
-    </div>
+    
 
     <a href="../index.html" class="back-home"> 返回主页</a>
     <div class="container">
@@ -282,42 +275,52 @@
                     <option value="prompt-style-5">引用符号5：成功反馈</option>
                 </select>
 
-                <!-- 段落模版风格选择（统一控制字体、字号、行高、首行缩进等） -->
+                <!-- 段落字体风格选择（统一控制字体、字号、行高、首行缩进等） -->
                 <select id="template-style-select" style="width: 180px; padding: 4px; border: 1px solid #ddd; border-radius: 4px;" onChange="changeHtml(this.value)">
-                    <option value="template-style-1">模版风格1：简约高级风</option>
-                    <option value="template-style-2">模版风格2：清晰分点风</option>
-                    <option value="template-style-3">模版风格3：学术严谨风</option>
-                    <option value="template-style-4">模版风格4：国风古韵风</option>
-                    <option value="template-style-5">模版风格5：温馨治愈风</option>
-                    <option value="template-style-6">模版风格6：复古怀旧风</option>
-                    <option value="template-style-7">模版风格7：活泼元气风</option>
-                    <option value="template-style-8">模版风格8：科技未来风</option>
-                    <option value="template-style-9">模版风格9：田园森系风</option>
-                    <option value="template-style-10">模版风格10：商务精英风</option>
-                    <option value="template-style-11">模版风格11：美食诱人风</option>
-                    <option value="template-style-12">模版风格12：健康养生风</option>
-                    <option value="template-style-13">模版风格13：宠物治愈风</option>
-                    <option value="template-style-14">模版风格14：星座趣味风</option>
-                    <option value="template-style-15">模版风格15：教育启蒙风</option>
-                    <option value="template-style-16">模版风格16：促销引流风</option>
-                    <option value="template-style-17">模版风格17：旅行攻略风</option>
-                    <option value="template-style-18">模版风格18：公益温情风</option>
-                    <option value="template-style-19">模版风格19：杂志精致风</option>
-                    <option value="template-style-20">模版风格20：互动问答风</option>
+                    <option value="template-style-1">字体风格1：简约高级风</option>
+                    <option value="template-style-2">字体风格2：清晰分点风</option>
+                    <option value="template-style-3">字体风格3：学术严谨风</option>
+                    <option value="template-style-4">字体风格4：国风古韵风</option>
+                    <option value="template-style-5">字体风格5：温馨治愈风</option>
+                    <option value="template-style-6">字体风格6：复古怀旧风</option>
+                    <option value="template-style-7">字体风格7：活泼元气风</option>
+                    <option value="template-style-8">字体风格8：科技未来风</option>
+                    <option value="template-style-9">字体风格9：田园森系风</option>
+                    <option value="template-style-10">字体风格10：商务精英风</option>
+                    <option value="template-style-11">字体风格11：美食诱人风</option>
+                    <option value="template-style-12">字体风格12：健康养生风</option>
+                    <option value="template-style-13">字体风格13：宠物治愈风</option>
+                    <option value="template-style-14">字体风格14：星座趣味风</option>
+                    <option value="template-style-15">字体风格15：教育启蒙风</option>
+                    <option value="template-style-16">字体风格16：促销引流风</option>
+                    <option value="template-style-17">字体风格17：旅行攻略风</option>
+                    <option value="template-style-18">字体风格18：公益温情风</option>
+                    <option value="template-style-19">字体风格19：杂志精致风</option>
+                    <option value="template-style-20">字体风格20：互动问答风</option>
                 </select>
 
                 <!-- 段落样式选择（用于引用内容等特殊段落） -->
                 <select id="normal-paragraph-style-select" style="width: 160px; padding: 4px; border: 1px solid #ddd; border-radius: 4px;" onChange="changeHtml(this.value)">
-                    <option value="normal-style-1">段落样式1：默认样式</option>
-                    <option value="normal-style-2">段落样式2：极简现代</option>
-                    <option value="normal-style-3">段落样式3：优雅衬线</option>
-                    <option value="normal-style-4">段落样式4：宽间距</option>
-                    <option value="normal-style-5">段落样式5：居中对齐</option>
-                    <option value="normal-style-6">段落样式6：右侧对齐</option>
-                    <option value="normal-style-7">段落样式7：复古印刷</option>
-                    <option value="normal-style-8">段落样式8：清新冷色</option>
-                    <option value="normal-style-9">段落样式9：柔和暖色</option>
-                    <option value="normal-style-10">段落样式10：深色模式</option>
+                    <option value="normal-style-1">段落样式1：极简现代</option>
+                    <option value="normal-style-2">段落样式2：优雅衬线</option>
+                    <option value="normal-style-3">段落样式3：深色模式</option>
+                    <option value="normal-style-4">段落样式4：柔和暖色</option>
+                    <option value="normal-style-5">段落样式5：清新冷色</option>
+                    <option value="normal-style-6">段落样式6：复古印刷</option>
+                    <option value="normal-style-7">段落样式7：强调首字</option>
+                    <option value="normal-style-8">段落样式8：卡片式</option>
+                    <option value="normal-style-9">段落样式9：渐变文字</option>
+                    <option value="normal-style-10">段落样式10：宽间距排版</option>
+                    <option value="normal-style-11">段落样式11：引用样式</option>
+                    <option value="normal-style-12">段落样式12：紧凑排版</option>
+                    <option value="normal-style-13">段落样式13：手写风格</option>
+                    <option value="normal-style-14">段落样式14：高对比度</option>
+                    <option value="normal-style-15">段落样式15：纹理背景</option>
+                    <option value="normal-style-16">段落样式16：居中对齐</option>
+                    <option value="normal-style-17">段落样式17：右侧对齐</option>
+                    <option value="normal-style-18">段落样式18：多彩强调</option>
+                    <option value="normal-style-19">段落样式19：大号字体</option>
+                    <option value="normal-style-20">段落样式20：微妙阴影</option>
                 </select>
 
  
@@ -369,7 +372,7 @@
             <!-- 功能说明 -->
             <div style="margin-bottom: 10px; padding: 8px; background-color: #f0f9ff; border-radius: 6px; font-size: 12px; color: #0369a1;">
                 <strong>功能说明：</strong>
-                H1标题支持9种风格，H2-H6标题支持10种样式，段落模版风格支持20种经典排版风格，引用内容（>开头的文本）支持12种段落样式，普通段落支持10种段落样式，提示词样式应用于引用内容开头
+                H1标题支持9种风格，H2-H6标题支持10种样式，段落字体风格支持20种经典排版风格，引用内容（>开头的文本）支持12种段落样式，普通段落支持10种段落样式，提示词样式应用于引用内容开头
             </div>
             
             <!-- 输入文本 -->
@@ -389,7 +392,7 @@
 
 
     function changeTitleTheme(color) {
-        autoFormatText(document.getElementById('editor').value, getStyleOptions())
+        autoFormatText(document.getElementById('editor').value)
     }
 
     function generateH1HTMLStyle(selectedStyle,titleAlign, selectedTitleColor, selectedThemeColor, titleName,) { 
@@ -489,28 +492,10 @@
 
     function changeHtml() { 
         const editor = document.getElementById('editor');
-        const html = autoFormatText(editor.value, getStyleOptions());
+        const html = autoFormatText(editor.value);
         preview.innerHTML = html;
     }
 
-    // 获取当前样式选项
-    function getStyleOptions() {
-        return {
-            enablePartStyle: document.getElementById('enablePartStyle').checked
-        };
-    }
-
-    // 样式选择器事件监听
-    document.addEventListener('DOMContentLoaded', function() {
-        // 样式选择器事件监听
-        const enablePartStyleCheckbox = document.getElementById('enablePartStyle');
-        
-        if (enablePartStyleCheckbox) {
-            enablePartStyleCheckbox.addEventListener('change', () => {
-                changeHtml();
-            });
-        }
-    });
 
     // 生成H2-H6标题样式
     function generateHeadingHTMLStyle(styleType, level, content, titleAlign) {
@@ -633,7 +618,7 @@
         return `<p ${styleAttr}>${promptPrefix}${content}</p>`;
     }
 
-    // 生成段落模版风格样式（统一控制字体、字号、行高、首行缩进等）
+    // 生成段落字体风格样式（统一控制字体、字号、行高、首行缩进等）
     function generateTemplateStyleCSS(templateStyle) {
         const templateStyles = new Map([
             ["template-style-1", { // 简约高级风
@@ -829,22 +814,32 @@
         return cssText;
     }
 
-    // 生成普通段落样式
+    // 生成普通段落样式（参考 wenzhang.html 中的20种段落样式）
     function generateNormalParagraphHTML(content, styleType, templateStyle) {
-        // 获取模版风格样式
+        // 获取字体风格样式
         const templateCSS = generateTemplateStyleCSS(templateStyle);
         
         const normalParagraphStyles = new Map([
-            ["normal-style-1", `style="${templateCSS};"`],
-            ["normal-style-2", `style="${templateCSS} text-align: left;"`],
-            ["normal-style-3", `style="${templateCSS} font-family: Georgia, 'Times New Roman', serif;"`],
-            ["normal-style-4", `style="${templateCSS} letter-spacing: 0.03em;"`],
-            ["normal-style-5", `style="${templateCSS} text-align: center; max-width: 320px; margin-left: auto; margin-right: auto;"`],
-            ["normal-style-6", `style="${templateCSS} text-align: right; max-width: 320px; margin-left: auto;"`],
-            ["normal-style-7", `style="${templateCSS} font-family: 'Times New Roman', serif; padding: 0.5em 0; border-top: 1px solid rgba(0,0,0,0.1); border-bottom: 1px solid rgba(0,0,0,0.1);"`],
-            ["normal-style-8", `style="${templateCSS} color: #1E3A8A;"`],
-            ["normal-style-9", `style="${templateCSS} color: #78350F;"`],
-            ["normal-style-10", `style="${templateCSS} color: #E5E7EB; background-color: #1F2937; padding: 1.5em; border-radius: 0.5em;"`],
+            ["normal-style-1", `style="${templateCSS} color: #374151; line-height: 1.7; font-size: 1rem; margin-bottom: 1.5rem; text-align: left;"`],
+            ["normal-style-2", `style="${templateCSS} color: #1F2937; line-height: 1.8; font-size: 1.125rem; margin-bottom: 1.75rem; text-indent: 2rem;"`],
+            ["normal-style-3", `style="${templateCSS} color: #E5E7EB; background-color: #1F2937; line-height: 1.7; font-size: 1rem; padding: 1.5rem; border-radius: 0.5rem; margin-bottom: 1.5rem;"`],
+            ["normal-style-4", `style="${templateCSS} color: #78350F; background-color: rgba(254, 243, 199, 0.3); line-height: 1.6; font-size: 1rem; padding: 1.25rem; border-radius: 0.5rem; margin-bottom: 1.5rem;"`],
+            ["normal-style-5", `style="${templateCSS} color: #1E3A8A; background-color: rgba(224, 231, 255, 0.3); line-height: 1.65; font-size: 1rem; padding: 1.25rem; border-radius: 0.5rem; margin-bottom: 1.5rem;"`],
+            ["normal-style-6", `style="${templateCSS} color: #44403C; background-color: #faf9f7; background-image: linear-gradient(90deg, rgba(0,0,0,0.02) 1px, transparent 1px), linear-gradient(rgba(0,0,0,0.02) 1px, transparent 1px); background-size: 20px 20px; line-height: 1.9; font-size: 1rem; text-indent: 2rem; margin-bottom: 1.75rem;"`],
+            ["normal-style-7", `style="${templateCSS} color: #1F2937; line-height: 1.8; font-size: 1.125rem; margin-bottom: 1.75rem;"`],
+            ["normal-style-8", `style="${templateCSS} color: #374151; background-color: #F0F9FF; border: 1px solid #93C5FD; line-height: 1.6; font-size: 1rem; padding: 1.5rem; border-radius: 0.75rem; box-shadow: 0 4px 15px rgba(59, 130, 246, 0.05); margin-bottom: 1.5rem;"`],
+            ["normal-style-9", `style="${templateCSS} font-size: 1.125rem; font-weight: 500; line-height: 1.7; margin-bottom: 1.5rem; background-clip: text; -webkit-background-clip: text; color: transparent; background-image: linear-gradient(to right, #3B82F6, #8B5CF6);"`],
+            ["normal-style-10", `style="${templateCSS} color: #374151; line-height: 1.9; letter-spacing: 0.03em; font-size: 1rem; margin-bottom: 1.75rem; word-spacing: 0.1em;"`],
+            ["normal-style-11", `style="${templateCSS} color: #374151; font-style: italic; line-height: 1.7; font-size: 1.05rem; margin-bottom: 1.5rem; padding-left: 1.5rem; border-left: 4px solid rgba(59, 130, 246, 0.3);"`],
+            ["normal-style-12", `style="${templateCSS} color: #D1D5DB; background-color: #1F2937; line-height: 1.5; font-size: 0.9375rem; margin-bottom: 1rem; padding: 1rem; border-radius: 0.5rem;"`],
+            ["normal-style-13", `style="${templateCSS} color: #1F2937; background-color: #F3F4F6; line-height: 1.6; font-size: 1.125rem; margin-bottom: 1.5rem; padding: 1.25rem; border-radius: 0.5rem; transform: rotate(-0.5deg);"`],
+            ["normal-style-14", `style="${templateCSS} color: #FFFFFF; background-color: #000000; font-weight: 500; line-height: 1.7; font-size: 1rem; margin-bottom: 1.5rem; padding: 1.25rem; border-radius: 0.5rem;"`],
+            ["normal-style-15", `style="${templateCSS} color: #FFFFFF; background-color: rgba(0, 0, 0, 0.3); background-image: url('texture.jpg'); background-size: cover; background-blend-mode: overlay; line-height: 1.7; font-size: 1rem; padding: 1.5rem; border-radius: 0.5rem; text-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); margin-bottom: 1.5rem;"`],
+            ["normal-style-16", `style="${templateCSS} color: #374151; line-height: 1.7; font-size: 1rem; margin-bottom: 1.5rem; text-align: center; max-width: 320px; margin-left: auto; margin-right: auto;"`],
+            ["normal-style-17", `style="${templateCSS} color: #374151; line-height: 1.7; font-size: 1rem; margin-bottom: 1.5rem; text-align: right; max-width: 320px; margin-left: auto;"`],
+            ["normal-style-18", `style="${templateCSS} color: #374151; line-height: 1.7; font-size: 1rem; margin-bottom: 1.5rem;"`],
+            ["normal-style-19", `style="${templateCSS} color: #1F2937; line-height: 1.8; font-size: 1.25rem; margin-bottom: 1.75rem; font-weight: 400; background-color: #F0F9FF; padding: 1.5rem; border-radius: 0.75rem;"`],
+            ["normal-style-20", `style="${templateCSS} color: #1F2937; line-height: 1.7; font-size: 1rem; margin-bottom: 1.5rem; text-shadow: 0 1px 2px rgba(0, 0, 0, 0.05); background-color: #FFFFFF; padding: 1.25rem; border-radius: 0.75rem; box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);"`],
         ]);
 
         const styleAttr = normalParagraphStyles.get(styleType) || normalParagraphStyles.get("normal-style-1");
@@ -862,7 +857,7 @@
 
     
 
-    function autoFormatText(rawText, styleOptions = { enablePartStyle: true }) {
+    function autoFormatText(rawText) {
         
         // 每次都初始化
         numberIndex = 0
@@ -946,11 +941,7 @@
                 
                 if(level === 1) {
                     // 根据样式选项决定是否应用part样式
-                    if(styleOptions.enablePartStyle) {
-                        html.push(`<div class="part-container">${generateH1HTMLStyle(selectedStyle,titleAlign, selectedTitleColor,  selectedThemeColor, content)}</div>`);
-                    } else {
-                        html.push(`<h1 style="font-size: 32px; font-weight: 600; color: #2D3748; margin: 24px 0 16px 0; text-align: ${titleAlign};">${content}</h1>`);
-                    }
+                    html.push(`<div class="part-container">${generateH1HTMLStyle(selectedStyle,titleAlign, selectedTitleColor,  selectedThemeColor, content)}</div>`);
                     // html.push(`
                     // <div  style="text-align: ${titleAlign};"> 
                     //     <div class="${selectedStyle}" style="text-align: ${titleAlign};">
@@ -1031,7 +1022,7 @@
             if (trimmedLine) {
                 const content = processInlineMarkdown(trimmedLine);
                 
-                // 普通段落应用选定的段落样式和模版风格
+                // 普通段落应用选定的段落样式和字体风格
                 let normalParagraphHTML = generateNormalParagraphHTML(content, normalParagraphStyleType, templateStyleType);
                 html.push(normalParagraphHTML);
             }
@@ -1716,7 +1707,7 @@ const rawText = "# 欢迎使用马克飞象\n" +
 
         editor.addEventListener('input', () => {
             const markdown = editor.value;
-            const html = autoFormatText(markdown, getStyleOptions());
+            const html = autoFormatText(markdown);
             preview.innerHTML = html;
         });
 
@@ -1828,13 +1819,13 @@ function demo() {
         document.getElementById('template-style-select').value = 'template-style-1';
         
         editor.value = demoContent
-        const html = autoFormatText(editor.value, getStyleOptions());
+        const html = autoFormatText(editor.value);
         preview.innerHTML = html;
         
         // 复制公众号兼容内容
         function copyWechatHTML() {
             const markdown = editor.value;
-            const htmlContent = autoFormatText(markdown, getStyleOptions());
+            const htmlContent = autoFormatText(markdown);
 
             // 创建临时textarea元素
             const textarea = document.createElement('textarea');
