@@ -452,11 +452,6 @@
                                 <option value="symbol-8">📝 笔记</option>
                                 <option value="symbol-9">💎 精华</option>
                                 <option value="symbol-10">🔥 热门</option>
-                                <option value="symbol-11">🌟 推荐</option>
-                                <option value="symbol-12">💕 喜欢</option>
-                                <option value="symbol-13">🎨 美学</option>
-                                <option value="symbol-14">📸 分享</option>
-                                <option value="symbol-15">💬 互动</option>
                             </select>
                         </label>
 
@@ -1165,7 +1160,7 @@
     function autoFormatText(rawText) {
         
         // 每次都初始化
-        numberIndex = 0
+        numberIndex = 0;
 
         const selectedStyle = document.getElementById('style-select').value;
         const headingStyleType = document.getElementById('heading-style-select').value;
@@ -1328,6 +1323,7 @@
             // 收集当前段落的所有连续非空行
             let paragraphLines = [];
             let j = i;
+            let hasSpecialContent = false;
             while (j < lines.length) {
                 const currentLine = lines[j];
                 const currentTrimmed = currentLine.trim();
@@ -1343,6 +1339,7 @@
                     /^\d+\.\s/.test(currentTrimmed) ||
                     /^[-*+]\s/.test(currentTrimmed)) {
                     // 结束段落收集，外层循环会处理这些特殊语法
+                    hasSpecialContent = true;
                     break;
                 }
                 
@@ -1350,7 +1347,7 @@
                 j++;
             }
             
-            // 更新外层循环的索引
+            // 无论何种情况，都更新i到当前处理位置
             i = j;
 
             // 将段落行合并为完整段落文本
@@ -1363,9 +1360,7 @@
                 html.push(normalParagraphHTML);
             }
             
-            // 继续下一个处理周期
-            continue;
-        }
+            }
 
         if (inList) {
             html.push(currentListType === 'ol' ? '</ol>' : '</ul>');
