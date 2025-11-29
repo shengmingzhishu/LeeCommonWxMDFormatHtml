@@ -171,24 +171,21 @@
                 <select id="style-select" style="width: 200px;" onchange="changeHtml(this.value)">
                     <option value="style-1">01 简约高级风</option>
                     <option value="style-2">02 复古衬线风</option>
-                    <option value="style-3">03 科技未来风</option>
+                    <option value="style-3">03 复古打字机风</option>
                     <option value="style-4">04 清新治愈风</option>
                     <option value="style-5">05 大胆撞色风</option>
                     <option value="style-6">06 极简几何风</option>
                     <option value="style-7">07 轻奢质感风</option>
-                    <option value="style-8">08 森系自然风</option>
+                    <option value="style-8">08 日系简约风</option>
                     <option value="style-9">09 暗黑酷感风</option>
-                    <option value="style-10">10 日系简约风</option>
-                    <option value="style-11">11 复古打字机风</option>
-                    <option value="style-12">12 活力运动风</option>
                 </select>
 
                 <!-- 增加标题1居中 ，使用radio 按钮 -->
-                <label>居中<input type="radio" name="title-align" value="center" checked></label>
-                <label>居左<input type="radio" name="title-align" value="left"></label>
-                <label>居右<input type="radio" name="title-align" value="right"></label>
+                <label>居左<input type="radio" name="title-align" value="left" onclick="changeHtml(this.value)"></label>
+                <label>居中<input type="radio" name="title-align" value="center" onclick="changeHtml(this.value)" checked></label>
+                <label>居右<input type="radio" name="title-align" value="right" onclick="changeHtml(this.value)"></label>
  
-                <select id="style-title-color" style="width: 200px; padding: 4px; border: 1px solid #ddd; border-radius: 4px;" onChange="changeTitleTheme()">
+                <select id="style-title-color" style="width: 200px; padding: 4px; border: 1px solid #ddd; border-radius: 4px;" onChange="changeHtml(this.value)">
                     <!-- 原有浅色系（保留） -->
                     <option value="white" style="background-color: white; color: #333;">纯净白（通用百搭）</option>
                     <option value="#f8f9fa" style="background-color: #f8f9fa; color: #333;">象牙白（柔和不刺眼）</option>
@@ -210,7 +207,7 @@
                     <option value="#f9e6d8" style="background-color: #f9e6d8; color: #222;">浅橘色（温暖活力）</option>
                 </select>
 
-                <select id="style-theme-color" style="width: 200px; padding: 4px; border: 1px solid #ddd; border-radius: 4px;">
+                <select id="style-theme-color" style="width: 200px; padding: 4px; border: 1px solid #ddd; border-radius: 4px;" onChange="changeHtml(this.value)">
                     <!-- 原有浅色系（保留） -->
                     <option value="white" style="background-color: white; color: #333;">纯净白（通用百搭）</option>
                     <option value="#f8f9fa" style="background-color: #f8f9fa; color: #333;">象牙白（柔和不刺眼）</option>
@@ -252,181 +249,45 @@
         autoFormatText(document.getElementById('editor').value)
     }
 
-    function generateTitleWechatHTML(selectedStyle,titleAlign, selectedTitleColor, selectedThemeColor, titleName,) { 
+    function generateH1HTMLStyle(selectedStyle,titleAlign, selectedTitleColor, selectedThemeColor, titleName,) { 
 
         let numberIndexStr = `${numberIndex++ < 10 ? '0' + numberIndex : numberIndex}`
-
-        const str  = `
-        <!-- 核心适配：h6标签+纯基础属性，无任何复杂样式 -->
-
-    <!-- 风格1：简约高级风 -->
-    <div style="margin-bottom: 60px;">
-        <h6 style="font-size: 18px; font-weight: 700; color: #165DFF; letter-spacing: 1px; margin: 0 0 8px 0; display: inline-block; border-bottom: 2px solid #165DFF; padding-bottom: 2px;">01</h6>
-        <h1 style="font-size: 28px; color: #2D3748; font-weight: 600; margin: 0 0 12px 0; line-height: 1.4; padding-bottom: 8px; border-bottom: 1px solid #E5E7EB;">社交媒体运营策略</h1>
-        <p style="font-size: 15px; color: #4A5568; line-height: 1.8; margin: 15px 0 0 0; text-align: justify;">研究发现定期在固定平台更新的插画师，收入比“随缘更新”的高出47%。核心原因在于持续输出能积累精准粉丝，提升账号权重，同时让潜在客户更容易找到并信任创作者。</p>
-    </div>
-
-    <!-- 分隔线 -->
-    <div style="height: 1px; background-color: #E5E7EB; margin: 40px 0;"></div>
-
-    <!-- 风格2：复古衬线风 -->
-    <div style="margin-bottom: 60px;">
-        <h6 style="font-size: 20px; font-weight: 600; color: #8B5A2B; font-family: 'SimSun', serif; margin: 0 0 10px 0; letter-spacing: 2px;">02</h6>
-        <h1 style="font-size: 26px; color: #3C2A21; font-weight: 500; font-family: 'SimSun', serif; margin: 0 0 12px 0; line-height: 1.4; padding-left: 16px; border-left: 4px solid #8B5A2B;">作品集优化技巧</h1>
-        <p style="font-size: 15px; color: #4A5568; line-height: 1.8; margin: 15px 0 0 0; text-align: justify;">优质的作品集是接单的关键，设计师需要将作品按主题分类，每类作品搭配简洁的创作说明，包括设计思路、使用工具、项目成果等。避免堆砌作品，精选3-5个高质量案例，比10个普通案例更有说服力。</p>
-    </div>
-
-    <!-- 分隔线 -->
-    <div style="height: 1px; background-color: #E5E7EB; margin: 40px 0;"></div>
-
-    <!-- 风格3：科技未来风 -->
-    <div style="margin-bottom: 60px;">
-        <h6 style="font-size: 18px; font-weight: 700; color: #00F5FF; font-family: 'Consolas', monospace; letter-spacing: 3px; margin: 0 0 8px 0; background-color: #1E3A5F; padding: 4px 10px; border-radius: 4px;">03</h6>
-        <h1 style="font-size: 28px; color: #FFFFFF; font-weight: 700; margin: 0 0 12px 0; line-height: 1.4; padding: 12px 16px; background-color: #1E3A5F; border-radius: 6px;">合作伙伴拓展方法</h1>
-        <div style="background-color: #FFFFFF; padding: 16px; border-radius: 6px; border: 1px solid #E5E7EB;">
-            <p style="font-size: 15px; color: #4A5568; line-height: 1.8; margin: 0; text-align: justify;">主动结交设计师、作家、品牌方等潜在合作伙伴，可通过行业展会、线上社群、平台评论区互动等方式建立联系。交流时避免直接推销，而是分享自己的作品和见解，建立真诚的专业连接。</p>
-        </div>
-    </div>
-
-    <!-- 分隔线 -->
-    <div style="height: 1px; background-color: #E5E7EB; margin: 40px 0;"></div>
-
-    <!-- 风格4：清新治愈风 -->
-    <div style="margin-bottom: 60px;">
-        <h6 style="font-size: 16px; font-weight: 600; color: #48BB78; margin: 0 0 8px 0; background-color: #F0FDF4; padding: 4px 12px; border-radius: 20px; display: inline-block;">04</h6>
-        <h1 style="font-size: 26px; color: #22C55E; font-weight: 500; margin: 0 0 12px 0; line-height: 1.4;">创作灵感积累指南</h1>
-        <div style="border-left: 4px solid #D1FAE5; padding-left: 16px;">
-            <p style="font-size: 15px; color: #4A5568; line-height: 1.8; margin: 0; text-align: justify;">日常积累灵感可从生活观察、艺术展览、自然景观中获取，建议建立专属灵感库（如Pinboard、Notion收藏夹），分类存储参考图、文字片段、色彩搭配等素材，定期整理复盘，形成自己的灵感体系。</p>
-        </div>
-    </div>
-
-    <!-- 分隔线 -->
-    <div style="height: 1px; background-color: #E5E7EB; margin: 40px 0;"></div>
-
-    <!-- 风格5：大胆撞色风 -->
-    <div style="margin-bottom: 60px;">
-        <h6 style="font-size: 22px; font-weight: 800; color: #FFFFFF; background-color: #FF6B35; width: 36px; height: 36px; border-radius: 50%; display: inline-flex; align-items: center; justify-content: center; margin: 0 0 10px 0; padding: 0;">05</h6>
-        <h1 style="font-size: 26px; color: #2D3748; font-weight: 700; margin: 0 0 12px 0; line-height: 1.4; display: inline-block; border-bottom: 6px solid #FFE4D6; padding-bottom: 2px;">客户沟通技巧</h1>
-        <p style="font-size: 15px; color: #4A5568; line-height: 1.8; margin: 15px 0 0 0; text-align: justify;">与客户沟通时，先明确需求核心（如使用场景、目标人群、风格偏好），再提供2-3个方案方向而非单一方案，减少反复修改成本。同时用可视化工具（如线框图、色卡）辅助表达，让客户更直观理解设计思路。</p>
-    </div>
-
-    <!-- 分隔线 -->
-    <div style="height: 1px; background-color: #E5E7EB; margin: 40px 0;"></div>
-
-    <!-- 风格6：极简几何风 -->
-    <div style="margin-bottom: 60px;">
-        <div style="display: flex; align-items: center; gap: 12px; margin: 0 0 12px 0;">
-            <h6 style="font-size: 18px; font-weight: 700; color: #6366F1; font-family: 'Consolas', monospace; margin: 0;">06</h6>
-            <div style="flex: 1; height: 2px; background-color: #E0E7FF;"></div>
-        </div>
-        <h1 style="font-size: 26px; color: #4F46E5; font-weight: 600; margin: 0 0 10px 0; line-height: 1.4;">设计收费标准制定</h1>
-        <p style="font-size: 15px; color: #374151; line-height: 1.8; margin: 0; text-align: justify;">收费标准可参考“基础定价+难度系数+交付周期”公式：基础定价根据自身经验（如入行年限、案例质量）设定，难度系数按项目复杂度（如插画张数、细节要求）调整，加急项目可加收20%-50%服务费，同时明确交付内容和修改次数，避免后续纠纷。</p>
-    </div>
-
-    <!-- 分隔线 -->
-    <div style="height: 1px; background-color: #E5E7EB; margin: 40px 0;"></div>
-
-    <!-- 风格7：轻奢质感风 -->
-    <div style="margin-bottom: 60px;">
-        <h6 style="font-size: 18px; font-weight: 700; color: #B794F4; font-family: 'SimSun', serif; letter-spacing: 2px; margin: 0 0 10px 0; display: inline-block; padding-left: 24px; background-image: url('data:image/svg+xml;utf8,<svg xmlns=\"http://www.w3.org/2000/svg\" width=\"12\" height=\"12\" viewBox=\"0 0 12 12\"><circle cx=\"6\" cy=\"6\" r=\"4\" fill=\"none\" stroke=\"%23B794F4\" stroke-width=\"2\"/></svg>'); background-repeat: no-repeat; background-position: left center;">07</h6>
-        <h1 style="font-size: 28px; color: #2D3748; font-weight: 500; margin: 0 0 12px 0; line-height: 1.4; padding-bottom: 8px; border-bottom: 1px solid #E0E7FF; letter-spacing: 0.5px;">高端品牌视觉设计策略</h1>
-        <p style="font-size: 15px; color: #4A5568; line-height: 1.8; margin: 15px 0 0 0; text-align: justify;">高端品牌设计需注重“少即是多”，通过精简色彩体系（建议2-3种主辅色）、统一字体层级、强化细节质感（如烫金工艺、哑光材质表现），传递品牌的奢华感与专业性。同时，视觉元素需与品牌调性强绑定，避免过度花哨的设计分散用户注意力。</p>
-    </div>
-
-    <!-- 分隔线 -->
-    <div style="height: 1px; background-color: #E5E7EB; margin: 40px 0;"></div>
-
-    <!-- 风格8：森系自然风 -->
-    <div style="margin-bottom: 60px;">
-        <div style="display: flex; align-items: center; gap: 10px; margin: 0 0 10px 0;">
-            <h6 style="font-size: 16px; font-weight: 600; color: #38B2AC; background-color: #EAF6FA; width: 32px; height: 32px; border-radius: 6px; display: inline-flex; align-items: center; justify-content: center; font-family: 'Consolas', monospace; margin: 0; padding: 0;">08</h6>
-            <h1 style="font-size: 26px; color: #285E61; font-weight: 500; margin: 0; line-height: 1.4;">自然系插画创作思路</h1>
-        </div>
-        <div style="background-color: #F8FAFC; padding: 16px; border-radius: 8px; border-top: 3px solid #38B2AC; margin-top: 10px;">
-            <p style="font-size: 15px; color: #4A5568; line-height: 1.8; margin: 0; text-align: justify;">自然系插画需以“真实感+治愈感”为核心，色彩选择以莫兰迪色系、大地色系为主，线条注重柔和流畅，避免尖锐棱角。可融入植物、动物、光影等元素，通过虚实结合的表现手法，营造沉浸式自然氛围，适合用于绘本、品牌包装、家居装饰等场景。</p>
-        </div>
-    </div>
-
-    <!-- 分隔线 -->
-    <div style="height: 1px; background-color: #E5E7EB; margin: 40px 0;"></div>
-
-    <!-- 风格9：暗黑酷感风 -->
-    <div style="background-color: #1A1A2E; padding: 24px; border-radius: 8px; margin-bottom: 60px;">
-        <h6 style="font-size: 18px; font-weight: 700; color: #FF2E63; font-family: 'Consolas', monospace; letter-spacing: 3px; margin: 0 0 8px 0;">09</h6>
-        <h1 style="font-size: 26px; color: #FFFFFF; font-weight: 600; margin: 0 0 15px 0; line-height: 1.4; padding-bottom: 6px; border-bottom: 3px solid #FF2E63;">暗黑系UI设计要点</h1>
-        <p style="font-size: 15px; color: #E2E8F0; line-height: 1.8; margin: 0; text-align: justify;">暗黑系UI设计需平衡“视觉冲击力”与“可读性”：背景选用深灰（而非纯黑）减少视觉疲劳，文字与背景对比度需≥4.5:1；强调色可选用高饱和色（如红、蓝、紫）提升重点元素辨识度；图标采用线性或极简面性设计，避免复杂纹理；同时注重光影层次，通过轻微渐变增强界面立体感。</p>
-    </div>
-
-    <!-- 分隔线 -->
-    <div style="height: 1px; background-color: #E5E7EB; margin: 40px 0;"></div>
-
-    <!-- 风格10：日系简约风 -->
-    <div style="margin-bottom: 60px;">
-        <h6 style="font-size: 16px; font-weight: 400; color: #718096; margin: 0 0 6px 0; letter-spacing: 1px;">10</h6>
-        <h1 style="font-size: 24px; color: #2D3748; font-weight: 500; margin: 0 0 15px 0; line-height: 1.4; letter-spacing: -0.5px;">日系杂志排版设计技巧</h1>
-        <p style="font-size: 15px; color: #4A5568; line-height: 1.8; margin: 0; text-align: justify; border-top: 1px solid #F0F0F0; padding-top: 16px;">日系杂志排版核心是“留白+秩序感”，页面留白率建议≥30%，文字间距、行高适当放大，提升阅读舒适度；字体选择无衬线字体（如思源黑体、Helvetica），标题与正文层级通过字号和字重区分，避免过多装饰；图片以竖版构图、低饱和色调为主，搭配简洁文字说明，营造清新治愈的视觉体验。</p>
-    </div>
-
-    <!-- 分隔线 -->
-    <div style="height: 1px; background-color: #E5E7EB; margin: 40px 0;"></div>
-
-    <!-- 风格11：复古打字机风 -->
-    <div style="margin-bottom: 60px;">
-        <h6 style="font-size: 20px; font-weight: 600; color: #654321; font-family: 'Courier New', monospace; margin: 0 0 10px 0; letter-spacing: 4px;">11</h6>
-        <h1 style="font-size: 26px; color: #3C2A21; font-weight: 500; font-family: 'Courier New', monospace; margin: 0 0 12px 0; line-height: 1.5; letter-spacing: 2px;">Vintage Typography Design</h1>
-        <p style="font-size: 15px; color: #5D4037; line-height: 1.7; margin: 0; text-align: justify; border-left: 2px solid #D7CCC8; padding-left: 16px;">复古打字机风格设计需突出“年代感”与“手工感”，字体选用等宽字体（如Courier New、Special Elite），模拟打字机敲击效果；色彩以米黄、深棕、墨黑为主，可添加轻微噪点、划痕等肌理效果；排版时故意保留轻微的文字错位、行距不均，增强复古质感，适合用于海报、书籍封面、文创产品设计。</p>
-    </div>
-
-    <!-- 分隔线 -->
-    <div style="height: 1px; background-color: #E5E7EB; margin: 40px 0;"></div>
-
-    <!-- 风格12：活力运动风 -->
-    <div style="margin-bottom: 60px;">
-        <div style="display: flex; align-items: baseline; gap: 12px; margin: 0 0 10px 0;">
-            <h6 style="font-size: 20px; font-weight: 800; color: #38BDF8; background-color: #E0F2FE; padding: 3px 8px; border-radius: 4px; margin: 0;">12</h6>
-            <h1 style="font-size: 26px; color: #0369A1; font-weight: 700; margin: 0; line-height: 1.4;">运动品牌视觉营销设计</h1>
-        </div>
-        <div style="color: #374151; background-color: #F0F9FF; padding: 16px; border-radius: 8px; margin-top: 12px;">
-            <p style="font-size: 15px; line-height: 1.8; margin: 0; text-align: justify;">运动品牌视觉设计需围绕“活力、动感、专业”展开：色彩选用高饱和色（如蓝、红、橙）搭配对比色，增强视觉张力；字体选用粗体、棱角分明的无衬线字体，传递力量感；图形元素融入运动轨迹、肌肉线条、几何图形等，强化运动属性；排版注重不对称平衡，通过倾斜、重叠等手法营造动感，适配社交媒体传播。</p>
-        </div>
-    </div>
-        `
-        // 方式1：直接创建空 Map
-        const map1 = new Map();
-
-        // 方式2：通过数组初始化（数组元素是 [key, value] 二维数组）
-        const map2 = new Map([
+         
+        // 方式1：通过数组初始化（数组元素是 [key, value] 二维数组）
+        const h1Style = new Map([
         ["style-1", `
             <!-- 风格1：简约高级风 -->
-            <div style="margin-bottom: 60px;">
-                <h6 style="font-size: 18px; font-weight: 700; color: #165DFF; letter-spacing: 1px; margin: 0 0 8px 0; display: inline-block; border-bottom: 2px solid #165DFF; padding-bottom: 2px;">${numberIndexStr}</h6>
-                <h1 style="font-size: 28px; color: #2D3748; font-weight: 600; margin: 0 0 12px 0; line-height: 1.4; padding-bottom: 8px; border-bottom: 1px solid #E5E7EB;">${titleName}</h1>
+            <div style="margin-bottom: 60px;text-align: ${titleAlign};">
+                <h6 style="text-align: ${titleAlign};font-size: 16px; font-weight: 400; color: #4F46E5; margin: 0 0 6px 0; letter-spacing: 1px;">${numberIndexStr}</h6>
+                <h1 style="text-align: ${titleAlign};font-size: 28px; color: #2D3748; font-weight: 600; margin: 0 0 12px 0; line-height: 1.4; padding-bottom: 8px; border-bottom: 1px solid #E5E7EB;">${titleName}</h1>
                 <p style="font-size: 15px; color: #4A5568; line-height: 1.8; margin: 15px 0 0 0; text-align: justify;">研究发现定期在固定平台更新的插画师，收入比“随缘更新”的高出47%。核心原因在于持续输出能积累精准粉丝，提升账号权重，同时让潜在客户更容易找到并信任创作者。</p>
             </div>
         `],
         ["style-2", `
             <!-- 风格2：复古衬线风 -->
-            <div style="margin-bottom: 60px;">
-                <h6 style="font-size: 20px; font-weight: 600; color: #8B5A2B; font-family: 'SimSun', serif; margin: 0 0 10px 0; letter-spacing: 2px;">${numberIndexStr}</h6>
-                <h1 style="font-size: 26px; color: #3C2A21; font-weight: 500; font-family: 'SimSun', serif; margin: 0 0 12px 0; line-height: 1.4; padding-left: 16px; border-left: 4px solid #8B5A2B;">${titleName}</h1>
+            <div style="margin-bottom: 60px;text-align: ${titleAlign};">
+                <h6 style="text-align: ${titleAlign};font-size: 20px; font-weight: 600; color: #8B5A2B; font-family: 'SimSun', serif; margin: 0 0 10px 0; letter-spacing: 2px;">${numberIndexStr}</h6>
+                <h1 style="text-align: ${titleAlign};font-size: 26px; color: #3C2A21; font-weight: 500; font-family: 'SimSun', serif; margin: 0 0 12px 0; line-height: 1.4; padding-left: 16px; border-left: 4px solid #8B5A2B;">${titleName}</h1>
                 <p style="font-size: 15px; color: #4A5568; line-height: 1.8; margin: 15px 0 0 0; text-align: justify;">优质的作品集是接单的关键，设计师需要将作品按主题分类，每类作品搭配简洁的创作说明，包括设计思路、使用工具、项目成果等。避免堆砌作品，精选3-5个高质量案例，比10个普通案例更有说服力。</p>
             </div>
         `],
         ["style-3", `
-            <!-- 风格3：科技未来风 -->
-            <div style="margin-bottom: 60px;">
-                <h6 style="font-size: 18px; font-weight: 700; color: #00F5FF; font-family: 'Consolas', monospace; letter-spacing: 3px; margin: 0 0 8px 0; background-color: #1E3A5F; padding: 4px 10px; border-radius: 4px;">${numberIndexStr}</h6>
-                <h1 style="font-size: 28px; color: #FFFFFF; font-weight: 700; margin: 0 0 12px 0; line-height: 1.4; padding: 12px 16px; background-color: #1E3A5F; border-radius: 6px;">${titleName}</h1>
-                <div style="background-color: #FFFFFF; padding: 16px; border-radius: 6px; border: 1px solid #E5E7EB;">
-                    <p style="font-size: 15px; color: #4A5568; line-height: 1.8; margin: 0; text-align: justify;">主动结交设计师、作家、品牌方等潜在合作伙伴，可通过行业展会、线上社群、平台评论区互动等方式建立联系。交流时避免直接推销，而是分享自己的作品和见解，建立真诚的专业连接。</p>
-                </div>
+           <!-- 风格3：复古打字机风 -->
+            <div style="margin-bottom: 60px;text-align: ${titleAlign};">
+                <h6 style="text-align: ${titleAlign};font-size: 20px; font-weight: 600; color: #654321; font-family: 'Courier New', monospace; margin: 0 0 10px 0; letter-spacing: 4px;">${numberIndexStr}</h6>
+                <h1 style="text-align: ${titleAlign};font-size: 26px; color: #3C2A21; font-weight: 500; font-family: 'Courier New', monospace; margin: 0 0 12px 0; line-height: 1.5; letter-spacing: 2px;">${titleName}</h1>
+                <p style="font-size: 15px; color: #5D4037; line-height: 1.7; margin: 0; text-align: justify; border-left: 2px solid #D7CCC8; padding-left: 16px;">复古打字机风格设计需突出“年代感”与“手工感”，字体选用等宽字体（如Courier New、Special Elite），模拟打字机敲击效果；色彩以米黄、深棕、墨黑为主，可添加轻微噪点、划痕等肌理效果；排版时故意保留轻微的文字错位、行距不均，增强复古质感，适合用于海报、书籍封面、文创产品设计。</p>
             </div>
         `],
         ["style-4", `
             <!-- 风格4：清新治愈风 -->
-            <div style="margin-bottom: 60px;">
-                <h6 style="font-size: 16px; font-weight: 600; color: #48BB78; margin: 0 0 8px 0; background-color: #F0FDF4; padding: 4px 12px; border-radius: 20px; display: inline-block;">${numberIndexStr}</h6>
-                <h1 style="font-size: 26px; color: #22C55E; font-weight: 500; margin: 0 0 12px 0; line-height: 1.4;">${titleName}</h1>
+            <div style="margin-bottom: 60px;text-align: ${titleAlign};">
+                <p style="text-align: center; margin: 10px 0;">
+                    <span style="display: inline-flex; align-items: center; justify-content: center; width: 36px; height: 36px; border-radius: 50%; background-color: #F0FDF4; color: #48BB78; font-size: 22px; font-weight: bold; line-height: 1; padding: 3px; margin: 0 auto;">
+                        ${numberIndexStr}
+                    </span>
+                </p>
+                <h1 style="text-align: ${titleAlign};font-size: 26px; color: #22C55E; font-weight: 500; margin: 0 0 12px 0; line-height: 1.4;">${titleName}</h1>
                 <div style="border-left: 4px solid #D1FAE5; padding-left: 16px;">
                     <p style="font-size: 15px; color: #4A5568; line-height: 1.8; margin: 0; text-align: justify;">日常积累灵感可从生活观察、艺术展览、自然景观中获取，建议建立专属灵感库（如Pinboard、Notion收藏夹），分类存储参考图、文字片段、色彩搭配等素材，定期整理复盘，形成自己的灵感体系。</p>
                 </div>
@@ -434,82 +295,52 @@
         `],
         ["style-5", `
             <!-- 风格5：大胆撞色风 -->
-            <div style="margin-bottom: 60px;">
-                <h6 style="font-size: 22px; font-weight: 800; color: #FFFFFF; background-color: #FF6B35; width: 36px; height: 36px; border-radius: 50%; display: inline-flex; align-items: center; justify-content: center; margin: 0 0 10px 0; padding: 0;">${numberIndexStr}</h6>
-                <h1 style="font-size: 26px; color: #2D3748; font-weight: 700; margin: 0 0 12px 0; line-height: 1.4; display: inline-block; border-bottom: 6px solid #FFE4D6; padding-bottom: 2px;">${titleName}</h1>
+            <div style="margin-bottom: 60px;text-align: ${titleAlign};">
+                <p style="text-align: center; margin: 10px 0;">
+                    <span style="display: inline-flex; align-items: center; justify-content: center; width: 36px; height: 36px; border-radius: 50%; background-color: #FF6B35; color: #FFFFFF; font-size: 22px; font-weight: bold; line-height: 1; padding: 3px; margin: 0 auto;">
+                        ${numberIndexStr}
+                    </span>
+                </p>
+                <h1 style="text-align: ${titleAlign};font-size: 26px; color: #2D3748; font-weight: 700; margin: 0 0 12px 0; line-height: 1.4; border-bottom: 1px solid #FFE4D6; padding-bottom: 1px;">${titleName}</h1>
+                
                 <p style="font-size: 15px; color: #4A5568; line-height: 1.8; margin: 15px 0 0 0; text-align: justify;">与客户沟通时，先明确需求核心（如使用场景、目标人群、风格偏好），再提供2-3个方案方向而非单一方案，减少反复修改成本。同时用可视化工具（如线框图、色卡）辅助表达，让客户更直观理解设计思路。</p>
             </div>
         `],
         ["style-6", `
             <!-- 风格6：极简几何风 -->
-            <div style="margin-bottom: 60px;">
-                <div style="display: flex; align-items: center; gap: 12px; margin: 0 0 12px 0;">
-                    <h6 style="font-size: 18px; font-weight: 700; color: #6366F1; font-family: 'Consolas', monospace; margin: 0;">${numberIndexStr}</h6>
-                    <div style="flex: 1; height: 2px; background-color: #E0E7FF;"></div>
-                </div>
-                <h1 style="font-size: 26px; color: #4F46E5; font-weight: 600; margin: 0 0 10px 0; line-height: 1.4;">${titleName}</h1>
+            <div style="margin-bottom: 60px;text-align: ${titleAlign};">
+                <h6 style="text-align: ${titleAlign};font-size: 16px; font-weight: 400; color: #4F46E5; margin: 0 0 6px 0; letter-spacing: 1px;">${numberIndexStr}</h6>
+                <h1 style="text-align: ${titleAlign};font-size: 26px; color: #4F46E5; font-weight: 600; margin: 0 0 10px 0; line-height: 1.4;">${titleName}</h1>
                 <p style="font-size: 15px; color: #374151; line-height: 1.8; margin: 0; text-align: justify;">收费标准可参考“基础定价+难度系数+交付周期”公式：基础定价根据自身经验（如入行年限、案例质量）设定，难度系数按项目复杂度（如插画张数、细节要求）调整，加急项目可加收20%-50%服务费，同时明确交付内容和修改次数，避免后续纠纷。</p>
             </div>
         `],
         ["style-7", `
             <!-- 风格7：轻奢质感风 -->
-            <div style="margin-bottom: 60px;">
-                <h6 style="font-size: 18px; font-weight: 800; color: #B794F4; font-family: 'SimSun', serif; letter-spacing: 2px; margin: 0 0 10px 0; display: inline-block; background-repeat: no-repeat; background-position: left center;">${numberIndexStr}</h6>
-                <h1 style="font-size: 28px; color: #2D3748; font-weight: 500; margin: 0 0 12px 0; line-height: 1.4; padding-bottom: 8px; border-bottom: 1px solid #E0E7FF; letter-spacing: 0.5px;">${titleName}</h1>
+            <div style="margin-bottom: 60px;text-align: ${titleAlign};">
+                <h6 style="text-align: ${titleAlign};font-size: 16px; font-weight: 400; color: #718096; margin: 0 0 6px 0; letter-spacing: 1px;">${numberIndexStr}</h6>
+                <h1 style="text-align: ${titleAlign};font-size: 28px; color: #2D3748; font-weight: 500; margin: 0 0 12px 0; line-height: 1.4; padding-bottom: 8px; border-bottom: 1px solid #E0E7FF; letter-spacing: 0.5px;">${titleName}</h1>
                 <p style="font-size: 15px; color: #4A5568; line-height: 1.8; margin: 15px 0 0 0; text-align: justify;">高端品牌设计需注重“少即是多”，通过精简色彩体系（建议2-3种主辅色）、统一字体层级、强化细节质感（如烫金工艺、哑光材质表现），传递品牌的奢华感与专业性。同时，视觉元素需与品牌调性强绑定，避免过度花哨的设计分散用户注意力。</p>
             </div>
         `],
         ["style-8", `
-            <!-- 风格8：森系自然风 -->
-            <div style="margin-bottom: 60px;">
-                <div style="display: flex; align-items: center; gap: 10px; margin: 0 0 10px 0;">
-                    <h6 style="font-size: 16px; font-weight: 600; color: #38B2AC; background-color: #EAF6FA; width: 32px; height: 32px; border-radius: 6px; display: inline-flex; align-items: center; justify-content: center; font-family: 'Consolas', monospace; margin: 0; padding: 0;">${numberIndexStr}</h6>
-                    <h1 style="font-size: 26px; color: #285E61; font-weight: 500; margin: 0; line-height: 1.4;">${titleName}</h1>
-                </div>
-                <div style="background-color: #F8FAFC; padding: 16px; border-radius: 8px; border-top: 3px solid #38B2AC; margin-top: 10px;">
-                    <p style="font-size: 15px; color: #4A5568; line-height: 1.8; margin: 0; text-align: justify;">自然系插画需以“真实感+治愈感”为核心，色彩选择以莫兰迪色系、大地色系为主，线条注重柔和流畅，避免尖锐棱角。可融入植物、动物、光影等元素，通过虚实结合的表现手法，营造沉浸式自然氛围，适合用于绘本、品牌包装、家居装饰等场景。</p>
-                </div>
+            <!-- 风格8：日系简约风 -->
+            <div style="margin-bottom: 60px;text-align: ${titleAlign};">
+                <h6 style="text-align: ${titleAlign};font-size: 16px; font-weight: 400; color: #718096; margin: 0 0 6px 0; letter-spacing: 1px;">${numberIndexStr}</h6>
+                <h1 style="text-align: ${titleAlign};font-size: 24px; color: #2D3748; font-weight: 500; margin: 0 0 15px 0; line-height: 1.4; letter-spacing: -0.5px;">${titleName}</h1>
+                <p style="font-size: 15px; color: #4A5568; line-height: 1.8; margin: 0; text-align: justify; border-top: 1px solid #F0F0F0; padding-top: 16px;">日系杂志排版核心是“留白+秩序感”，页面留白率建议≥30%，文字间距、行高适当放大，提升阅读舒适度；字体选择无衬线字体（如思源黑体、Helvetica），标题与正文层级通过字号和字重区分，避免过多装饰；图片以竖版构图、低饱和色调为主，搭配简洁文字说明，营造清新治愈的视觉体验。</p>
             </div>
         `],
         ["style-9", `
             <!-- 风格9：暗黑酷感风 -->
-            <div style="background-color: #1A1A2E; padding: 24px; border-radius: 8px; margin-bottom: 60px;">
-                <h6 style="font-size: 18px; font-weight: 700; color: #FF2E63; font-family: 'Consolas', monospace; letter-spacing: 3px; margin: 0 0 8px 0;">${numberIndexStr}</h6>
-                <h1 style="font-size: 26px; color: #FFFFFF; font-weight: 600; margin: 0 0 15px 0; line-height: 1.4; padding-bottom: 6px; border-bottom: 3px solid #FF2E63;">${titleName}</h1>
-                <p style="font-size: 15px; color: #E2E8F0; line-height: 1.8; margin: 0; text-align: justify;">暗黑系UI设计需平衡“视觉冲击力”与“可读性”：背景选用深灰（而非纯黑）减少视觉疲劳，文字与背景对比度需≥4.5:1；强调色可选用高饱和色（如红、蓝、紫）提升重点元素辨识度；图标采用线性或极简面性设计，避免复杂纹理；同时注重光影层次，通过轻微渐变增强界面立体感。</p>
-            </div>
-        `],
-        ["style-10", `
-            <!-- 风格10：日系简约风 -->
-            <div style="margin-bottom: 60px;">
-                <h6 style="font-size: 16px; font-weight: 400; color: #718096; margin: 0 0 6px 0; letter-spacing: 1px;">${numberIndexStr}</h6>
-                <h1 style="font-size: 24px; color: #2D3748; font-weight: 500; margin: 0 0 15px 0; line-height: 1.4; letter-spacing: -0.5px;">${titleName}</h1>
-                <p style="font-size: 15px; color: #4A5568; line-height: 1.8; margin: 0; text-align: justify; border-top: 1px solid #F0F0F0; padding-top: 16px;">日系杂志排版核心是“留白+秩序感”，页面留白率建议≥30%，文字间距、行高适当放大，提升阅读舒适度；字体选择无衬线字体（如思源黑体、Helvetica），标题与正文层级通过字号和字重区分，避免过多装饰；图片以竖版构图、低饱和色调为主，搭配简洁文字说明，营造清新治愈的视觉体验。</p>
-            </div>
-        `],
-        ["style-11", `
-            <!-- 风格11：复古打字机风 -->
-            <div style="margin-bottom: 60px;">
-                <h6 style="font-size: 20px; font-weight: 600; color: #654321; font-family: 'Courier New', monospace; margin: 0 0 10px 0; letter-spacing: 4px;">${numberIndexStr}</h6>
-                <h1 style="font-size: 26px; color: #3C2A21; font-weight: 500; font-family: 'Courier New', monospace; margin: 0 0 12px 0; line-height: 1.5; letter-spacing: 2px;">${titleName}</h1>
-                <p style="font-size: 15px; color: #5D4037; line-height: 1.7; margin: 0; text-align: justify; border-left: 2px solid #D7CCC8; padding-left: 16px;">复古打字机风格设计需突出“年代感”与“手工感”，字体选用等宽字体（如Courier New、Special Elite），模拟打字机敲击效果；色彩以米黄、深棕、墨黑为主，可添加轻微噪点、划痕等肌理效果；排版时故意保留轻微的文字错位、行距不均，增强复古质感，适合用于海报、书籍封面、文创产品设计。</p>
-            </div>
-        `],
-        ["style-12", `
-            <!-- 风格12：活力运动风 -->
-            <div style="margin-bottom: 60px;">
-                <div style="display: flex; align-items: baseline; gap: 12px; margin: 0 0 10px 0;">
-                    <h6 style="font-size: 20px; font-weight: 800; color: #38BDF8; background-color: #E0F2FE; padding: 3px 8px; border-radius: 4px; margin: 0;">${numberIndexStr}</h6>
-                    <h1 style="font-size: 26px; color: #0369A1; font-weight: 700; margin: 0; line-height: 1.4;">${titleName}</h1>
-                </div>
-                <div style="color: #374151; background-color: #F0F9FF; padding: 16px; border-radius: 8px; margin-top: 12px;">
-                    <p style="font-size: 15px; line-height: 1.8; margin: 0; text-align: justify;">运动品牌视觉设计需围绕“活力、动感、专业”展开：色彩选用高饱和色（如蓝、红、橙）搭配对比色，增强视觉张力；字体选用粗体、棱角分明的无衬线字体，传递力量感；图形元素融入运动轨迹、肌肉线条、几何图形等，强化运动属性；排版注重不对称平衡，通过倾斜、重叠等手法营造动感，适配社交媒体传播。</p>
-                </div>
+            <div style="padding: 24px; border-radius: 8px; margin-bottom: 60px;text-align: ${titleAlign};">
+                <h6 style="text-align: ${titleAlign};font-size: 18px; font-weight: 700; color: #FF2E63; font-family: 'Consolas', monospace; letter-spacing: 3px; margin: 0 0 8px 0;">${numberIndexStr}</h6>
+                <h1 style="text-align: ${titleAlign};font-size: 26px; color: #000000; font-weight: 600; margin: 0 0 15px 0; line-height: 1.4; padding-bottom: 6px; border-bottom: 3px solid #FF2E63;">${titleName}</h1>
+                <p style="font-size: 15px; color: #000000; line-height: 1.8; margin: 0; text-align: justify;">暗黑系UI设计需平衡“视觉冲击力”与“可读性”：背景选用深灰（而非纯黑）减少视觉疲劳，文字与背景对比度需≥4.5:1；强调色可选用高饱和色（如红、蓝、紫）提升重点元素辨识度；图标采用线性或极简面性设计，避免复杂纹理；同时注重光影层次，通过轻微渐变增强界面立体感。</p>
             </div>
         `]
         ]);
         
-        return map2.get(selectedStyle);
+        return h1Style.get(selectedStyle);
 
     }
 
@@ -602,7 +433,7 @@
                     //     <h2 class="part-title">${content} <span class="part-label">${getRandomLabel()}</span></h2>
                     // </div>`);
                     
-                    html.push(`<div class="part-container">${generateTitleWechatHTML(selectedStyle,titleAlign, selectedTitleColor,  selectedThemeColor, content)}</div>`);
+                    html.push(`<div class="part-container">${generateH1HTMLStyle(selectedStyle,titleAlign, selectedTitleColor,  selectedThemeColor, content)}</div>`);
                     // html.push(`
                     // <div  style="text-align: ${titleAlign};"> 
                     //     <div class="${selectedStyle}" style="text-align: ${titleAlign};">
