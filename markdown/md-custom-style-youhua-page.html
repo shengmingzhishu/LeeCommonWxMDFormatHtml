@@ -168,7 +168,7 @@
             <div class="align-group">
                     
                 <!-- 选择样式下拉列表 宽度200px -->
-                <select id="style-select" style="width: 200px;">
+                <select id="style-select" style="width: 200px;" onchange="changeHtml(this.value)">
                     <option value="style-1">01 简约高级风</option>
                     <option value="style-2">02 复古衬线风</option>
                     <option value="style-3">03 科技未来风</option>
@@ -513,7 +513,12 @@
 
     }
 
-        
+    function changeHtml() { 
+        const editor = document.getElementById('editor');
+        const html = autoFormatText(editor.value);
+        preview.innerHTML = html;
+    }
+
     function autoFormatText(rawText) {
         
         // 每次都初始化
