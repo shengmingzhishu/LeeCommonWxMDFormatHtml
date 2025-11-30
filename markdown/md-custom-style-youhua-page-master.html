@@ -401,20 +401,49 @@
                     <input type="radio" name="title-align" value="right" onclick="changeHtml(this.value)">右
                 </label>
  
-                <label>H2-H6风格：
-                    <!-- H2-H6标题样式选择 -->
+                <label>H3-H6风格：
+                    <!-- H3-H6标题样式选择 -->
                     <select id="heading-style-select" style="width: 200px; padding: 4px; border: 1px solid #ddd; border-radius: 4px;" onChange="changeHtml(this.value)">
-                        <option value="heading-style-1">H2-H6样式1：极简现代</option>
-                        <option value="heading-style-2">H2-H6样式2：优雅衬线</option>
-                        <option value="heading-style-3">H2-H6样式3：渐变文字</option>
-                        <option value="heading-style-4">H2-H6样式4：复古印刷</option>
-                        <option value="heading-style-5">H2-H6样式5：科技感</option>
-                        <option value="heading-style-6">H2-H6样式6：粗体强调</option>
-                        <option value="heading-style-7">H2-H6样式7：下划线装饰</option>
-                        <option value="heading-style-8">H2-H6样式8：边框包围</option>
-                        <option value="heading-style-9">H2-H6样式9：手写风格</option>
-                        <option value="heading-style-10">H2-H6样式10：阴影立体</option>
+                        <option value="heading-style-1">H3-H6样式1：极简现代</option>
+                        <option value="heading-style-2">H3-H6样式2：优雅衬线</option>
+                        <option value="heading-style-3">H3-H6样式3：渐变文字</option>
+                        <option value="heading-style-4">H3-H6样式4：复古印刷</option>
+                        <option value="heading-style-5">H3-H6样式5：科技感</option>
+                        <option value="heading-style-6">H3-H6样式6：粗体强调</option>
+                        <option value="heading-style-7">H3-H6样式7：下划线装饰</option>
+                        <option value="heading-style-8">H3-H6样式8：边框包围</option>
+                        <option value="heading-style-9">H3-H6样式9：手写风格</option>
+                        <option value="heading-style-10">H3-H6样式10：阴影立体</option>
                     </select>
+                </label>
+
+                <!-- H3-H6独立对齐方式 -->
+                <label>H3-H6对齐：
+                    <input type="radio" name="h3h6-align" value="left" onclick="changeHtml(this.value)">左
+                    <input type="radio" name="h3h6-align" value="center" onclick="changeHtml(this.value)" checked>中
+                    <input type="radio" name="h3h6-align" value="right" onclick="changeHtml(this.value)">右
+                </label>
+
+                <!-- H2风格选择（同H1风格选项） -->
+                <label>H2风格：
+                    <select id="h2-style-select" style="width: 200px; padding: 4px; border: 1px solid #ddd; border-radius: 4px;" onChange="changeHtml(this.value)">
+                        <option value="style-1">H2样式1：简约高级风</option>
+                        <option value="style-2">H2样式2：复古衬线风</option>
+                        <option value="style-3">H2样式3：复古打字机风</option>
+                        <option value="style-4">H2样式4：清新治愈风</option>
+                        <option value="style-5">H2样式5：大胆撞色风</option>
+                        <option value="style-6">H2样式6：极简几何风</option>
+                        <option value="style-7">H2样式7：轻奢质感风</option>
+                        <option value="style-8">H2样式8：日系简约风</option>
+                        <option value="style-9">H2样式9：暗黑酷感风</option>
+                    </select>
+                </label>
+
+                <!-- H2独立对齐方式 -->
+                <label>H2对齐：
+                    <input type="radio" name="h2-align" value="left" onclick="changeHtml(this.value)">左
+                    <input type="radio" name="h2-align" value="center" onclick="changeHtml(this.value)" checked>中
+                    <input type="radio" name="h2-align" value="right" onclick="changeHtml(this.value)">右
                 </label>
 
                 </div>
@@ -489,6 +518,18 @@
                         <label>引用斜体：
                             <input type="checkbox" id="quote-italic" style="margin-left: 10px;">启用斜体
                         </label>
+
+                        <label>引用字号：
+                            <select id="quote-font-size-select" style="width: 100px; padding: 4px; border: 1px solid #ddd; border-radius: 4px;" onChange="changeHtml(this.value)">
+                                <option value="14px">14px</option>
+                                <option value="16px" selected>16px（默认）</option>
+                                <option value="18px">18px</option>
+                            </select>
+                        </label>
+
+                        <label>引用圆角：
+                            <input type="checkbox" id="quote-border-radius" style="margin-left: 10px;">启用8px圆角
+                        </label>
                     </div>
                 </div>
 
@@ -559,13 +600,66 @@
             <!-- 功能说明 -->
             <div style="margin-bottom: 10px; padding: 8px; background-color: #f0f9ff; border-radius: 6px; font-size: 12px; color: #0369a1;">
                 <strong>功能说明：</strong>
-                H1标题支持9种风格，H2-H6标题支持10种样式，段落字体风格支持20种经典排版风格，引用内容（>开头的文本）支持11种引用风格、16种引用符号、3种对齐方式，段落块支持阴影、缩进、背景、圆角等4种独立设置（按空行分隔的真实段落），引用新增字体、首行缩进、阴影、斜体等4个维度控制
+                标题系统分为三个独立板块：H1标题支持9种风格和独立对齐，H2标题支持H1风格的9种样式和独立对齐，H3-H6标题支持10种样式和独立对齐；段落字体风格支持20种经典排版风格，引用内容（>开头的文本）支持11种引用风格、16种引用符号、3种对齐方式，段落块支持阴影、缩进、背景、圆角等4种独立设置（按空行分隔的真实段落），引用新增字体、首行缩进、阴影、斜体、字号、圆角等6个维度控制，支持图片拖拽上传和网络URL添加功能
+            </div>
+            
+            <!-- 图片上传和预览功能区域 -->
+            <div style="margin-bottom: 15px; padding: 12px; border: 1px solid #e1e5e9; border-radius: 8px; background-color: #f8f9fa;">
+                <div style="display: flex; gap: 10px; align-items: center; margin-bottom: 10px; flex-wrap: wrap;">
+                    <button id="pick-images-btn" class="bg-primary hover:bg-primary/90 text-white font-medium py-2 px-4 rounded-lg shadow" style="background-color: #007bff; border: none; cursor: pointer;">
+                        📁 选择图片
+                    </button>
+                    <button id="insert-image-btn" class="bg-primary hover:bg-primary/90 text-white font-medium py-2 px-4 rounded-lg shadow" style="background-color: #28a745; border: none; cursor: pointer;">
+                        📷 插入图片
+                    </button>
+                    <button id="clear-images-btn" class="bg-primary hover:bg-primary/90 text-white font-medium py-2 px-4 rounded-lg shadow" style="background-color: #dc3545; border: none; cursor: pointer;">
+                        🗑️ 清空图片
+                    </button>
+                    <input id="file-input-btn" type="file" accept="image/*" multiple style="display: none;" />
+                    <span style="font-size: 12px; color: #6c757d;">支持拖拽文件到此处或点击选择图片，然后插入到文章中</span>
+                </div>
+                
+                <!-- URL图片添加区域 -->
+                <div style="display: flex; gap: 10px; align-items: center; margin-bottom: 10px; flex-wrap: wrap;">
+                    <input type="url" id="image-url-input" placeholder="输入图片URL (http/https)" style="flex: 1; min-width: 200px; padding: 6px 10px; border: 1px solid #ddd; border-radius: 4px; font-size: 14px;">
+                    <button id="add-url-image-btn" class="bg-primary hover:bg-primary/90 text-white font-medium py-2 px-4 rounded-lg shadow" style="background-color: #17a2b8; border: none; cursor: pointer;">
+                        🔗 添加URL图片
+                    </button>
+                    <span style="font-size: 12px; color: #6c757d;">支持添加网络图片URL</span>
+                </div>
+                <div id="image-list" style="width: 100%; min-height: 60px; border: 2px dashed #dee2e6; border-radius: 6px; padding: 10px; background-color: #fff;">
+                    <span style="color: #6c757d; font-size: 14px;">暂无图片，请选择或拖拽图片文件</span>
+                </div>
             </div>
             
             <!-- 输入文本 -->
             <textarea id="editor" placeholder="输入Markdown内容..."></textarea>
         </div>
         <div class="editor-box">
+            <!-- 图片预览和排版区域 -->
+            <div id="image-preview" style="margin-bottom: 15px; padding: 15px; border: 1px solid #e1e5e9; border-radius: 8px; background-color: #f8f9fa;">
+                <h4 style="margin: 0 0 12px 0; font-size: 14px; color: #495057;">🖼️ 图片管理和排版</h4>
+                
+                <!-- 图片选择模态框 -->
+                <div id="image-select-modal" style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.5); z-index: 10000; justify-content: center; align-items: center;">
+                    <div style="background: white; padding: 20px; border-radius: 8px; max-width: 80%; max-height: 80%; overflow: auto;">
+                        <h5 style="margin: 0 0 15px 0;">选择要插入的图片</h5>
+                        <div id="image-select-grid" style="display: grid; grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)); gap: 15px; margin-bottom: 15px;">
+                            <span style="color: #6c757d; grid-column: 1 / -1; text-align: center;">暂无图片可选择</span>
+                        </div>
+                        <div style="display: flex; gap: 10px; justify-content: flex-end;">
+                            <button id="cancel-insert-btn" style="padding: 8px 16px; background: #6c757d; color: white; border: none; border-radius: 4px; cursor: pointer;">取消</button>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- 文档中的图片列表 -->
+                <div id="image-preview-content" style="display: grid; grid-template-columns: repeat(auto-fill, minmax(120px, 1fr)); gap: 10px; max-height: 300px; overflow-y: auto;">
+                    <span style="color: #6c757d; font-size: 14px; grid-column: 1 / -1; text-align: center; padding: 20px;">暂无图片，请选择或拖拽图片文件</span>
+                </div>
+            </div>
+            
+            <!-- Markdown预览区域 -->
             <div id="preview" class="wx-content"></div>
             <button class="copy-btn" onclick="copyWechatHTML()">复制公众号内容</button>
         </div>
@@ -577,14 +671,20 @@
     <script>
     let numberIndex = 0;
 
+    // 图片管理相关变量
+    let imageFiles = []; // 图片文件列表
+    let imageSrcList = []; // 图片源列表（Base64编码）
+
 
     function changeTitleTheme(color) {
         autoFormatText(document.getElementById('editor').value)
     }
 
-    function generateH1HTMLStyle(selectedStyle,titleAlign, titleName,) { 
+    function generateH1HTMLStyle(selectedStyle,titleAlign, titleName, customNumberIndex = null) { 
 
-        let numberIndexStr = `${numberIndex++ < 10 ? '0' + numberIndex : numberIndex}`
+        let numberIndexStr = customNumberIndex !== null ? 
+            `${customNumberIndex < 10 ? '0' + customNumberIndex : customNumberIndex}` : 
+            `${numberIndex++ < 10 ? '0' + numberIndex : numberIndex}`;
          
         // 方式1：通过数组初始化（数组元素是 [key, value] 二维数组）
         const h1Style = new Map([
@@ -684,81 +784,85 @@
     }
 
 
-    // 生成H2-H6标题样式
-    function generateHeadingHTMLStyle(styleType, level, content, titleAlign) {
+    // 生成H3-H6标题样式
+    function generateHeadingHTMLStyle(styleType, level, content, h3h6Align) {
+        // H3-H6使用独立的H3-H6对齐
+        const effectiveAlign = h3h6Align || 'center';
+        
         const headingStyles = new Map([
             ["heading-style-1", { // 极简现代
-                "2": `style="font-size: 24px; font-weight: 600; color: #2D3748; margin: 24px 0 16px 0; text-align: ${titleAlign};"`,
-                "3": `style="font-size: 20px; font-weight: 500; color: #4A5568; margin: 20px 0 12px 0; text-align: ${titleAlign};"`,
-                "4": `style="font-size: 18px; font-weight: 500; color: #718096; margin: 16px 0 10px 0; text-align: ${titleAlign};"`,
-                "5": `style="font-size: 16px; font-weight: 400; color: #A0AEC0; margin: 12px 0 8px 0; text-align: ${titleAlign};"`,
-                "6": `style="font-size: 14px; font-weight: 400; color: #CBD5E0; margin: 10px 0 6px 0; text-align: ${titleAlign};"`
+                "2": `style="font-size: 24px; font-weight: 600; color: #2D3748; margin: 24px 0 16px 0; text-align: ${effectiveAlign};"`,
+                "3": `style="font-size: 20px; font-weight: 500; color: #4A5568; margin: 20px 0 12px 0; text-align: ${effectiveAlign};"`,
+                "4": `style="font-size: 18px; font-weight: 500; color: #718096; margin: 16px 0 10px 0; text-align: ${effectiveAlign};"`,
+                "5": `style="font-size: 16px; font-weight: 400; color: #A0AEC0; margin: 12px 0 8px 0; text-align: ${effectiveAlign};"`,
+                "6": `style="font-size: 14px; font-weight: 400; color: #CBD5E0; margin: 10px 0 6px 0; text-align: ${effectiveAlign};"`
             }],
             ["heading-style-2", { // 优雅衬线
-                "2": `style="font-size: 22px; font-weight: 600; color: #8B5A2B; font-family: 'Georgia', serif; margin: 24px 0 16px 0; padding-left: 16px; border-left: 4px solid #8B5A2B; text-align: ${titleAlign};"`,
-                "3": `style="font-size: 18px; font-weight: 500; color: #A0522D; font-family: 'Georgia', serif; margin: 20px 0 12px 0; padding-left: 16px; border-left: 4px solid #44b0ce; text-align: ${titleAlign};"`,
-                "4": `style="font-size: 16px; font-weight: 500; color: #CD853F; font-family: 'Georgia', serif; margin: 16px 0 10px 0; padding-left: 16px; border-left: 4px solid #1abc9c; text-align: ${titleAlign};"`,
-                "5": `style="font-size: 14px; font-weight: 400; color: #D2691E; font-family: 'Georgia', serif; margin: 12px 0 8px 0; padding-left: 16px; border-left: 4px solid #f1c40f; text-align: ${titleAlign};"`,
-                "6": `style="font-size: 12px; font-weight: 400; color: #DEB887; font-family: 'Georgia', serif; margin: 10px 0 6px 0; padding-left: 16px; border-left: 4px solid #e67e22; text-align: ${titleAlign};"`
+                "2": `style="font-size: 22px; font-weight: 600; color: #8B5A2B; font-family: 'Georgia', serif; margin: 24px 0 16px 0; padding-left: 16px; border-left: 4px solid #8B5A2B; text-align: ${effectiveAlign};"`,
+                "3": `style="font-size: 18px; font-weight: 500; color: #A0522D; font-family: 'Georgia', serif; margin: 20px 0 12px 0; padding-left: 16px; border-left: 4px solid #44b0ce; text-align: ${effectiveAlign};"`,
+                "4": `style="font-size: 16px; font-weight: 500; color: #CD853F; font-family: 'Georgia', serif; margin: 16px 0 10px 0; padding-left: 16px; border-left: 4px solid #1abc9c; text-align: ${effectiveAlign};"`,
+                "5": `style="font-size: 14px; font-weight: 400; color: #D2691E; font-family: 'Georgia', serif; margin: 12px 0 8px 0; padding-left: 16px; border-left: 4px solid #f1c40f; text-align: ${effectiveAlign};"`,
+                "6": `style="font-size: 12px; font-weight: 400; color: #DEB887; font-family: 'Georgia', serif; margin: 10px 0 6px 0; padding-left: 16px; border-left: 4px solid #e67e22; text-align: ${effectiveAlign};"`
             }],
             ["heading-style-3", { // 渐变文字
-                "2": `style="font-size: 22px; font-weight: 600; margin: 24px 0 16px 0; text-align: ${titleAlign}; background: linear-gradient(to right, #3B82F6, #8B5CF6); -webkit-background-clip: text; background-clip: text; color: transparent;"`,
-                "3": `style="font-size: 18px; font-weight: 500; margin: 20px 0 12px 0; text-align: ${titleAlign}; background: linear-gradient(to right, #8B5CF6, #EC4899); -webkit-background-clip: text; background-clip: text; color: transparent;"`,
-                "4": `style="font-size: 16px; font-weight: 500; margin: 16px 0 10px 0; text-align: ${titleAlign}; background: linear-gradient(to right, #EC4899, #F97316); -webkit-background-clip: text; background-clip: text; color: transparent;"`,
-                "5": `style="font-size: 14px; font-weight: 400; margin: 12px 0 8px 0; text-align: ${titleAlign}; background: linear-gradient(to right, #F97316, #EAB308); -webkit-background-clip: text; background-clip: text; color: transparent;"`,
-                "6": `style="font-size: 12px; font-weight: 400; margin: 10px 0 6px 0; text-align: ${titleAlign}; background: linear-gradient(to right, #EAB308, #22C55E); -webkit-background-clip: text; background-clip: text; color: transparent;"`
+                "2": `style="font-size: 22px; font-weight: 600; margin: 24px 0 16px 0; text-align: ${effectiveAlign}; background: linear-gradient(to right, #3B82F6, #8B5CF6); -webkit-background-clip: text; background-clip: text; color: transparent;"`,
+                "3": `style="font-size: 18px; font-weight: 500; margin: 20px 0 12px 0; text-align: ${effectiveAlign}; background: linear-gradient(to right, #8B5CF6, #EC4899); -webkit-background-clip: text; background-clip: text; color: transparent;"`,
+                "4": `style="font-size: 16px; font-weight: 500; margin: 16px 0 10px 0; text-align: ${effectiveAlign}; background: linear-gradient(to right, #EC4899, #F97316); -webkit-background-clip: text; background-clip: text; color: transparent;"`,
+                "5": `style="font-size: 14px; font-weight: 400; margin: 12px 0 8px 0; text-align: ${effectiveAlign}; background: linear-gradient(to right, #F97316, #EAB308); -webkit-background-clip: text; background-clip: text; color: transparent;"`,
+                "6": `style="font-size: 12px; font-weight: 400; margin: 10px 0 6px 0; text-align: ${effectiveAlign}; background: linear-gradient(to right, #EAB308, #22C55E); -webkit-background-clip: text; background-clip: text; color: transparent;"`
             }],
             ["heading-style-4", { // 复古印刷
-                "2": `style="font-size: 20px; font-weight: 600; color: #4A4A4A; font-family: 'Times New Roman', serif; margin: 24px 0 16px 0; border-bottom: 2px solid #E5E5E5; padding-bottom: 8px; text-align: ${titleAlign};"`,
-                "3": `style="font-size: 18px; font-weight: 500; color: #666666; font-family: 'Times New Roman', serif; margin: 20px 0 12px 0; text-align: ${titleAlign};"`,
-                "4": `style="font-size: 16px; font-weight: 500; color: #777777; font-family: 'Times New Roman', serif; margin: 16px 0 10px 0; text-align: ${titleAlign};"`,
-                "5": `style="font-size: 14px; font-weight: 400; color: #888888; font-family: 'Times New Roman', serif; margin: 12px 0 8px 0; text-align: ${titleAlign};"`,
-                "6": `style="font-size: 12px; font-weight: 400; color: #999999; font-family: 'Times New Roman', serif; margin: 10px 0 6px 0; text-align: ${titleAlign};"`
+                "2": `style="font-size: 20px; font-weight: 600; color: #4A4A4A; font-family: 'Times New Roman', serif; margin: 24px 0 16px 0; border-bottom: 2px solid #E5E5E5; padding-bottom: 8px; text-align: ${effectiveAlign};"`,
+                "3": `style="font-size: 18px; font-weight: 500; color: #666666; font-family: 'Times New Roman', serif; margin: 20px 0 12px 0; text-align: ${effectiveAlign};"`,
+                "4": `style="font-size: 16px; font-weight: 500; color: #777777; font-family: 'Times New Roman', serif; margin: 16px 0 10px 0; text-align: ${effectiveAlign};"`,
+                "5": `style="font-size: 14px; font-weight: 400; color: #888888; font-family: 'Times New Roman', serif; margin: 12px 0 8px 0; text-align: ${effectiveAlign};"`,
+                "6": `style="font-size: 12px; font-weight: 400; color: #999999; font-family: 'Times New Roman', serif; margin: 10px 0 6px 0; text-align: ${effectiveAlign};"`
             }],
             ["heading-style-5", { // 科技感
-                "2": `style="font-size: 20px; font-weight: 600; color: #4A90E2; margin: 24px 0 16px 0; text-align: ${titleAlign};"`,
-                "3": `style="font-size: 18px; font-weight: 500; color: #5BA3F5; margin: 20px 0 12px 0; text-align: ${titleAlign};"`,
-                "4": `style="font-size: 16px; font-weight: 500; color: #6B9BD8; margin: 16px 0 10px 0; text-align: ${titleAlign};"`,
-                "5": `style="font-size: 14px; font-weight: 400; color: #8BB5D0; margin: 12px 0 8px 0; text-align: ${titleAlign};"`,
-                "6": `style="font-size: 12px; font-weight: 400; color: #9BB0C8; margin: 10px 0 6px 0; text-align: ${titleAlign};"`
+                "2": `style="font-size: 20px; font-weight: 600; color: #4A90E2; margin: 24px 0 16px 0; text-align: ${effectiveAlign};"`,
+                "3": `style="font-size: 18px; font-weight: 500; color: #5BA3F5; margin: 20px 0 12px 0; text-align: ${effectiveAlign};"`,
+                "4": `style="font-size: 16px; font-weight: 500; color: #6B9BD8; margin: 16px 0 10px 0; text-align: ${effectiveAlign};"`,
+                "5": `style="font-size: 14px; font-weight: 400; color: #8BB5D0; margin: 12px 0 8px 0; text-align: ${effectiveAlign};"`,
+                "6": `style="font-size: 12px; font-weight: 400; color: #9BB0C8; margin: 10px 0 6px 0; text-align: ${effectiveAlign};"`
             }],
             ["heading-style-6", { // 粗体强调
-                "2": `style="font-size: 20px; font-weight: 700; color: #1F2937; margin: 24px 0 16px 0; text-transform: uppercase; letter-spacing: 1px; text-align: ${titleAlign};"`,
-                "3": `style="font-size: 18px; font-weight: 600; color: #374151; margin: 20px 0 12px 0; text-transform: uppercase; letter-spacing: 0.5px; text-align: ${titleAlign};"`,
-                "4": `style="font-size: 16px; font-weight: 600; color: #4B5563; margin: 16px 0 10px 0; text-transform: uppercase; text-align: ${titleAlign};"`,
-                "5": `style="font-size: 14px; font-weight: 500; color: #6B7280; margin: 12px 0 8px 0; text-transform: uppercase; text-align: ${titleAlign};"`,
-                "6": `style="font-size: 12px; font-weight: 500; color: #9CA3AF; margin: 10px 0 6px 0; text-transform: uppercase; text-align: ${titleAlign};"`
+                "2": `style="font-size: 20px; font-weight: 700; color: #1F2937; margin: 24px 0 16px 0; text-transform: uppercase; letter-spacing: 1px; text-align: ${effectiveAlign};"`,
+                "3": `style="font-size: 18px; font-weight: 600; color: #374151; margin: 20px 0 12px 0; text-transform: uppercase; letter-spacing: 0.5px; text-align: ${effectiveAlign};"`,
+                "4": `style="font-size: 16px; font-weight: 600; color: #4B5563; margin: 16px 0 10px 0; text-transform: uppercase; text-align: ${effectiveAlign};"`,
+                "5": `style="font-size: 14px; font-weight: 500; color: #6B7280; margin: 12px 0 8px 0; text-transform: uppercase; text-align: ${effectiveAlign};"`,
+                "6": `style="font-size: 12px; font-weight: 500; color: #9CA3AF; margin: 10px 0 6px 0; text-transform: uppercase; text-align: ${effectiveAlign};"`
             }],
             ["heading-style-7", { // 下划线装饰
-                "2": `style="font-size: 20px; font-weight: 600; color: #1F2937; margin: 24px 0 16px 0; position: relative; padding-bottom: 8px; text-align: ${titleAlign};"`,
-                "3": `style="font-size: 18px; font-weight: 500; color: #374151; margin: 20px 0 12px 0; position: relative; padding-bottom: 6px; text-align: ${titleAlign};"`,
-                "4": `style="font-size: 16px; font-weight: 500; color: #4B5563; margin: 16px 0 10px 0; position: relative; padding-bottom: 4px; text-align: ${titleAlign};"`,
-                "5": `style="font-size: 14px; font-weight: 400; color: #6B7280; margin: 12px 0 8px 0; position: relative; padding-bottom: 2px; text-align: ${titleAlign};"`,
-                "6": `style="font-size: 12px; font-weight: 400; color: #9CA3AF; margin: 10px 0 6px 0; text-align: ${titleAlign};"`
+                "2": `style="font-size: 20px; font-weight: 600; color: #1F2937; margin: 24px 0 16px 0; position: relative; padding-bottom: 8px; text-align: ${effectiveAlign};"`,
+                "3": `style="font-size: 18px; font-weight: 500; color: #374151; margin: 20px 0 12px 0; position: relative; padding-bottom: 6px; text-align: ${effectiveAlign};"`,
+                "4": `style="font-size: 16px; font-weight: 500; color: #4B5563; margin: 16px 0 10px 0; position: relative; padding-bottom: 4px; text-align: ${effectiveAlign};"`,
+                "5": `style="font-size: 14px; font-weight: 400; color: #6B7280; margin: 12px 0 8px 0; position: relative; padding-bottom: 2px; text-align: ${effectiveAlign};"`,
+                "6": `style="font-size: 12px; font-weight: 400; color: #9CA3AF; margin: 10px 0 6px 0; text-align: ${effectiveAlign};"`
             }],
             ["heading-style-8", { // 边框包围
-                "2": `style="font-size: 20px; font-weight: 600; color: #1F2937; margin: 24px 0 16px 0; padding: 12px 16px; border: 2px solid #3B82F6; background-color: rgba(59, 130, 246, 0.05); border-radius: 8px; text-align: ${titleAlign};"`,
-                "3": `style="font-size: 18px; font-weight: 500; color: #374151; margin: 20px 0 12px 0; padding: 8px 12px; border: 1px solid #6B7280; background-color: rgba(107, 114, 128, 0.05); border-radius: 6px; text-align: ${titleAlign};"`,
-                "4": `style="font-size: 16px; font-weight: 500; color: #4B5563; margin: 16px 0 10px 0; padding: 6px 10px; border-left: 4px solid #3B82F6; text-align: ${titleAlign};"`,
-                "5": `style="font-size: 14px; font-weight: 400; color: #6B7280; margin: 12px 0 8px 0; padding: 4px 8px; border-top: 1px solid #D1D5DB; text-align: ${titleAlign};"`,
-                "6": `style="font-size: 12px; font-weight: 400; color: #9CA3AF; margin: 10px 0 6px 0; padding: 2px 6px; border: 1px solid #E5E7EB; border-radius: 4px; text-align: ${titleAlign};"`
+                "2": `style="font-size: 20px; font-weight: 600; color: #1F2937; margin: 24px 0 16px 0; padding: 12px 16px; border: 2px solid #3B82F6; background-color: rgba(59, 130, 246, 0.05); border-radius: 8px; text-align: ${effectiveAlign};"`,
+                "3": `style="font-size: 18px; font-weight: 500; color: #374151; margin: 20px 0 12px 0; padding: 8px 12px; border: 1px solid #6B7280; background-color: rgba(107, 114, 128, 0.05); border-radius: 6px; text-align: ${effectiveAlign};"`,
+                "4": `style="font-size: 16px; font-weight: 500; color: #4B5563; margin: 16px 0 10px 0; padding: 6px 10px; border-left: 4px solid #3B82F6; text-align: ${effectiveAlign};"`,
+                "5": `style="font-size: 14px; font-weight: 400; color: #6B7280; margin: 12px 0 8px 0; padding: 4px 8px; border-top: 1px solid #D1D5DB; text-align: ${effectiveAlign};"`,
+                "6": `style="font-size: 12px; font-weight: 400; color: #9CA3AF; margin: 10px 0 6px 0; padding: 2px 6px; border: 1px solid #E5E7EB; border-radius: 4px; text-align: ${effectiveAlign};"`
             }],
             ["heading-style-9", { // 手写风格
-                "2": `style="font-size: 20px; font-weight: 400; color: #EC4899; margin: 24px 0 16px 0; font-family: 'Comic Sans MS', cursive; transform: rotate(-0.5deg); text-align: ${titleAlign};"`,
-                "3": `style="font-size: 18px; font-weight: 400; color: #8B5CF6; margin: 20px 0 12px 0; font-family: 'Comic Sans MS', cursive; transform: rotate(0.5deg); text-align: ${titleAlign};"`,
-                "4": `style="font-size: 16px; font-weight: 400; color: #F97316; margin: 16px 0 10px 0; font-family: 'Comic Sans MS', cursive; text-align: ${titleAlign};"`,
-                "5": `style="font-size: 14px; font-weight: 400; color: #3B82F6; margin: 12px 0 8px 0; font-family: 'Comic Sans MS', cursive; transform: rotate(-0.3deg); text-align: ${titleAlign};"`,
-                "6": `style="font-size: 12px; font-weight: 400; color: #6B7280; margin: 10px 0 6px 0; font-family: 'Comic Sans MS', cursive; text-align: ${titleAlign};"`
+                "2": `style="font-size: 20px; font-weight: 400; color: #EC4899; margin: 24px 0 16px 0; font-family: 'Comic Sans MS', cursive; transform: rotate(-0.5deg); text-align: ${effectiveAlign};"`,
+                "3": `style="font-size: 18px; font-weight: 400; color: #8B5CF6; margin: 20px 0 12px 0; font-family: 'Comic Sans MS', cursive; transform: rotate(0.5deg); text-align: ${effectiveAlign};"`,
+                "4": `style="font-size: 16px; font-weight: 400; color: #F97316; margin: 16px 0 10px 0; font-family: 'Comic Sans MS', cursive; text-align: ${effectiveAlign};"`,
+                "5": `style="font-size: 14px; font-weight: 400; color: #3B82F6; margin: 12px 0 8px 0; font-family: 'Comic Sans MS', cursive; transform: rotate(-0.3deg); text-align: ${effectiveAlign};"`,
+                "6": `style="font-size: 12px; font-weight: 400; color: #6B7280; margin: 10px 0 6px 0; font-family: 'Comic Sans MS', cursive; text-align: ${effectiveAlign};"`
             }],
             ["heading-style-10", { // 阴影立体
-                "2": `style="font-size: 20px; font-weight: 600; color: #1F2937; margin: 24px 0 16px 0; text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1); text-align: ${titleAlign};"`,
-                "3": `style="font-size: 18px; font-weight: 500; color: #374151; margin: 20px 0 12px 0; text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.1); text-align: ${titleAlign};"`,
-                "4": `style="font-size: 16px; font-weight: 500; color: #4B5563; margin: 16px 0 10px 0; text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.05); text-align: ${titleAlign};"`,
-                "5": `style="font-size: 14px; font-weight: 400; color: #6B7280; margin: 12px 0 8px 0; text-align: ${titleAlign};"`,
-                "6": `style="font-size: 12px; font-weight: 400; color: #9CA3AF; margin: 10px 0 6px 0; text-align: ${titleAlign};"`
+                "2": `style="font-size: 20px; font-weight: 600; color: #1F2937; margin: 24px 0 16px 0; text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1); text-align: ${effectiveAlign};"`,
+                "3": `style="font-size: 18px; font-weight: 500; color: #374151; margin: 20px 0 12px 0; text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.1); text-align: ${effectiveAlign};"`,
+                "4": `style="font-size: 16px; font-weight: 500; color: #4B5563; margin: 16px 0 10px 0; text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.05); text-align: ${effectiveAlign};"`,
+                "5": `style="font-size: 14px; font-weight: 400; color: #6B7280; margin: 12px 0 8px 0; text-align: ${effectiveAlign};"`,
+                "6": `style="font-size: 12px; font-weight: 400; color: #9CA3AF; margin: 10px 0 6px 0; text-align: ${effectiveAlign};"`
             }]
         ]);
 
+        // H3-H6使用选择的H3-H6样式
         const styleMap = headingStyles.get(styleType);
         if (!styleMap || !styleMap[level]) {
             return `<h${level}>${content}</h${level}>`;
@@ -967,7 +1071,7 @@
     }
 
     // 生成引用样式（仅影响>开头的引用内容）
-    function generateQuoteHTML(content, quoteStyle, quoteSymbol, quoteAlign, quoteFont, quoteIndent, quoteShadow, quoteItalic) {
+    function generateQuoteHTML(content, quoteStyle, quoteSymbol, quoteAlign, quoteFont, quoteIndent, quoteShadow, quoteItalic, quoteFontSize = '16px', quoteBorderRadius = false) {
         // 获取引用符号前缀
         const symbolMap = {
             'symbol-0': '',
@@ -985,56 +1089,66 @@
         
         const symbolPrefix = symbolMap[quoteSymbol] || '';
         
+        // 辅助函数：根据是否启用圆角添加border-radius样式
+        function addBorderRadius(baseStyle, enabled) {
+            if (!enabled) return baseStyle;
+            // 检查是否已经有border-radius，避免重复添加
+            if (baseStyle.includes('border-radius:')) {
+                return baseStyle.replace(/border-radius:\s*[^;]+;/, 'border-radius: 8px;');
+            }
+            return baseStyle + ' border-radius: 8px;';
+        }
+        
         // 引用样式映射
         const quoteStyles = new Map([
             ['quote-style-1', { // 基础引用
-                style: 'margin: 16px 0; padding: 0; font-size: 15px; line-height: 1.7; color: #4A5568; text-align: ' + quoteAlign + ';',
+                style: addBorderRadius('margin: 16px 0; padding: 0; font-size: ' + quoteFontSize + '; line-height: 1.7; color: #4A5568; text-align: ' + quoteAlign + ';', quoteBorderRadius),
                 class: ''
             }],
             ['quote-style-2', { // 强调引用
-                style: 'margin: 16px 0; padding: 12px 0; font-size: 16px; line-height: 1.6; color: #2D3748; font-weight: 600; text-align: ' + quoteAlign + '; border-bottom: 2px solid #07C160; display: inline-block;',
+                style: addBorderRadius('margin: 16px 0; padding: 12px 0; font-size: ' + quoteFontSize + '; line-height: 1.6; color: #2D3748; font-weight: 600; text-align: ' + quoteAlign + '; border-bottom: 2px solid #07C160; display: inline-block;', quoteBorderRadius),
                 class: ''
             }],
             ['quote-style-3', { // 经典引用
-                style: 'margin: 16px 0; padding: 12px 16px; font-size: 15px; line-height: 1.7; color: #4A5568; background-color: #F5F9F7; border-left: 4px solid #07C160; border-radius: 0 4px 4px 0; text-align: ' + quoteAlign + ';',
+                style: addBorderRadius('margin: 16px 0; padding: 12px 16px; font-size: ' + quoteFontSize + '; line-height: 1.7; color: #4A5568; background-color: #F5F9F7; border-left: 4px solid #07C160; border-radius: 0 4px 4px 0; text-align: ' + quoteAlign + ';', quoteBorderRadius),
                 class: ''
             }],
             ['quote-style-4', { // 温馨提示
-                style: 'margin: 16px 0; padding: 16px; font-size: 15px; line-height: 1.7; color: #5C6E70; background-color: #F0F8F5; border-radius: 8px; border: 1px solid #E1F0EB; text-align: ' + quoteAlign + ';',
+                style: addBorderRadius('margin: 16px 0; padding: 16px; font-size: ' + quoteFontSize + '; line-height: 1.7; color: #5C6E70; background-color: #F0F8F5; border-radius: 8px; border: 1px solid #E1F0EB; text-align: ' + quoteAlign + ';', quoteBorderRadius),
                 class: ''
             }],
             
             
             
             ['quote-style-8', { // 警告引用
-                style: 'margin: 16px 0; padding: 16px; font-size: 15px; line-height: 1.7; color: #8A2420; background-color: #FFF6F6; border-radius: 8px; border: 1px solid #FDEEEE; text-align: ' + quoteAlign + ';',
+                style: addBorderRadius('margin: 16px 0; padding: 16px; font-size: ' + quoteFontSize + '; line-height: 1.7; color: #8A2420; background-color: #FFF6F6; border-radius: 8px; border: 1px solid #FDEEEE; text-align: ' + quoteAlign + ';', quoteBorderRadius),
                 class: ''
             }],
             ['quote-style-9', { // 居中引用
-                style: 'margin: 20px 0; padding: 0; font-size: 16px; line-height: 1.7; color: #2D3748; font-weight: 500; text-align: center;',
+                style: addBorderRadius('margin: 20px 0; padding: 0; font-size: ' + quoteFontSize + '; line-height: 1.7; color: #2D3748; font-weight: 500; text-align: center;', quoteBorderRadius),
                 class: ''
             }],
             ['quote-style-10', { // 背景引用
-                style: 'margin: 16px 0; padding: 16px; font-size: 15px; line-height: 1.7; color: #2D3748; background-color: #F5F6F7; border-radius: 8px; text-align: ' + quoteAlign + ';',
+                style: addBorderRadius('margin: 16px 0; padding: 16px; font-size: ' + quoteFontSize + '; line-height: 1.7; color: #2D3748; background-color: #F5F6F7; border-radius: 8px; text-align: ' + quoteAlign + ';', quoteBorderRadius),
                 class: ''
             }],
             ['quote-style-11', { // 边框引用
-                style: 'margin: 16px 0; padding: 16px; font-size: 15px; line-height: 1.7; color: #333333; border: 1px solid #4299E1; border-radius: 8px; background-color: #F8FAFF; text-align: ' + quoteAlign + ';',
+                style: addBorderRadius('margin: 16px 0; padding: 16px; font-size: ' + quoteFontSize + '; line-height: 1.7; color: #333333; border: 1px solid #4299E1; border-radius: 8px; background-color: #F8FAFF; text-align: ' + quoteAlign + ';', quoteBorderRadius),
                 class: ''
             }],
             
             ['quote-style-13', { // 引号引用
-                style: 'margin: 16px 0; padding: 16px; font-size: 15px; line-height: 1.7; color: #4A5568; background-color: #FAFAFA; border-radius: 8px; position: relative; text-align: ' + quoteAlign + ';',
+                style: addBorderRadius('margin: 16px 0; padding: 16px; font-size: ' + quoteFontSize + '; line-height: 1.7; color: #4A5568; background-color: #FAFAFA; border-radius: 8px; position: relative; text-align: ' + quoteAlign + ';', quoteBorderRadius),
                 class: ''
             }],
             ['quote-style-14', { // 首字引用
-                style: 'margin: 16px 0; padding: 0; font-size: 15px; line-height: 1.7; color: #333333; text-align: ' + quoteAlign + ';',
+                style: addBorderRadius('margin: 16px 0; padding: 0; font-size: ' + quoteFontSize + '; line-height: 1.7; color: #333333; text-align: ' + quoteAlign + ';', quoteBorderRadius),
                 class: ''
             }],
             ['quote-style-15', { // 渐变引用
-                style: 'margin: 16px 0; padding: 0; font-size: 15px; line-height: 1.7; font-weight: 500; text-align: ' + quoteAlign + '; background: linear-gradient(90deg, #07C160, #4299E1); -webkit-background-clip: text; background-clip: text; color: transparent;',
+                style: addBorderRadius('margin: 16px 0; padding: 0; font-size: ' + quoteFontSize + '; line-height: 1.7; font-weight: 500; text-align: ' + quoteAlign + '; background: linear-gradient(90deg, #07C160, #4299E1); -webkit-background-clip: text; background-clip: text; color: transparent;', quoteBorderRadius),
                 class: ''
-            }]
+            }],
         ]);
         
         const selectedStyle = quoteStyles.get(quoteStyle) || quoteStyles.get('quote-style-1');
@@ -1199,16 +1313,69 @@
             // 处理行内代码
             text = text.replace(/`([^`]+)`/g, '<code>$1</code>');
             
-            // 处理链接
-            text = text.replace(/\[([^\]]+)\]\(([^)]+)\)/g, '<a href="$2" target="_blank">$1</a>');
+            // 处理新的图片引用格式：![图片1], ![img1], ![photo] 等
+            text = text.replace(/!\[([^\]]+)\]/g, (match, label) => {
+                return processImageReference(label);
+            });
             
-            // 处理图片
-            text = text.replace(/!\[([^\]]*)\]\(([^)]+)\)/g, '<img src="$2" alt="$1">');
+            // 处理传统链接（排除图片链接）
+            text = text.replace(/\[([^\]]+)\]\(([^)]+)\)/g, (match, text, href) => {
+                // 如果是Base64图片链接，跳过（已经被上面的图片处理了）
+                if (href.startsWith('data:image/')) {
+                    return match;
+                }
+                return `<a href="${href}" target="_blank">${text}</a>`;
+            });
+            
+            // 处理传统图片格式（保留兼容性）
+            text = text.replace(/!\[([^\]]*)\]\(([^)]+)\)/g, (match, alt, src) => {
+                // 直接渲染为图片
+                return `<img src="${src}" alt="${alt}" style="max-width: 100%; height: auto; border-radius: 6px; box-shadow: 0 2px 8px rgba(0,0,0,0.1); margin: 10px 0;">`;
+            });
 
             // 清理多余空格
             text = text.replace(/\s+/g, ' ').trim();
 
             return text;
+        }
+
+        // 处理图片引用的函数
+        function processImageReference(label) {
+            // 尝试解析图片索引
+            let imageIndex = -1;
+            
+            // 格式1：![图片1], ![图片2], ...
+            const numberMatch = label.match(/^图片(\d+)$/);
+            if (numberMatch) {
+                imageIndex = parseInt(numberMatch[1]) - 1; // 转换为0-based索引
+            }
+            
+            // 格式2：![img1], ![img2], ...
+            if (imageIndex === -1) {
+                const imgNumberMatch = label.match(/^img(\d+)$/i);
+                if (imgNumberMatch) {
+                    imageIndex = parseInt(imgNumberMatch[1]) - 1;
+                }
+            }
+            
+            // 格式3：直接使用数字 ![1], ![2], ...
+            if (imageIndex === -1) {
+                const directNumberMatch = label.match(/^(\d+)$/);
+                if (directNumberMatch) {
+                    imageIndex = parseInt(directNumberMatch[1]) - 1;
+                }
+            }
+            
+            // 如果找到有效索引且图片存在
+            if (imageIndex >= 0 && imageIndex < imageSrcList.length) {
+                const imageSrc = imageSrcList[imageIndex];
+                const fileName = imageFiles[imageIndex]?.name || `图片${imageIndex + 1}`;
+                
+                return `<img src="${imageSrc}" alt="${label}" style="max-width: 100%; height: auto; border-radius: 6px; box-shadow: 0 2px 8px rgba(0,0,0,0.1); margin: 10px 0;" data-image-ref="${label}" data-image-index="${imageIndex}" data-file-name="${fileName}">`;
+            }
+            
+            // 如果找不到对应的图片，显示提示
+            return `<span style="color: #dc3545; background: #f8d7da; padding: 2px 6px; border-radius: 4px; font-size: 12px; border: 1px solid #f5c6cb;">❌ ${label} (未找到对应图片)</span>`;
         }
 
         let i = 0;
@@ -1241,11 +1408,20 @@
                 
                 if(level === 1) {
                     // 根据样式选项决定是否应用part样式
-                    html.push(`<div class="part-container">${generateH1HTMLStyle(selectedStyle,titleAlign, content)}</div>`);
+                    html.push(`<div class="part-container">${generateH1HTMLStyle(selectedStyle,titleAlign, content, null)}</div>`);
        
                 } else {
-                    // 使用新的H2-H6样式生成函数
-                    html.push(generateHeadingHTMLStyle(headingStyleType, level, content, titleAlign));
+                    if (level === 2) {
+                        // H2使用H1的风格系统，但使用独立对齐
+                        const h2Style = document.getElementById('h2-style-select')?.value || 'style-1';
+                        const h2Align = document.querySelector('input[name="h2-align"]:checked')?.value || 'center';
+                        const h2NumberIndex = numberIndex++; // H2独立序号
+                        html.push(`<div class="part-container">${generateH1HTMLStyle(h2Style, h2Align, content, h2NumberIndex)}</div>`);
+                    } else {
+                        // H3-H6使用独立的H3-H6样式和对齐
+                        const h3h6Align = document.querySelector('input[name="h3h6-align"]:checked')?.value || 'center';
+                        html.push(generateHeadingHTMLStyle(headingStyleType, level, content, h3h6Align));
+                    }
                 }
                 i++;
                 continue;
@@ -1269,9 +1445,11 @@
                 const quoteIndent = document.getElementById('quote-indent')?.checked || false;
                 const quoteShadow = document.getElementById('quote-shadow')?.checked || false;
                 const quoteItalic = document.getElementById('quote-italic')?.checked || false;
+                const quoteFontSize = document.getElementById('quote-font-size-select')?.value || '16px';
+                const quoteBorderRadius = document.getElementById('quote-border-radius')?.checked || false;
                 
                 // 生成引用HTML
-                const quoteHTML = generateQuoteHTML(content, quoteStyleType, quoteSymbolType, quoteAlign, quoteFont, quoteIndent, quoteShadow, quoteItalic);
+                const quoteHTML = generateQuoteHTML(content, quoteStyleType, quoteSymbolType, quoteAlign, quoteFont, quoteIndent, quoteShadow, quoteItalic, quoteFontSize, quoteBorderRadius);
                 
                 html.push(quoteHTML);
                 i++;
@@ -1456,6 +1634,23 @@
                 .custom-list li::marker {
                     color: #3498db;
                     font-weight: bold;
+                }
+
+                /* 图片样式优化 */
+                .wx-content img, .wechat-article img {
+                    max-width: 100% !important;
+                    height: auto !important;
+                    border-radius: 6px !important;
+                    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1) !important;
+                    margin: 10px 0 !important;
+                    display: block !important;
+                }
+
+                /* 确保Base64图片正确显示 */
+                img[src^="data:image/"] {
+                    max-width: 100% !important;
+                    height: auto !important;
+                    object-fit: contain !important;
                 }
 
                 strong {
@@ -2058,6 +2253,22 @@ const rawText = "# 欢迎使用马克飞象\n" +
         document.getElementById('quote-indent')?.addEventListener('change', changeHtml);
         document.getElementById('quote-shadow')?.addEventListener('change', changeHtml);
         document.getElementById('quote-italic')?.addEventListener('change', changeHtml);
+        document.getElementById('quote-font-size-select')?.addEventListener('change', changeHtml);
+        document.getElementById('quote-border-radius')?.addEventListener('change', changeHtml);
+
+        // H2独立对齐和风格事件监听
+        document.querySelectorAll('input[name="h2-align"]')?.forEach(radio => {
+            radio.addEventListener('change', changeHtml);
+        });
+        document.getElementById('h2-style-select')?.addEventListener('change', changeHtml);
+
+        // H3-H6独立对齐事件监听
+        document.querySelectorAll('input[name="h3h6-align"]')?.forEach(radio => {
+            radio.addEventListener('change', changeHtml);
+        });
+
+        // 图片处理事件监听
+        setupImageEventListeners();
 
         // 示例内容，展示各种新功能
         const demoContent = `# 微信公众号样式工具演示
@@ -2198,6 +2409,335 @@ function demo() {
                 toast.classList.remove('show');
             }, duration);
         }
+
+        // 图片处理相关函数
+        function handleImageFiles(files) {
+            const imageFilesList = Array.from(files).filter(file => file.type.startsWith('image/'));
+            
+            if (imageFilesList.length === 0) {
+                showToast('请选择有效的图片文件');
+                return;
+            }
+
+            imageFilesList.forEach(file => {
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                    imageFiles.push(file);
+                    imageSrcList.push(e.target.result);
+                    updateImageList();
+                    updateImagePreview();
+                };
+                reader.readAsDataURL(file);
+            });
+            
+            showToast(`成功添加 ${imageFilesList.length} 张图片`);
+        }
+
+        // 处理URL图片
+        function handleUrlImage() {
+            const urlInput = document.getElementById('image-url-input');
+            const url = urlInput.value.trim();
+            
+            if (!url) {
+                showToast('请输入图片URL');
+                return;
+            }
+            
+            // 验证URL格式
+            try {
+                new URL(url);
+            } catch (e) {
+                showToast('请输入有效的URL');
+                return;
+            }
+            
+            // 检查是否为HTTP/HTTPS
+            const urlObj = new URL(url);
+            if (!['http:', 'https:'].includes(urlObj.protocol)) {
+                showToast('只支持HTTP和HTTPS协议的URL');
+                return;
+            }
+            
+            // 创建虚拟文件对象
+            const urlImageInfo = {
+                name: `URL图片_${new Date().getTime()}`,
+                type: 'url',
+                url: url
+            };
+            
+            imageFiles.push(urlImageInfo);
+            imageSrcList.push(url);
+            updateImageList();
+            updateImagePreview();
+            
+            urlInput.value = '';
+            showToast('成功添加URL图片');
+        }
+
+        function updateImageList() {
+            const imageList = document.getElementById('image-list');
+            if (imageFiles.length === 0) {
+                imageList.innerHTML = '<span style="color: #6c757d; font-size: 14px;">暂无图片，请选择或拖拽图片文件</span>';
+                return;
+            }
+
+            let html = '';
+            imageFiles.forEach((file, index) => {
+                const isUrlImage = file.type === 'url';
+                const displayName = isUrlImage ? `${file.name} (URL)` : file.name;
+                const displaySrc = isUrlImage ? file.url : imageSrcList[index];
+                
+                html += `
+                    <div style="display: inline-block; margin: 5px; padding: 8px; border: 1px solid #dee2e6; border-radius: 4px; background: #fff; position: relative;">
+                        <img src="${displaySrc}" alt="${displayName}" style="width: 80px; height: 80px; object-fit: cover; border-radius: 4px;" onerror="this.style.display='none'">
+                        <div style="font-size: 11px; color: ${isUrlImage ? '#17a2b8' : '#6c757d'}; margin-top: 4px; max-width: 80px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;" title="${displayName}">${displayName}</div>
+                        <button onclick="removeImage(${index})" style="position: absolute; top: -5px; right: -5px; width: 20px; height: 20px; background: #dc3545; color: white; border: none; border-radius: 50%; cursor: pointer; font-size: 12px; line-height: 1;">×</button>
+                    </div>
+                `;
+            });
+            imageList.innerHTML = html;
+        }
+
+        function updateImagePreview() {
+            const previewContent = document.getElementById('image-preview-content');
+            if (imageFiles.length === 0) {
+                previewContent.innerHTML = '<span style="color: #6c757d; font-size: 14px; grid-column: 1 / -1; text-align: center; padding: 20px;">暂无图片，请选择或拖拽图片文件</span>';
+                return;
+            }
+
+            // 检查每个图片是否在文档中被使用（新格式检测）
+            const editor = document.getElementById('editor');
+            const documentText = editor ? editor.value : '';
+            
+            let html = '';
+            imageFiles.forEach((file, index) => {
+                const imageRef = `图片${index + 1}`;
+                const isUrlImage = file.type === 'url';
+                const displaySrc = isUrlImage ? file.url : imageSrcList[index];
+                
+                // 检查新格式的使用情况：![图片1] 格式
+                const isUsed = documentText.includes(`![${imageRef}]`);
+                
+                // 如果是新格式未检测到，再检查旧格式作为备用（只对非URL图片检查base64）
+                const oldFormatUsed = !isUrlImage && documentText.includes(imageSrcList[index]);
+                const finalIsUsed = isUsed || oldFormatUsed;
+                
+                const status = finalIsUsed ? 
+                    '<span style="position: absolute; top: 8px; left: 8px; background: #28a745; color: white; padding: 2px 6px; border-radius: 4px; font-size: 10px;">已使用</span>' :
+                    '<span style="position: absolute; top: 8px; left: 8px; background: #6c757d; color: white; padding: 2px 6px; border-radius: 4px; font-size: 10px;">未使用</span>';
+                
+                const urlIndicator = isUrlImage ? '<span style="position: absolute; top: 8px; right: 8px; background: #17a2b8; color: white; padding: 2px 6px; border-radius: 4px; font-size: 10px;">URL</span>' : '';
+                
+                html += `
+                    <div style="position: relative; border: 1px solid ${finalIsUsed ? '#28a745' : '#dee2e6'}; border-radius: 6px; overflow: hidden; background: #fff;">
+                        ${status}
+                        ${urlIndicator}
+                        <img src="${displaySrc}" alt="${file.name}" style="width: 100%; height: 100px; object-fit: cover; cursor: pointer;" onclick="showImageModal('${displaySrc}', '${file.name}')" onerror="this.style.display='none'">
+                        <div style="position: absolute; bottom: 0; left: 0; right: 0; background: rgba(0,0,0,0.7); color: white; padding: 4px 6px; font-size: 11px; text-overflow: ellipsis; overflow: hidden; white-space: nowrap;">
+                            <div style="font-weight: bold; color: #28a745;">${imageRef}</div>
+                            <div style="font-size: 10px; color: #ccc; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;">${isUrlImage ? file.url : file.name}</div>
+                        </div>
+                        <div style="position: absolute; bottom: 0; right: 0; background: ${finalIsUsed ? '#28a745' : '#ffc107'}; color: white; padding: 2px 6px; font-size: 10px; border-radius: 4px 0 0 0;">
+                            ${finalIsUsed ? '✅' : '📝'}
+                        </div>
+                    </div>
+                `;
+            });
+            previewContent.innerHTML = html;
+        }
+
+        function removeImage(index) {
+            imageFiles.splice(index, 1);
+            imageSrcList.splice(index, 1);
+            updateImageList();
+            updateImagePreview();
+        }
+
+        function clearImages() {
+            imageFiles = [];
+            imageSrcList = [];
+            updateImageList();
+            updateImagePreview();
+        }
+
+        function showImageModal(src, name) {
+            // 简单的图片预览模态框
+            const modal = document.createElement('div');
+            modal.style.cssText = `
+                position: fixed;
+                top: 0;
+                left: 0;
+                width: 100%;
+                height: 100%;
+                background: rgba(0,0,0,0.8);
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                z-index: 10000;
+            `;
+            modal.innerHTML = `
+                <div style="position: relative; max-width: 90%; max-height: 90%;">
+                    <img src="${src}" alt="${name}" style="max-width: 100%; max-height: 100%; border-radius: 8px;">
+                    <button onclick="this.closest('.image-modal').remove()" style="position: absolute; top: -40px; right: 0; background: #fff; border: none; border-radius: 50%; width: 30px; height: 30px; cursor: pointer; font-size: 18px;">×</button>
+                </div>
+            `;
+            modal.className = 'image-modal';
+            document.body.appendChild(modal);
+            modal.addEventListener('click', function(e) {
+                if (e.target === modal) {
+                    modal.remove();
+                }
+            });
+        }
+
+        function setupImageEventListeners() {
+            // 选择图片按钮
+            const pickImagesBtn = document.getElementById('pick-images-btn');
+            const fileInputBtn = document.getElementById('file-input-btn');
+            const clearImagesBtn = document.getElementById('clear-images-btn');
+            const imageList = document.getElementById('image-list');
+
+            // 选择图片按钮事件
+            pickImagesBtn.addEventListener('click', () => {
+                fileInputBtn.click();
+            });
+
+            // 插入图片按钮事件
+            const insertImageBtn = document.getElementById('insert-image-btn');
+            insertImageBtn.addEventListener('click', showImageSelectModal);
+
+            // 文件选择事件
+            fileInputBtn.addEventListener('change', (e) => {
+                handleImageFiles(e.target.files);
+                fileInputBtn.value = ''; // 清空输入
+            });
+
+            // 清空图片按钮事件
+            clearImagesBtn.addEventListener('click', () => {
+                clearImages();
+            });
+
+            // 添加URL图片按钮事件
+            const addUrlImageBtn = document.getElementById('add-url-image-btn');
+            addUrlImageBtn.addEventListener('click', handleUrlImage);
+
+            // 回车键添加URL图片
+            const imageUrlInput = document.getElementById('image-url-input');
+            imageUrlInput.addEventListener('keypress', (e) => {
+                if (e.key === 'Enter') {
+                    handleUrlImage();
+                }
+            });
+
+            // 取消插入按钮事件
+            const cancelInsertBtn = document.getElementById('cancel-insert-btn');
+            cancelInsertBtn.addEventListener('click', hideImageSelectModal);
+
+            // 拖拽事件
+            imageList.addEventListener('dragover', (e) => {
+                e.preventDefault();
+                imageList.style.backgroundColor = '#e3f2fd';
+                imageList.style.borderColor = '#2196f3';
+            });
+
+            imageList.addEventListener('dragleave', (e) => {
+                e.preventDefault();
+                imageList.style.backgroundColor = '#fff';
+                imageList.style.borderColor = '#dee2e6';
+            });
+
+            imageList.addEventListener('drop', (e) => {
+                e.preventDefault();
+                imageList.style.backgroundColor = '#fff';
+                imageList.style.borderColor = '#dee2e6';
+                
+                const files = e.dataTransfer.files;
+                if (files.length > 0) {
+                    handleImageFiles(files);
+                }
+            });
+
+            // 移除全局拖拽事件，避免重复处理
+        }
+
+        // 图片插入相关函数
+        function showImageSelectModal() {
+            const modal = document.getElementById('image-select-modal');
+            const grid = document.getElementById('image-select-grid');
+            
+            if (imageFiles.length === 0) {
+                showToast('请先选择图片文件');
+                return;
+            }
+
+            let html = '';
+            imageFiles.forEach((file, index) => {
+                const imageRef = `图片${index + 1}`;
+                html += `
+                    <div style="border: 1px solid #ddd; border-radius: 6px; overflow: hidden; cursor: pointer; transition: all 0.2s; position: relative;" 
+                         onclick="insertImageAtCursor(${index})"
+                         onmouseover="this.style.borderColor='#007bff'; this.style.transform='scale(1.02)'"
+                         onmouseout="this.style.borderColor='#ddd'; this.style.transform='scale(1)'">
+                        <img src="${imageSrcList[index]}" alt="${file.name}" style="width: 100%; height: 120px; object-fit: cover;">
+                        <div style="padding: 8px; font-size: 11px; color: #666; text-align: center; background: #f8f9fa;">
+                            <div style="font-weight: bold; color: #007bff; margin-bottom: 4px;">${imageRef}</div>
+                            <div style="font-size: 10px; color: #999; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;">${file.name}</div>
+                        </div>
+                        <div style="position: absolute; top: 8px; right: 8px; background: #007bff; color: white; padding: 2px 6px; border-radius: 4px; font-size: 10px;">
+                            点击插入
+                        </div>
+                    </div>
+                `;
+            });
+            
+            grid.innerHTML = html;
+            modal.style.display = 'flex';
+        }
+
+        function hideImageSelectModal() {
+            const modal = document.getElementById('image-select-modal');
+            modal.style.display = 'none';
+        }
+
+        function insertImageAtCursor(imageIndex) {
+            const editor = document.getElementById('editor');
+            const file = imageFiles[imageIndex];
+            
+            // 生成简洁的图片标签（使用语义化名称）
+            const imageName = `图片${imageIndex + 1}`;
+            
+            // 获取当前光标位置
+            const start = editor.selectionStart;
+            const end = editor.selectionEnd;
+            const text = editor.value;
+            
+            // 使用新的短格式：![图片1] 而不是长Base64
+            const imageMarkdown = `![${imageName}]\n\n`;
+            
+            // 插入图片到光标位置
+            const newText = text.substring(0, start) + imageMarkdown + text.substring(end);
+            editor.value = newText;
+            
+            // 设置光标位置到插入的图片后面
+            const newCursorPos = start + imageMarkdown.length;
+            editor.setSelectionRange(newCursorPos, newCursorPos);
+            editor.focus();
+            
+            // 隐藏模态框
+            hideImageSelectModal();
+            
+            // 触发预览更新
+            changeHtml();
+            
+            showToast(`图片已插入到文章中：${file.name} (格式: ${imageMarkdown.trim()})`);
+        }
+
+        // 点击模态框外部关闭
+        document.getElementById('image-select-modal').addEventListener('click', function(e) {
+            if (e.target === this) {
+                hideImageSelectModal();
+            }
+        });
     </script>
     
     <!-- 代码高亮 -->
