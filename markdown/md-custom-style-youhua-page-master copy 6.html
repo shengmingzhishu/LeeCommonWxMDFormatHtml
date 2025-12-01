@@ -600,7 +600,7 @@
             <!-- 功能说明 -->
             <div style="margin-bottom: 10px; padding: 8px; background-color: #f0f9ff; border-radius: 6px; font-size: 12px; color: #0369a1;">
                 <strong>功能说明：</strong>
-                标题系统分为三个独立板块：H1标题支持9种风格和独立对齐，H2标题支持H1风格的9种样式和独立对齐，H3-H6标题支持10种样式和独立对齐；段落字体风格支持20种经典排版风格，引用内容（>开头的文本）支持11种引用风格、16种引用符号、3种对齐方式，段落块支持阴影、缩进、背景、圆角等4种独立设置（按空行分隔的真实段落），引用新增字体、首行缩进、阴影、斜体、字号、圆角等6个维度控制，支持图片拖拽上传和网络URL添加功能，<strong style="color: #dc3545;">新增：自动格式转换功能，支持将WEBP、BMP等格式自动转换为JPG格式</strong>
+                标题系统分为三个独立板块：H1标题支持9种风格和独立对齐，H2标题支持H1风格的9种样式和独立对齐，H3-H6标题支持10种样式和独立对齐；段落字体风格支持20种经典排版风格，引用内容（>开头的文本）支持11种引用风格、16种引用符号、3种对齐方式，段落块支持阴影、缩进、背景、圆角等4种独立设置（按空行分隔的真实段落），引用新增字体、首行缩进、阴影、斜体、字号、圆角等6个维度控制，支持图片拖拽上传和网络URL添加功能
             </div>
             
             <!-- 图片上传和预览功能区域 -->
@@ -616,7 +616,7 @@
                         🗑️ 清空图片
                     </button>
                     <input id="file-input-btn" type="file" accept="image/*" multiple style="display: none;" />
-                    <span style="font-size: 12px; color: #6c757d;">支持拖拽文件到此处或点击选择图片，<strong style="color: #dc3545;">自动将WEBP/BMP等格式转换为JPG</strong>，然后插入到文章中</span>
+                    <span style="font-size: 12px; color: #6c757d;">支持拖拽文件到此处或点击选择图片，然后插入到文章中</span>
                 </div>
                 
                 <!-- URL图片添加区域 -->
@@ -642,9 +642,6 @@
             <!-- 图片预览和排版区域 -->
             <div id="image-preview" style="margin-bottom: 15px; padding: 15px; border: 1px solid #e1e5e9; border-radius: 8px; background-color: #f8f9fa;">
                 <h4 style="margin: 0 0 12px 0; font-size: 14px; color: #495057;">🖼️ 图片管理和排版</h4>
-                <div style="margin-bottom: 12px; padding: 8px; background-color: #fff3cd; border: 1px solid #ffeaa7; border-radius: 4px; font-size: 11px; color: #856404;">
-                    <strong>🆕 新功能：</strong>自动格式转换 - 支持JPG/JPEG/PNG/GIF，直接上传；WEBP/BMP等格式会自动转换为JPG
-                </div>
                 
                 <!-- 图片选择模态框 -->
                 <div id="image-select-modal" style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.5); z-index: 10000; justify-content: center; align-items: center;">
@@ -2418,181 +2415,25 @@ function demo() {
 
         // 图片处理相关函数
         function handleImageFiles(files) {
-            const allFiles = Array.from(files);
-            const supportedFiles = [];
-            const unsupportedFiles = [];
+            const imageFilesList = Array.from(files).filter(file => file.type.startsWith('image/'));
             
-            // 支持的图片格式
-            const supportedFormats = ['image/jpeg', 'image/jpg', 'image/png', 'image/gif'];
-            
-            // 分离支持的和不支持的图片文件
-            allFiles.forEach(file => {
-                if (file.type.startsWith('image/')) {
-                    if (supportedFormats.includes(file.type.toLowerCase())) {
-                        supportedFiles.push(file);
-                    } else {
-                        unsupportedFiles.push(file);
-                    }
-                }
-            });
-            
-            if (allFiles.length === 0) {
+            if (imageFilesList.length === 0) {
                 showToast('请选择有效的图片文件');
                 return;
             }
-            
-            if (supportedFiles.length === 0 && unsupportedFiles.length === 0) {
-                showToast('未找到有效的图片文件');
-                return;
-            }
 
-            // 处理支持的图片文件
-            if (supportedFiles.length > 0) {
-                processSupportedFiles(supportedFiles);
-            }
-
-            // 处理不支持的图片文件（自动转换为JPG）
-            if (unsupportedFiles.length > 0) {
-                processUnsupportedFiles(unsupportedFiles);
-            }
-        }
-
-        // 处理支持的图片文件
-        function processSupportedFiles(files) {
-            let processedCount = 0;
-            
-            files.forEach(file => {
+            imageFilesList.forEach(file => {
                 const reader = new FileReader();
                 reader.onload = function(e) {
                     imageFiles.push(file);
                     imageSrcList.push(e.target.result);
-                    processedCount++;
-                    
-                    if (processedCount === files.length) {
-                        updateImageList();
-                        updateImagePreview();
-                        showToast(`成功添加 ${files.length} 张支持格式的图片`);
-                    }
+                    updateImageList();
+                    updateImagePreview();
                 };
                 reader.readAsDataURL(file);
             });
-        }
-
-        // 处理不支持的图片文件（自动转换为JPG）
-        function processUnsupportedFiles(files) {
-            let convertedCount = 0;
-            let failedCount = 0;
             
-            files.forEach(file => {
-                showToast(`🔄 正在转换 ${file.name} 为JPG格式...`);
-                
-                // 转换文件为JPG
-                convertImageToJPG(file)
-                    .then(convertedFile => {
-                        if (convertedFile) {
-                            // 转换成功，使用转换后的文件
-                            const reader = new FileReader();
-                            reader.onload = function(e) {
-                                imageFiles.push(convertedFile);
-                                imageSrcList.push(e.target.result);
-                                convertedCount++;
-                                
-                                if (convertedCount + failedCount === files.length) {
-                                    updateImageList();
-                                    updateImagePreview();
-                                    
-                                    if (failedCount === 0) {
-                                        showToast(`✅ 成功转换 ${convertedCount} 个图片为JPG格式`);
-                                    } else {
-                                        showToast(`⚠️ 转换完成：${convertedCount} 个成功，${failedCount} 个失败`);
-                                    }
-                                }
-                            };
-                            reader.readAsDataURL(convertedFile);
-                        } else {
-                            failedCount++;
-                            if (convertedCount + failedCount === files.length) {
-                                updateImageList();
-                                updateImagePreview();
-                                showToast(`❌ 转换失败：${failedCount} 个图片无法转换`);
-                            }
-                        }
-                    })
-                    .catch(error => {
-                        console.error('转换失败:', error);
-                        failedCount++;
-                        if (convertedCount + failedCount === files.length) {
-                            updateImageList();
-                            updateImagePreview();
-                            showToast(`❌ 转换失败：${failedCount} 个图片无法转换`);
-                        }
-                    });
-            });
-        }
-
-        // 将图片转换为JPG格式
-        function convertImageToJPG(file) {
-            return new Promise((resolve) => {
-                const canvas = document.createElement('canvas');
-                const ctx = canvas.getContext('2d');
-                const img = new Image();
-                
-                img.onload = function() {
-                    try {
-                        // 获取原始尺寸
-                        const originalWidth = img.naturalWidth;
-                        const originalHeight = img.naturalHeight;
-                        
-                        // 设置canvas尺寸
-                        canvas.width = originalWidth;
-                        canvas.height = originalHeight;
-                        
-                        // 绘制图片（对于透明图片，白色背景）
-                        ctx.fillStyle = '#FFFFFF'; // 白色背景
-                        ctx.fillRect(0, 0, originalWidth, originalHeight);
-                        ctx.drawImage(img, 0, 0, originalWidth, originalHeight);
-                        
-                        // 转换为JPG格式
-                        canvas.toBlob((blob) => {
-                            if (blob) {
-                                // 创建新的文件名
-                                const originalName = file.name;
-                                const nameWithoutExt = originalName.substring(0, originalName.lastIndexOf('.'));
-                                const newFileName = `${nameWithoutExt}_converted.jpg`;
-                                
-                                // 创建新的文件对象
-                                const convertedFile = new File([blob], newFileName, {
-                                    type: 'image/jpeg',
-                                    lastModified: Date.now()
-                                });
-                                
-                                // 清理canvas
-                                canvas.width = 0;
-                                canvas.height = 0;
-                                
-                                resolve(convertedFile);
-                            } else {
-                                resolve(null);
-                            }
-                        }, 'image/jpeg', 0.9); // 质量设置为90%
-                    } catch (error) {
-                        console.error('转换过程中出错:', error);
-                        resolve(null);
-                    }
-                };
-                
-                img.onerror = function() {
-                    console.error('图片加载失败:', file.name);
-                    resolve(null);
-                };
-                
-                // 创建图片URL并加载
-                const reader = new FileReader();
-                reader.onload = function(e) {
-                    img.src = e.target.result;
-                };
-                reader.readAsDataURL(file);
-            });
+            showToast(`成功添加 ${imageFilesList.length} 张图片`);
         }
 
         // 处理URL图片并转换为Base64
@@ -2864,17 +2705,10 @@ function demo() {
                         statusText = 'URL';
                     }
                 } else {
-                    // 检查是否为转换后的JPG文件
-                    if (file.name.includes('_converted.jpg')) {
-                        displayName = `${file.name} (已转换JPG)`;
-                        statusColor = '#fd7e14';
-                        statusText = '已转换';
-                    } else {
-                        displayName = file.name;
-                        statusColor = '#6c757d';
-                        statusText = '本地';
-                    }
+                    displayName = file.name;
                     displaySrc = imageSrcList[index];
+                    statusColor = '#6c757d';
+                    statusText = '本地';
                 }
                 
                 html += `
@@ -2927,16 +2761,9 @@ function demo() {
                     }
                 } else {
                     displaySrc = imageSrcList[index];
-                    // 检查是否为转换后的JPG文件
-                    if (file.name.includes('_converted.jpg')) {
-                        statusColor = '#fd7e14';
-                        statusText = '已转换';
-                        indicatorText = 'JPG';
-                    } else {
-                        statusColor = '#6c757d';
-                        statusText = '本地';
-                        indicatorText = '本地';
-                    }
+                    statusColor = '#6c757d';
+                    statusText = '本地';
+                    indicatorText = '本地';
                 }
                 
                 // 检查新格式的使用情况：![图片1] 格式
@@ -2960,7 +2787,7 @@ function demo() {
                         <div style="position: absolute; bottom: 0; left: 0; right: 0; background: rgba(0,0,0,0.7); color: white; padding: 4px 6px; font-size: 11px; text-overflow: ellipsis; overflow: hidden; white-space: nowrap;">
                             <div style="font-weight: bold; color: #28a745;">${imageRef}</div>
                             <div style="font-size: 10px; color: #ccc; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;">
-                                ${isUrlImage ? (file.status === 'converted' ? 'Base64格式' : file.url) : (file.name.includes('_converted.jpg') ? 'JPG格式(已转换)' : file.name)}
+                                ${isUrlImage ? (file.status === 'converted' ? 'Base64格式' : file.url) : file.name}
                             </div>
                         </div>
                         <div style="position: absolute; bottom: 0; right: 0; background: ${finalIsUsed ? '#28a745' : '#ffc107'}; color: white; padding: 2px 6px; font-size: 10px; border-radius: 4px 0 0 0;">
