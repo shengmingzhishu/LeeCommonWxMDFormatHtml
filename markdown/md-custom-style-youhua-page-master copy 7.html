@@ -380,76 +380,73 @@
                     <h3 class="style-section-title">标题样式区域</h3>
                     <div class="style-controls">
                         <label>H1风格：
-                            <!-- 主样式选择 -->
-                            <select id="style-select" style="width: 200px;" onchange="changeHtml(this.value)">
-                                <option value="style-1">01 简约高级风</option>
-                                <option value="style-2">02 复古衬线风</option>
-                                <option value="style-3">03 复古打字机风</option>
-                                <option value="style-4">04 清新治愈风</option>
-                                <option value="style-5">05 大胆撞色风</option>
-                                <option value="style-6">06 极简几何风</option>
-                                <option value="style-7">07 轻奢质感风</option>
-                                <option value="style-8">08 日系简约风</option>
-                                <option value="style-9">09 暗黑酷感风</option>
-                            </select>
-                        </label>
+                    <!-- 主样式选择 -->
+                    <select id="style-select" style="width: 200px;" onchange="changeHtml(this.value)">
+                        <option value="style-1">01 简约高级风</option>
+                        <option value="style-2">02 复古衬线风</option>
+                        <option value="style-3">03 复古打字机风</option>
+                        <option value="style-4">04 清新治愈风</option>
+                        <option value="style-5">05 大胆撞色风</option>
+                        <option value="style-6">06 极简几何风</option>
+                        <option value="style-7">07 轻奢质感风</option>
+                        <option value="style-8">08 日系简约风</option>
+                        <option value="style-9">09 暗黑酷感风</option>
+                    </select>
+                </label>
 
-                        <!-- H1标题对齐方式 -->
-                        <label>
-                            <input type="radio" name="title-align" value="left" onclick="changeHtml(this.value)">左
-                            <input type="radio" name="title-align" value="center" onclick="changeHtml(this.value)" checked>中
-                            <input type="radio" name="title-align" value="right" onclick="changeHtml(this.value)">右
-                        </label>
+                <!-- H1标题对齐方式 -->
+                <label>H1对齐：
+                    <input type="radio" name="title-align" value="left" onclick="changeHtml(this.value)">左
+                    <input type="radio" name="title-align" value="center" onclick="changeHtml(this.value)" checked>中
+                    <input type="radio" name="title-align" value="right" onclick="changeHtml(this.value)">右
+                </label>
+ 
+                <label>H3-H6风格：
+                    <!-- H3-H6标题样式选择 -->
+                    <select id="heading-style-select" style="width: 200px; padding: 4px; border: 1px solid #ddd; border-radius: 4px;" onChange="changeHtml(this.value)">
+                        <option value="heading-style-1">H3-H6样式1：极简现代</option>
+                        <option value="heading-style-2">H3-H6样式2：优雅衬线</option>
+                        <option value="heading-style-3">H3-H6样式3：渐变文字</option>
+                        <option value="heading-style-4">H3-H6样式4：复古印刷</option>
+                        <option value="heading-style-5">H3-H6样式5：科技感</option>
+                        <option value="heading-style-6">H3-H6样式6：粗体强调</option>
+                        <option value="heading-style-7">H3-H6样式7：下划线装饰</option>
+                        <option value="heading-style-8">H3-H6样式8：边框包围</option>
+                        <option value="heading-style-9">H3-H6样式9：手写风格</option>
+                        <option value="heading-style-10">H3-H6样式10：阴影立体</option>
+                    </select>
+                </label>
 
-                        <br>
-                        <!-- H2风格选择（同H1风格选项） -->
-                        <label>H2风格：
-                            <select id="h2-style-select" style="width: 200px; padding: 4px; border: 1px solid #ddd; border-radius: 4px;" onChange="changeHtml(this.value)">
-                                <option value="style-1">H2样式1：简约高级风</option>
-                                <option value="style-2">H2样式2：复古衬线风</option>
-                                <option value="style-3">H2样式3：复古打字机风</option>
-                                <option value="style-4">H2样式4：清新治愈风</option>
-                                <option value="style-5">H2样式5：大胆撞色风</option>
-                                <option value="style-6">H2样式6：极简几何风</option>
-                                <option value="style-7">H2样式7：轻奢质感风</option>
-                                <option value="style-8">H2样式8：日系简约风</option>
-                                <option value="style-9">H2样式9：暗黑酷感风</option>
-                            </select>
-                        </label>
+                <!-- H3-H6独立对齐方式 -->
+                <label>H3-H6对齐：
+                    <input type="radio" name="h3h6-align" value="left" onclick="changeHtml(this.value)">左
+                    <input type="radio" name="h3h6-align" value="center" onclick="changeHtml(this.value)" checked>中
+                    <input type="radio" name="h3h6-align" value="right" onclick="changeHtml(this.value)">右
+                </label>
 
-                        <!-- H2独立对齐方式 -->
-                        <label>
-                            <input type="radio" name="h2-align" value="left" onclick="changeHtml(this.value)">左
-                            <input type="radio" name="h2-align" value="center" onclick="changeHtml(this.value)" checked>中
-                            <input type="radio" name="h2-align" value="right" onclick="changeHtml(this.value)">右
-                        </label>
+                <!-- H2风格选择（同H1风格选项） -->
+                <label>H2风格：
+                    <select id="h2-style-select" style="width: 200px; padding: 4px; border: 1px solid #ddd; border-radius: 4px;" onChange="changeHtml(this.value)">
+                        <option value="style-1">H2样式1：简约高级风</option>
+                        <option value="style-2">H2样式2：复古衬线风</option>
+                        <option value="style-3">H2样式3：复古打字机风</option>
+                        <option value="style-4">H2样式4：清新治愈风</option>
+                        <option value="style-5">H2样式5：大胆撞色风</option>
+                        <option value="style-6">H2样式6：极简几何风</option>
+                        <option value="style-7">H2样式7：轻奢质感风</option>
+                        <option value="style-8">H2样式8：日系简约风</option>
+                        <option value="style-9">H2样式9：暗黑酷感风</option>
+                    </select>
+                </label>
 
-                        <br>
-        
-                        <label>H3-H6风格：
-                            <!-- H3-H6标题样式选择 -->
-                            <select id="heading-style-select" style="width: 200px; padding: 4px; border: 1px solid #ddd; border-radius: 4px;" onChange="changeHtml(this.value)">
-                                <option value="heading-style-1">H3-H6样式1：极简现代</option>
-                                <option value="heading-style-2">H3-H6样式2：优雅衬线</option>
-                                <option value="heading-style-3">H3-H6样式3：渐变文字</option>
-                                <option value="heading-style-4">H3-H6样式4：复古印刷</option>
-                                <option value="heading-style-5">H3-H6样式5：科技感</option>
-                                <option value="heading-style-6">H3-H6样式6：粗体强调</option>
-                                <option value="heading-style-7">H3-H6样式7：下划线装饰</option>
-                                <option value="heading-style-8">H3-H6样式8：边框包围</option>
-                                <option value="heading-style-9">H3-H6样式9：手写风格</option>
-                                <option value="heading-style-10">H3-H6样式10：阴影立体</option>
-                            </select>
-                        </label>
+                <!-- H2独立对齐方式 -->
+                <label>H2对齐：
+                    <input type="radio" name="h2-align" value="left" onclick="changeHtml(this.value)">左
+                    <input type="radio" name="h2-align" value="center" onclick="changeHtml(this.value)" checked>中
+                    <input type="radio" name="h2-align" value="right" onclick="changeHtml(this.value)">右
+                </label>
 
-                        <!-- H3-H6独立对齐方式 -->
-                        <label>
-                            <input type="radio" name="h3h6-align" value="left" onclick="changeHtml(this.value)" checked>左
-                            <input type="radio" name="h3h6-align" value="center" onclick="changeHtml(this.value)">中
-                            <input type="radio" name="h3h6-align" value="right" onclick="changeHtml(this.value)">右
-                        </label>
-
-                    </div>
+                </div>
                 </div>
 
                 <div class="style-section">
@@ -487,6 +484,12 @@
                             </select>
                         </label>
 
+                        <label>引用对齐：
+                            <input type="radio" name="quote-align" value="left" onclick="changeHtml(this.value)">左
+                            <input type="radio" name="quote-align" value="center" onclick="changeHtml(this.value)" checked>中
+                            <input type="radio" name="quote-align" value="right" onclick="changeHtml(this.value)">右
+                        </label>
+
                         <label>引用字体：
                             <select id="quote-font-select" style="width: 160px; padding: 4px; border: 1px solid #ddd; border-radius: 4px;" onChange="changeHtml(this.value)">
                                 <option value="quote-font-1">默认字体</option>
@@ -503,36 +506,29 @@
                                 <option value="quote-font-12" style="font-family: Georgia, serif;">Georgia（优雅）</option>
                             </select>
                         </label>
-                        
-                        <label>
-                            <input type="radio" name="quote-align" value="left" onclick="changeHtml(this.value)">左
-                            <input type="radio" name="quote-align" value="center" onclick="changeHtml(this.value)" checked>中
-                            <input type="radio" name="quote-align" value="right" onclick="changeHtml(this.value)">右
+
+                        <label>引用缩进：
+                            <input type="checkbox" id="quote-indent" style="margin-left: 10px;">启用首行缩进
                         </label>
 
-
-                        <label>
-                            <input type="checkbox" id="quote-indent" style="margin-left: 10px;">首行缩进
+                        <label>引用阴影：
+                            <input type="checkbox" id="quote-shadow" style="margin-left: 10px;">启用阴影
                         </label>
 
-                        <label>
-                            <input type="checkbox" id="quote-shadow" style="margin-left: 10px;">阴影
+                        <label>引用斜体：
+                            <input type="checkbox" id="quote-italic" style="margin-left: 10px;">启用斜体
                         </label>
 
-                        <label>
-                            <input type="checkbox" id="quote-italic" style="margin-left: 10px;">斜体
-                        </label>
-
-                        <label>
-                            <input type="checkbox" id="quote-border-radius" style="margin-left: 10px;">圆角
-                        </label>
-
-                        <label>
+                        <label>引用字号：
                             <select id="quote-font-size-select" style="width: 100px; padding: 4px; border: 1px solid #ddd; border-radius: 4px;" onChange="changeHtml(this.value)">
                                 <option value="14px">14px</option>
                                 <option value="16px" selected>16px（默认）</option>
                                 <option value="18px">18px</option>
                             </select>
+                        </label>
+
+                        <label>引用圆角：
+                            <input type="checkbox" id="quote-border-radius" style="margin-left: 10px;">启用8px圆角
                         </label>
                     </div>
                 </div>
@@ -541,65 +537,63 @@
                     <h3 class="style-section-title">段落设置区域</h3>
                     <div class="style-controls">
                         <label>段落字体：  
-                            <!-- 段落字体风格选择（统一控制字体、字号、行高、首行缩进等） -->
-                            <select id="template-style-select" style="width: 220px; padding: 4px; border: 1px solid #ddd; border-radius: 4px;" onChange="changeHtml(this.value)">
-                                <option value="template-style-1" style="font-family: 'Microsoft YaHei', sans-serif;">微软雅黑（通用字体）</option>
-                                <option value="template-style-2" style="font-family: 'SimSun', serif;">仿宋（正式文章）</option>
-                                <option value="template-style-3" style="font-family: 'KaiTi', serif;">楷体（学术严谨）</option>
-                                <option value="template-style-4" style="font-family: 'LiSu', cursive;">隶书（古韵风雅）</option>
-                                <option value="template-style-5" style="font-family: 'YouYuan', sans-serif;">幼圆（温馨可爱）</option>
-                                <option value="template-style-6" style="font-family: 'FangSong', serif;">仿宋（复古怀旧）</option>
-                                <option value="template-style-7" style="font-family: 'PingFang SC', sans-serif;">苹方（活泼现代）</option>
-                                <option value="template-style-8" style="font-family: 'Helvetica Neue', sans-serif;">Helvetica（科技感）</option>
-                                <option value="template-style-9" style="font-family: 'Comic Sans MS', cursive;">Comic Sans（手写风格）</option>
-                                <option value="template-style-10" style="font-family: 'Arial', sans-serif;">Arial（商务简洁）</option>
-                                <option value="template-style-11" style="font-family: 'Georgia', serif;">Georgia（优雅衬线）</option>
-                                <option value="template-style-12" style="font-family: 'Times New Roman', serif;">Times（经典正式）</option>
-                                <option value="template-style-13" style="font-family: 'Courier New', monospace;">Courier（等宽代码）</option>
-                                <option value="template-style-14" style="font-family: 'Trebuchet MS', sans-serif;">Trebuchet（现代简洁）</option>
-                                <option value="template-style-15" style="font-family: 'Verdana', sans-serif;">Verdana（清晰易读）</option>
-                                <option value="template-style-16" style="font-family: 'Impact', sans-serif;">Impact（粗体强调）</option>
-                                <option value="template-style-17" style="font-family: 'Palatino', serif;">Palatino（文艺复古）</option>
-                                <option value="template-style-18" style="font-family: 'Garamond', serif;">Garamond（经典书籍）</option>
-                                <option value="template-style-19" style="font-family: 'Baskerville', serif;">Baskerville（杂志精致）</option>
-                                <option value="template-style-20" style="font-family: 'Futura', sans-serif;">Futura（几何现代）</option>
-                            </select>
-                        </label>
+                    <!-- 段落字体风格选择（统一控制字体、字号、行高、首行缩进等） -->
+                    <select id="template-style-select" style="width: 220px; padding: 4px; border: 1px solid #ddd; border-radius: 4px;" onChange="changeHtml(this.value)">
+                        <option value="template-style-1" style="font-family: 'Microsoft YaHei', sans-serif;">微软雅黑（通用字体）</option>
+                        <option value="template-style-2" style="font-family: 'SimSun', serif;">仿宋（正式文章）</option>
+                        <option value="template-style-3" style="font-family: 'KaiTi', serif;">楷体（学术严谨）</option>
+                        <option value="template-style-4" style="font-family: 'LiSu', cursive;">隶书（古韵风雅）</option>
+                        <option value="template-style-5" style="font-family: 'YouYuan', sans-serif;">幼圆（温馨可爱）</option>
+                        <option value="template-style-6" style="font-family: 'FangSong', serif;">仿宋（复古怀旧）</option>
+                        <option value="template-style-7" style="font-family: 'PingFang SC', sans-serif;">苹方（活泼现代）</option>
+                        <option value="template-style-8" style="font-family: 'Helvetica Neue', sans-serif;">Helvetica（科技感）</option>
+                        <option value="template-style-9" style="font-family: 'Comic Sans MS', cursive;">Comic Sans（手写风格）</option>
+                        <option value="template-style-10" style="font-family: 'Arial', sans-serif;">Arial（商务简洁）</option>
+                        <option value="template-style-11" style="font-family: 'Georgia', serif;">Georgia（优雅衬线）</option>
+                        <option value="template-style-12" style="font-family: 'Times New Roman', serif;">Times（经典正式）</option>
+                        <option value="template-style-13" style="font-family: 'Courier New', monospace;">Courier（等宽代码）</option>
+                        <option value="template-style-14" style="font-family: 'Trebuchet MS', sans-serif;">Trebuchet（现代简洁）</option>
+                        <option value="template-style-15" style="font-family: 'Verdana', sans-serif;">Verdana（清晰易读）</option>
+                        <option value="template-style-16" style="font-family: 'Impact', sans-serif;">Impact（粗体强调）</option>
+                        <option value="template-style-17" style="font-family: 'Palatino', serif;">Palatino（文艺复古）</option>
+                        <option value="template-style-18" style="font-family: 'Garamond', serif;">Garamond（经典书籍）</option>
+                        <option value="template-style-19" style="font-family: 'Baskerville', serif;">Baskerville（杂志精致）</option>
+                        <option value="template-style-20" style="font-family: 'Futura', sans-serif;">Futura（几何现代）</option>
+                    </select>
+                </label>
 
-                        <label>
-                            <select id="style-block-background" style="width: 200px; padding: 4px; border: 1px solid #ddd; border-radius: 4px;" onChange="changeHtml(this.value)">
-                                <option value="none">无背景</option>
-                                <option value="#f8f9fa">象牙白（柔和不刺眼）</option>
-                                <option value="#f5f5f5">米白（温暖质感）</option>
-                                <option value="#faf6ed">浅米黄（护眼柔和）</option>
-                                <option value="#e8f4f8">淡天蓝（清新透气）</option>
-                                <option value="#f0f8fb">浅青蓝（冷静舒适）</option>
-                                <option value="#fdf2f8">柔粉色（温馨文艺）</option>
-                                <option value="#f5fafe">冰蓝色（简约高级）</option>
-                                <option value="#faf0f5">浅紫灰（雅致小众）</option>
-                                <option value="#eaf6fa">薄荷绿（清爽护眼）</option>
-                                <option value="#e6e2d3">暖米色（温润厚重）</option>
-                                <option value="#d4e6f1">湖水蓝（沉稳清新）</option>
-                                <option value="#f2e6e8">豆沙粉（温柔复古）</option>
-                                <option value="#d5e8d4">青柠绿（鲜活护眼）</option>
-                                <option value="#e1d5e7">薰衣草紫（雅致柔和）</option>
-                                <option value="#f9e6d8">浅橘色（温暖活力）</option>
-                            </select>
-                        </label>
+                <label>段落块阴影：
+                    <input type="checkbox" id="enable-block-shadow" style="margin-left: 10px;">启用阴影
+                </label>
 
-                        <label>
-                            <input type="checkbox" id="enable-block-shadow" style="margin-left: 10px;">阴影
-                        </label>
+                <label>段落块首行缩进：
+                    <input type="checkbox" id="enable-block-indent" style="margin-left: 10px;">启用缩进
+                </label>
 
-                        <label>
-                            <input type="checkbox" id="enable-block-indent" style="margin-left: 10px;">首行缩进
-                        </label>
+                <label>段落块背景：
+                    <select id="style-block-background" style="width: 200px; padding: 4px; border: 1px solid #ddd; border-radius: 4px;" onChange="changeHtml(this.value)">
+                        <option value="none">无背景</option>
+                        <option value="#f8f9fa">象牙白（柔和不刺眼）</option>
+                        <option value="#f5f5f5">米白（温暖质感）</option>
+                        <option value="#faf6ed">浅米黄（护眼柔和）</option>
+                        <option value="#e8f4f8">淡天蓝（清新透气）</option>
+                        <option value="#f0f8fb">浅青蓝（冷静舒适）</option>
+                        <option value="#fdf2f8">柔粉色（温馨文艺）</option>
+                        <option value="#f5fafe">冰蓝色（简约高级）</option>
+                        <option value="#faf0f5">浅紫灰（雅致小众）</option>
+                        <option value="#eaf6fa">薄荷绿（清爽护眼）</option>
+                        <option value="#e6e2d3">暖米色（温润厚重）</option>
+                        <option value="#d4e6f1">湖水蓝（沉稳清新）</option>
+                        <option value="#f2e6e8">豆沙粉（温柔复古）</option>
+                        <option value="#d5e8d4">青柠绿（鲜活护眼）</option>
+                        <option value="#e1d5e7">薰衣草紫（雅致柔和）</option>
+                        <option value="#f9e6d8">浅橘色（温暖活力）</option>
+                    </select>
+                </label>
 
-                        <label>
-                            <input type="checkbox" id="enable-block-radius" style="margin-left: 10px;" onchange="changeHtml(this.checked)">圆角
-                        </label>
-                        
-
+                <label>段落块圆角：
+                    <input type="checkbox" id="enable-block-radius" style="margin-left: 10px;" onchange="changeHtml(this.checked)">启用8px圆角
+                </label>
                     </div>
                 </div>
             </div>
@@ -681,8 +675,7 @@
     <div id="toast" class="toast">复制成功！</div>
 
     <script>
-    let numberh1Index = 0;
-    let numberh2Index = 0;
+    let numberIndex = 0;
 
     // 图片管理相关变量
     let imageFiles = []; // 图片文件列表
@@ -697,80 +690,91 @@
 
         let numberIndexStr = customNumberIndex !== null ? 
             `${customNumberIndex < 10 ? '0' + customNumberIndex : customNumberIndex}` : 
-            `${numberh1Index++ < 10 ? '0' + numberh1Index : numberh1Index}`;
+            `${numberIndex++ < 10 ? '0' + numberIndex : numberIndex}`;
          
         // 方式1：通过数组初始化（数组元素是 [key, value] 二维数组）
         const h1Style = new Map([
         ["style-1", `
             <!-- 风格1：简约高级风 -->
-            <div style="margin-bottom: 20px;text-align: ${titleAlign};">
+            <div style="margin-bottom: 60px;text-align: ${titleAlign};">
                 <h6 style="text-align: ${titleAlign};font-size: 16px; font-weight: 400; color: #4F46E5; margin: 0 0 6px 0; letter-spacing: 1px;">${numberIndexStr}</h6>
                 <h1 style="text-align: ${titleAlign};font-size: 28px; color: #2D3748; font-weight: 600; margin: 0 0 12px 0; line-height: 1.4; padding-bottom: 8px; border-bottom: 1px solid #E5E7EB;">${titleName}</h1>
+                <p style="font-size: 15px; color: #4A5568; line-height: 1.8; margin: 15px 0 0 0; text-align: justify;">研究发现定期在固定平台更新的插画师，收入比“随缘更新”的高出47%。核心原因在于持续输出能积累精准粉丝，提升账号权重，同时让潜在客户更容易找到并信任创作者。</p>
             </div>
         `],
         ["style-2", `
             <!-- 风格2：复古衬线风 -->
-            <div style="margin-bottom: 20px;text-align: ${titleAlign};">
+            <div style="margin-bottom: 60px;text-align: ${titleAlign};">
                 <h6 style="text-align: ${titleAlign};font-size: 20px; font-weight: 600; color: #8B5A2B; font-family: 'SimSun', serif; margin: 0 0 10px 0; letter-spacing: 2px;">${numberIndexStr}</h6>
                 <h1 style="text-align: ${titleAlign};font-size: 26px; color: #3C2A21; font-weight: 500; font-family: 'SimSun', serif; margin: 0 0 12px 0; line-height: 1.4; padding-left: 16px; border-left: 4px solid #8B5A2B;">${titleName}</h1>
+                <p style="font-size: 15px; color: #4A5568; line-height: 1.8; margin: 15px 0 0 0; text-align: justify;">优质的作品集是接单的关键，设计师需要将作品按主题分类，每类作品搭配简洁的创作说明，包括设计思路、使用工具、项目成果等。避免堆砌作品，精选3-5个高质量案例，比10个普通案例更有说服力。</p>
             </div>
         `],
         ["style-3", `
            <!-- 风格3：复古打字机风 -->
-            <div style="margin-bottom: 20px;text-align: ${titleAlign};">
+            <div style="margin-bottom: 60px;text-align: ${titleAlign};">
                 <h6 style="text-align: ${titleAlign};font-size: 20px; font-weight: 600; color: #654321; font-family: 'Courier New', monospace; margin: 0 0 10px 0; letter-spacing: 4px;">${numberIndexStr}</h6>
                 <h1 style="text-align: ${titleAlign};font-size: 26px; color: #3C2A21; font-weight: 500; font-family: 'Courier New', monospace; margin: 0 0 12px 0; line-height: 1.5; letter-spacing: 2px;">${titleName}</h1>
+                <p style="font-size: 15px; color: #5D4037; line-height: 1.7; margin: 0; text-align: justify; border-left: 2px solid #D7CCC8; padding-left: 16px;">复古打字机风格设计需突出“年代感”与“手工感”，字体选用等宽字体（如Courier New、Special Elite），模拟打字机敲击效果；色彩以米黄、深棕、墨黑为主，可添加轻微噪点、划痕等肌理效果；排版时故意保留轻微的文字错位、行距不均，增强复古质感，适合用于海报、书籍封面、文创产品设计。</p>
             </div>
         `],
         ["style-4", `
             <!-- 风格4：清新治愈风 -->
-            <div style="margin-bottom: 20px;text-align: ${titleAlign};">
+            <div style="margin-bottom: 60px;text-align: ${titleAlign};">
                 <p style="text-align: center; margin: 10px 0;">
                     <span style="display: inline-flex; align-items: center; justify-content: center; width: 36px; height: 36px; border-radius: 50%; background-color: #F0FDF4; color: #48BB78; font-size: 22px; font-weight: bold; line-height: 1; padding: 3px; margin: 0 auto;">
                         ${numberIndexStr}
                     </span>
                 </p>
                 <h1 style="text-align: ${titleAlign};font-size: 26px; color: #22C55E; font-weight: 500; margin: 0 0 12px 0; line-height: 1.4;">${titleName}</h1>
+                <div style="border-left: 4px solid #D1FAE5; padding-left: 16px;">
+                    <p style="font-size: 15px; color: #4A5568; line-height: 1.8; margin: 0; text-align: justify;">日常积累灵感可从生活观察、艺术展览、自然景观中获取，建议建立专属灵感库（如Pinboard、Notion收藏夹），分类存储参考图、文字片段、色彩搭配等素材，定期整理复盘，形成自己的灵感体系。</p>
+                </div>
             </div>
         `],
         ["style-5", `
             <!-- 风格5：大胆撞色风 -->
-            <div style="margin-bottom: 20px;text-align: ${titleAlign};">
+            <div style="margin-bottom: 60px;text-align: ${titleAlign};">
                 <p style="text-align: center; margin: 10px 0;">
                     <span style="display: inline-flex; align-items: center; justify-content: center; width: 36px; height: 36px; border-radius: 50%; background-color: #FF6B35; color: #FFFFFF; font-size: 22px; font-weight: bold; line-height: 1; padding: 3px; margin: 0 auto;">
                         ${numberIndexStr}
                     </span>
                 </p>
                 <h1 style="text-align: ${titleAlign};font-size: 26px; color: #2D3748; font-weight: 700; margin: 0 0 12px 0; line-height: 1.4; border-bottom: 1px solid #FFE4D6; padding-bottom: 1px;">${titleName}</h1>
+                
+                <p style="font-size: 15px; color: #4A5568; line-height: 1.8; margin: 15px 0 0 0; text-align: justify;">与客户沟通时，先明确需求核心（如使用场景、目标人群、风格偏好），再提供2-3个方案方向而非单一方案，减少反复修改成本。同时用可视化工具（如线框图、色卡）辅助表达，让客户更直观理解设计思路。</p>
             </div>
         `],
         ["style-6", `
             <!-- 风格6：极简几何风 -->
-            <div style="margin-bottom: 20px;text-align: ${titleAlign};">
+            <div style="margin-bottom: 60px;text-align: ${titleAlign};">
                 <h6 style="text-align: ${titleAlign};font-size: 16px; font-weight: 400; color: #4F46E5; margin: 0 0 6px 0; letter-spacing: 1px;">${numberIndexStr}</h6>
                 <h1 style="text-align: ${titleAlign};font-size: 26px; color: #4F46E5; font-weight: 600; margin: 0 0 10px 0; line-height: 1.4;">${titleName}</h1>
+                <p style="font-size: 15px; color: #374151; line-height: 1.8; margin: 0; text-align: justify;">收费标准可参考“基础定价+难度系数+交付周期”公式：基础定价根据自身经验（如入行年限、案例质量）设定，难度系数按项目复杂度（如插画张数、细节要求）调整，加急项目可加收20%-50%服务费，同时明确交付内容和修改次数，避免后续纠纷。</p>
             </div>
         `],
         ["style-7", `
             <!-- 风格7：轻奢质感风 -->
-            <div style="margin-bottom: 20px;text-align: ${titleAlign};">
+            <div style="margin-bottom: 60px;text-align: ${titleAlign};">
                 <h6 style="text-align: ${titleAlign};font-size: 16px; font-weight: 400; color: #718096; margin: 0 0 6px 0; letter-spacing: 1px;">${numberIndexStr}</h6>
                 <h1 style="text-align: ${titleAlign};font-size: 28px; color: #2D3748; font-weight: 500; margin: 0 0 12px 0; line-height: 1.4; padding-bottom: 8px; border-bottom: 1px solid #E0E7FF; letter-spacing: 0.5px;">${titleName}</h1>
+                <p style="font-size: 15px; color: #4A5568; line-height: 1.8; margin: 15px 0 0 0; text-align: justify;">高端品牌设计需注重“少即是多”，通过精简色彩体系（建议2-3种主辅色）、统一字体层级、强化细节质感（如烫金工艺、哑光材质表现），传递品牌的奢华感与专业性。同时，视觉元素需与品牌调性强绑定，避免过度花哨的设计分散用户注意力。</p>
             </div>
         `],
         ["style-8", `
             <!-- 风格8：日系简约风 -->
-            <div style="margin-bottom: 20px;text-align: ${titleAlign};">
+            <div style="margin-bottom: 60px;text-align: ${titleAlign};">
                 <h6 style="text-align: ${titleAlign};font-size: 16px; font-weight: 400; color: #718096; margin: 0 0 6px 0; letter-spacing: 1px;">${numberIndexStr}</h6>
                 <h1 style="text-align: ${titleAlign};font-size: 24px; color: #2D3748; font-weight: 500; margin: 0 0 15px 0; line-height: 1.4; letter-spacing: -0.5px;">${titleName}</h1>
+                <p style="font-size: 15px; color: #4A5568; line-height: 1.8; margin: 0; text-align: justify; border-top: 1px solid #F0F0F0; padding-top: 16px;">日系杂志排版核心是“留白+秩序感”，页面留白率建议≥30%，文字间距、行高适当放大，提升阅读舒适度；字体选择无衬线字体（如思源黑体、Helvetica），标题与正文层级通过字号和字重区分，避免过多装饰；图片以竖版构图、低饱和色调为主，搭配简洁文字说明，营造清新治愈的视觉体验。</p>
             </div>
         `],
         ["style-9", `
             <!-- 风格9：暗黑酷感风 -->
-            <div style="padding: 24px; border-radius: 8px; margin-bottom: 20px;text-align: ${titleAlign};">
+            <div style="padding: 24px; border-radius: 8px; margin-bottom: 60px;text-align: ${titleAlign};">
                 <h6 style="text-align: ${titleAlign};font-size: 18px; font-weight: 700; color: #FF2E63; font-family: 'Consolas', monospace; letter-spacing: 3px; margin: 0 0 8px 0;">${numberIndexStr}</h6>
                 <h1 style="text-align: ${titleAlign};font-size: 26px; color: #000000; font-weight: 600; margin: 0 0 15px 0; line-height: 1.4; padding-bottom: 6px; border-bottom: 3px solid #FF2E63;">${titleName}</h1>
-                
+                <p style="font-size: 15px; color: #000000; line-height: 1.8; margin: 0; text-align: justify;">暗黑系UI设计需平衡“视觉冲击力”与“可读性”：背景选用深灰（而非纯黑）减少视觉疲劳，文字与背景对比度需≥4.5:1；强调色可选用高饱和色（如红、蓝、紫）提升重点元素辨识度；图标采用线性或极简面性设计，避免复杂纹理；同时注重光影层次，通过轻微渐变增强界面立体感。</p>
             </div>
         `]
         ]);
@@ -1276,8 +1280,7 @@
     function autoFormatText(rawText) {
         
         // 每次都初始化
-        numberh1Index = 0
-        numberh2Index = 1
+        numberIndex = 0;
 
         const selectedStyle = document.getElementById('style-select').value;
         const headingStyleType = document.getElementById('heading-style-select').value;
@@ -1386,7 +1389,6 @@
             const line = lines[i];
             const trimmedLine = line.trim();
 
-
             // 跳过连续的空行
             if (trimmedLine === '') {
                 if (inList) {
@@ -1411,8 +1413,6 @@
                 const content = processInlineMarkdown(headingMatch[2]);
                 
                 if(level === 1) {
-                    // 重置2级标题
-                    numberh2Index = 1
                     // 根据样式选项决定是否应用part样式
                     html.push(`<div class="part-container">${generateH1HTMLStyle(selectedStyle,titleAlign, content, null)}</div>`);
        
@@ -1421,7 +1421,7 @@
                         // H2使用H1的风格系统，但使用独立对齐
                         const h2Style = document.getElementById('h2-style-select')?.value || 'style-1';
                         const h2Align = document.querySelector('input[name="h2-align"]:checked')?.value || 'center';
-                        const h2NumberIndex = numberh2Index++; // H2独立序号
+                        const h2NumberIndex = numberIndex++; // H2独立序号
                         html.push(`<div class="part-container">${generateH1HTMLStyle(h2Style, h2Align, content, h2NumberIndex)}</div>`);
                     } else {
                         // H3-H6使用独立的H3-H6样式和对齐
