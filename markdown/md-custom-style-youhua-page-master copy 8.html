@@ -92,62 +92,6 @@
             height: auto!important;
         }
 
-        /* 表格样式 */
-        table {
-            width: 100%;
-            border-collapse: collapse;
-            margin: 20px 0;
-            font-size: 14px;
-            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
-            border-radius: 8px;
-            overflow: hidden;
-        }
-
-        thead {
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            color: white;
-        }
-
-        thead th {
-            padding: 12px 15px;
-            text-align: left;
-            font-weight: 600;
-            letter-spacing: 0.5px;
-        }
-
-        tbody tr {
-            border-bottom: 1px solid #e0e0e0;
-            transition: background-color 0.3s ease;
-        }
-
-        tbody tr:hover {
-            background-color: #f5f5f5;
-        }
-
-        tbody tr:last-child {
-            border-bottom: none;
-        }
-
-        tbody td {
-            padding: 12px 15px;
-            text-align: left;
-        }
-
-        tbody tr:nth-child(even) {
-            background-color: #f9f9f9;
-        }
-
-        /* 表格响应式 */
-        @media (max-width: 768px) {
-            table {
-                font-size: 12px;
-            }
-            
-            thead th, tbody td {
-                padding: 8px 10px;
-            }
-        }
-
         /* 返回主页按钮样式 */
         .back-home {
             position: fixed;
@@ -1518,62 +1462,6 @@
                 continue;
             }
 
-            // 处理表格
-            if (trimmedLine.startsWith('|') && trimmedLine.endsWith('|')) {
-                if (inList) {
-                    html.push(currentListType === 'ol' ? '</ol>' : '</ul>');
-                    inList = false;
-                    currentListType = '';
-                }
-                
-                // 收集表格的所有行
-                let tableLines = [];
-                let k = i;
-                while (k < lines.length) {
-                    const tableLine = lines[k].trim();
-                    if (tableLine.startsWith('|') && tableLine.endsWith('|')) {
-                        tableLines.push(tableLine);
-                        k++;
-                    } else {
-                        break;
-                    }
-                }
-                
-                // 解析表格
-                if (tableLines.length >= 2) {
-                    let tableHTML = '<table>';
-                    
-                    // 第一行是表头
-                    const headerCells = tableLines[0].split('|').filter(cell => cell.trim() !== '');
-                    tableHTML += '<thead><tr>';
-                    headerCells.forEach(cell => {
-                        tableHTML += `<th>${processInlineMarkdown(cell.trim())}</th>`;
-                    });
-                    tableHTML += '</tr></thead>';
-                    
-                    // 第二行是分隔符（跳过）
-                    // 从第三行开始是数据行
-                    if (tableLines.length > 2) {
-                        tableHTML += '<tbody>';
-                        for (let m = 2; m < tableLines.length; m++) {
-                            const dataCells = tableLines[m].split('|').filter(cell => cell.trim() !== '');
-                            tableHTML += '<tr>';
-                            dataCells.forEach(cell => {
-                                tableHTML += `<td>${processInlineMarkdown(cell.trim())}</td>`;
-                            });
-                            tableHTML += '</tr>';
-                        }
-                        tableHTML += '</tbody>';
-                    }
-                    
-                    tableHTML += '</table>';
-                    html.push(tableHTML);
-                }
-                
-                i = k;
-                continue;
-            }
-
             // 处理列表
             if (/^\d+\.\s/.test(trimmedLine) || /^[-*+]\s/.test(trimmedLine)) {
                 if (inList) {
@@ -2343,8 +2231,6 @@ const rawText = "# 欢迎使用马克飞象\n" +
         // 初始化Markdown解析器
         marked.setOptions({
             breaks: true,
-            gfm: true,
-            tables: true,
             highlight: function(code) {
                 return hljs.highlightAuto(code).value;
             }
@@ -3285,6 +3171,6 @@ function demo() {
     </script>
     
     <!-- 代码高亮 -->
-    <script src="../js/highlight.min.js"></script>
+    <script src="./js/highlight.min.js"></script>
 </body>
 </html>
