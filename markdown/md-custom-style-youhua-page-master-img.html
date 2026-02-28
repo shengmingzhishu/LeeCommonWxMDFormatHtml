@@ -33,11 +33,12 @@
         }
 
         textarea {
-            flex: 1;
             padding: 15px;
             border: 1px solid #ddd;
             border-radius: 4px;
             resize: none;
+            overflow-y: auto;
+            height: 3000px;
             font-family: 'Courier New', monospace;
         }
 
@@ -183,6 +184,43 @@
             content: "🏠";
             font-size: 16px;
         }
+
+        
+
+        /* 批量保存按钮样式 */
+        .batch-save-btn {
+            position: fixed;
+            bottom: 20px;
+            right: 140px;
+            padding: 8px 15px;
+            background: #ffd93d;
+            color: #333;
+            border: none;
+            border-radius: 20px;
+            cursor: pointer;
+            font-size: 14px;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            text-decoration: none;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+            transition: all 0.3s ease, opacity 0.3s ease;
+            z-index: 1000;
+            opacity: 0.7;
+        }
+
+        .batch-save-btn:hover {
+            background: #ffc107;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 8px rgba(0,0,0,0.15);
+            opacity: 0.9;
+        }
+
+        .batch-save-btn::before {
+            content: "📥";
+            font-size: 16px;
+        }
+
 
         /* 浮动提示样式 */
         .toast {
@@ -442,33 +480,7 @@
             padding: 40px;
             font-size: 14px;
         }
-
-        /* 批量保存按钮样式 */
-        .batch-save-btn {
-            position: fixed;
-            bottom: 30px;
-            right: 30px;
-            padding: 12px 24px;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            color: white;
-            border: none;
-            border-radius: 30px;
-            cursor: pointer;
-            font-size: 16px;
-            font-weight: 600;
-            box-shadow: 0 4px 12px rgba(102, 126, 234, 0.4);
-            transition: all 0.3s ease;
-            z-index: 1000;
-        }
-
-        .batch-save-btn:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 6px 16px rgba(102, 126, 234, 0.6);
-        }
-
-        .batch-save-btn:active {
-            transform: translateY(-1px);
-        }
+       
 
         /* 小红书图片卡片样式 */
         .xiaohongshu-image-card {
@@ -494,7 +506,7 @@
             left: 0;
             width: 100%;
             height: 100%;
-            overflow: hidden;
+            overflow: visible;
             border-radius: 12px;
         }
 
@@ -503,9 +515,12 @@
             height: 1440px;
             transform-origin: top left;
             position: absolute;
+            padding: 20px;
             top: 0;
             left: 0;
-            pointer-events: none;
+            pointer-events: auto;
+            overflow: visible;
+            z-index: 1;
         }
 
         .xiaohongshu-image-card-label {
@@ -537,19 +552,42 @@
         }
 
         .xiaohongshu-card-header {
-            text-align: center;
-            margin-bottom: 40px;
-            padding-bottom: 20px;
+            position: absolute;
+            top: 50px;
+            left: 50px;
+            right: 50px;
+            height: 50px;
+            display: grid;
+            grid-template-columns: 1fr 1fr 1fr;
+            align-items: center;
             border-bottom: 2px solid #f0f0f0;
         }
 
-        .xiaohongshu-card-header-text {
-            font-size: 24px;
+        .xiaohongshu-card-header-left {
+            font-size: 18px;
             color: #999;
+            display: flex;
+            align-items: center;
+        }
+
+        .xiaohongshu-card-header-center {
+            font-size: 18px;
+            color: #999;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .xiaohongshu-card-header-right {
+            font-size: 18px;
+            color: #999;
+            display: flex;
+            align-items: center;
+            justify-content: flex-end;
         }
 
         .xiaohongshu-card-title {
-            font-size: 64px;
+            font-size: 48px;
             font-weight: 700;
             line-height: 1.2;
             margin-bottom: 20px;
@@ -565,6 +603,17 @@
         .xiaohongshu-card-content {
             flex: 1;
             overflow: hidden;
+            padding-top: 70px;  /* 避免与页眉重叠 */
+            padding-bottom: 70px;  /* 避免与页脚重叠 */
+        }
+
+        /* 主图内容容器：垂直居中 */
+        .xiaohongshu-card-main-content {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
         }
 
         .xiaohongshu-card-subtitle {
@@ -574,12 +623,38 @@
         }
 
         .xiaohongshu-card-footer {
-            text-align: center;
-            margin-top: 40px;
-            padding-top: 20px;
+            position: absolute;
+            bottom: 50px;
+            left: 50px;
+            right: 50px;
+            height: 50px;
+            display: grid;
+            grid-template-columns: 1fr 1fr 1fr;
+            align-items: center;
             border-top: 2px solid #f0f0f0;
-            font-size: 28px;
-            color: #666;
+        }
+
+        .xiaohongshu-card-footer-left {
+            font-size: 18px;
+            color: #999;
+            display: flex;
+            align-items: center;
+        }
+
+        .xiaohongshu-card-footer-center {
+            font-size: 18px;
+            color: #999;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .xiaohongshu-card-footer-right {
+            font-size: 18px;
+            color: #999;
+            display: flex;
+            align-items: center;
+            justify-content: flex-end;
         }
 
         .xiaohongshu-end-card {
@@ -608,13 +683,12 @@
     </style>
 </head>
 <body>
+    <a href="#" class="batch-save-btn" onclick="batchSaveXiaohongshuImages()"> 批量保存</a>
 
     <a href="../index.html" class="back-home"> 返回主页</a>
+
     
-    <!-- 批量保存按钮 -->
-    <button class="batch-save-btn" onclick="batchSaveXiaohongshuImages()" id="batch-save-btn">
-        📥 批量保存
-    </button>
+    
     
     <div class="container">
         <div class="editor-box">
@@ -622,7 +696,18 @@
             <div class="style-sticky-container">
                 <!-- 小红书设置区域 -->
                 <div class="style-section" id="xiaohongshu-section">
-                    <h3 class="style-section-title">🌸 小红书设置</h3>
+                     
+                    <!-- 3. 作者介绍 -->
+                    <div class="style-controls" style=" border-top: 1px solid #eee;">
+                        <label style="font-weight: 600; color: #666;">作者介绍：</label>
+                        <label>作者：
+                            <input type="text" id="author-input" value="北屿的蓝色" placeholder="输入作者名称" style="width: 150px; padding: 4px; border: 1px solid #ddd; border-radius: 4px;">
+                        </label>
+                        <label>关注：
+                            <input type="text" id="follow-text-input" value="欢迎关注，点个好运赞吧~" placeholder="输入关注语" style="width: 200px; padding: 4px; border: 1px solid #ddd; border-radius: 4px;">
+                        </label>
+                    </div>
+                    <!-- 1. 主题切换 -->
                     <div class="style-controls">
                         <label>主题风格：
                             <button id="theme-prev-btn" style="padding: 4px 12px; background: #667eea; color: white; border: none; border-radius: 4px; cursor: pointer;">◀</button>
@@ -639,32 +724,78 @@
                             </select>
                         </label>
                     </div>
+                    
+                    <!-- 2. 页眉页脚设置 -->
                     <div class="style-controls">
-                        <label>作者名称：
-                            <input type="text" id="author-input" value="北屿的蓝色" placeholder="输入作者名称" style="width: 150px; padding: 4px; border: 1px solid #ddd; border-radius: 4px;">
+                        <label style="font-weight: 600; color: #666; margin-right: 10px;">页眉（左中右布局）：</label>
+                        <label style="margin-right: 15px;">
+                            <strong>左：</strong>
+                            <select id="header-left-content" style="padding: 2px;">
+                                <option value="none">无</option>
+                                <option value="author">作者</option>
+                                <option value="title">标题</option>
+                                <option value="follow">关注</option>
+                            </select>
+                        </label>
+                        <label style="margin-right: 15px;">
+                            <strong>中：</strong>
+                            <select id="header-center-content" style="padding: 2px;">
+                                <option value="none">无</option>
+                                <option value="author">作者</option>
+                                <option value="title" selected>标题</option>
+                                <option value="follow">关注</option>
+                            </select>
+                        </label>
+                        <label style="margin-right: 15px;">
+                            <strong>右：</strong>
+                            <select id="header-right-content" style="padding: 2px;">
+                                <option value="none">无</option>
+                                <option value="author">作者</option>
+                                <option value="title">标题</option>
+                                <option value="follow" selected>关注</option>
+                            </select>
                         </label>
                         <label>
-                            <input type="checkbox" id="show-author" checked>显示作者
+                            <strong>位置：</strong>
+                            <label>主图 <input type="checkbox" id="header-show-main" checked></label>
+                            <label>内容图 <input type="checkbox" id="header-show-content" checked></label>
+                            <label>尾图 <input type="checkbox" id="header-show-end" checked></label>
                         </label>
                     </div>
                     <div class="style-controls">
-                        <label>关注语：
-                            <input type="text" id="follow-text-input" value="欢迎关注，点个好运赞吧~" placeholder="输入关注语" style="width: 200px; padding: 4px; border: 1px solid #ddd; border-radius: 4px;">
+                        <label style="font-weight: 600; color: #666; margin-right: 10px;">页脚（左中右布局）：</label>
+                        <label style="margin-right: 15px;">
+                            <strong>左：</strong>
+                            <select id="footer-left-content" style="padding: 2px;">
+                                <option value="none">无</option>
+                                <option value="author" selected>作者</option>
+                                <option value="title">标题</option>
+                                <option value="follow">关注</option>
+                            </select>
                         </label>
-                    </div>
-                    <div class="style-controls">
-                        <label style="font-weight: 600; color: #666;">显示位置：</label>
-                        <label>
-                            <input type="checkbox" id="show-follow-main" checked>主图页眉页脚
+                        <label style="margin-right: 15px;">
+                            <strong>中：</strong>
+                            <select id="footer-center-content" style="padding: 2px;">
+                                <option value="none">无</option>
+                                <option value="author">作者</option>
+                                <option value="title">标题</option>
+                                <option value="follow">关注</option>
+                            </select>
+                        </label>
+                        <label style="margin-right: 15px;">
+                            <strong>右：</strong>
+                            <select id="footer-right-content" style="padding: 2px;">
+                                <option value="none">无</option>
+                                <option value="author">作者</option>
+                                <option value="title">标题</option>
+                                <option value="follow" selected>关注</option>
+                            </select>
                         </label>
                         <label>
-                            <input type="checkbox" id="show-follow-content-header" checked>内容页眉
-                        </label>
-                        <label>
-                            <input type="checkbox" id="show-follow-content-footer" checked>内容页脚
-                        </label>
-                        <label>
-                            <input type="checkbox" id="show-follow-end" checked>尾图页眉页脚
+                            <strong>位置：</strong>
+                            <label>主图 <input type="checkbox" id="footer-show-main" checked></label>
+                            <label>内容图 <input type="checkbox" id="footer-show-content" checked></label>
+                            <label>尾图 <input type="checkbox" id="footer-show-end" checked></label>
                         </label>
                     </div>
                 </div>
@@ -689,9 +820,9 @@
 
                         <!-- H1标题对齐方式 -->
                         <label>
-                            <input type="radio" name="title-align" value="left" onclick="changeHtml(this.value)">左
-                            <input type="radio" name="title-align" value="center" onclick="changeHtml(this.value)" checked>中
-                            <input type="radio" name="title-align" value="right" onclick="changeHtml(this.value)">右
+                            <input type="radio" name="title-align" value="left" onclick="changeHtml(this.value);updateXiaohongshuPreview()">左
+                            <input type="radio" name="title-align" value="center" onclick="changeHtml(this.value);updateXiaohongshuPreview()" checked>中
+                            <input type="radio" name="title-align" value="right" onclick="changeHtml(this.value);updateXiaohongshuPreview()">右
                         </label>
 
                         <br>
@@ -712,9 +843,9 @@
 
                         <!-- H2独立对齐方式 -->
                         <label>
-                            <input type="radio" name="h2-align" value="left" onclick="changeHtml(this.value)">左
-                            <input type="radio" name="h2-align" value="center" onclick="changeHtml(this.value)" checked>中
-                            <input type="radio" name="h2-align" value="right" onclick="changeHtml(this.value)">右
+                            <input type="radio" name="h2-align" value="left" onclick="changeHtml(this.value);updateXiaohongshuPreview()">左
+                            <input type="radio" name="h2-align" value="center" onclick="changeHtml(this.value);updateXiaohongshuPreview()" checked>中
+                            <input type="radio" name="h2-align" value="right" onclick="changeHtml(this.value);updateXiaohongshuPreview()">右
                         </label>
 
                         <br>
@@ -737,9 +868,9 @@
 
                         <!-- H3-H6独立对齐方式 -->
                         <label>
-                            <input type="radio" name="h3h6-align" value="left" onclick="changeHtml(this.value)" checked>左
-                            <input type="radio" name="h3h6-align" value="center" onclick="changeHtml(this.value)">中
-                            <input type="radio" name="h3h6-align" value="right" onclick="changeHtml(this.value)">右
+                            <input type="radio" name="h3h6-align" value="left" onclick="changeHtml(this.value);updateXiaohongshuPreview()" checked>左
+                            <input type="radio" name="h3h6-align" value="center" onclick="changeHtml(this.value);updateXiaohongshuPreview()">中
+                            <input type="radio" name="h3h6-align" value="right" onclick="changeHtml(this.value);updateXiaohongshuPreview()">右
                         </label>
 
                     </div>
@@ -798,9 +929,9 @@
                         </label>
                         
                         <label>
-                            <input type="radio" name="quote-align" value="left" onclick="changeHtml(this.value)">左
-                            <input type="radio" name="quote-align" value="center" onclick="changeHtml(this.value)" checked>中
-                            <input type="radio" name="quote-align" value="right" onclick="changeHtml(this.value)">右
+                            <input id="quote-align-left" type="radio" name="quote-align" value="left" onclick="changeHtml(this.value);updateXiaohongshuPreview()"><label for="quote-align-left">左</label>
+                            <input id="quote-align-center" type="radio" name="quote-align" value="center" onclick="changeHtml(this.value);updateXiaohongshuPreview()" checked><label for="quote-align-center">中</label>
+                            <input id="quote-align-right" type="radio" name="quote-align" value="right" onclick="changeHtml(this.value);updateXiaohongshuPreview()"><label for="quote-align-right">右</label> 
                         </label>
 
 
@@ -832,7 +963,15 @@
 
                 <div class="style-section">
                     <h3 class="style-section-title">段落设置区域</h3>
+                
                     <div class="style-controls">
+                        <label>段落字号：
+                            <select id="xiaohongshu-font-size" style="padding: 4px; border: 1px solid #ddd; border-radius: 4px;">
+                                <option value="24">24px</option>
+                                <option value="26" selected>26px</option>
+                                <option value="28">28px</option>
+                            </select>
+                        </label>
                         <label>段落字体：  
                             <!-- 段落字体风格选择（统一控制字体、字号、行高、首行缩进等） -->
                             <select id="template-style-select" style="width: 220px; padding: 4px; border: 1px solid #ddd; border-radius: 4px;" onChange="changeHtml(this.value)">
@@ -1083,11 +1222,20 @@
         const xiaohongshuInputs = [
             'author-input',
             'follow-text-input',
-            'show-author',
-            'show-follow-main',
-            'show-follow-content-header',
-            'show-follow-content-footer',
-            'show-follow-end'
+            'theme-select',
+            'header-left-content',
+            'header-center-content',
+            'header-right-content',
+            'header-show-main',
+            'header-show-content',
+            'header-show-end',
+            'footer-left-content',
+            'footer-center-content',
+            'footer-right-content',
+            'footer-show-main',
+            'footer-show-content',
+            'footer-show-end',
+            'xiaohongshu-font-size'
         ];
 
         xiaohongshuInputs.forEach(id => {
@@ -1159,11 +1307,39 @@
     // ========== 智能拆分算法 ==========
     function extractArticleStructure(markdownText) {
         const lines = markdownText.split('\n').filter(line => line.trim());
+
+        // 处理每一行，去除Markdown语法
+        const processLine = (line) => {
+            if (!line) return '';
+
+            // 去除开头和结尾的空格
+            let processed = line.trim();
+
+            // 处理 Markdown 标题语法 (# ## ### 等)
+            // 移除开头的 # 符号和可选的空格
+            processed = processed.replace(/^#{1,6}\s+/, '');
+
+            // 移除其他常见的Markdown格式标记
+            processed = processed.replace(/^\*\*/, '').replace(/\*\*$/, ''); // 加粗
+            processed = processed.replace(/^_/, '').replace(/_$/, ''); // 斜体
+            processed = processed.replace(/^`/, '').replace(/`$/, ''); // 行内代码
+
+            return processed;
+        };
+
+        // 处理标题、副标题、摘要
+        const title = processLine(lines[0]) || '标题';
+        const subtitle = processLine(lines[1]) || '副标题';
+        const summary = processLine(lines[2]) || '摘要';
+
+        // 内容部分保持原样，因为后续会用 marked.js 解析
+        const content = lines.slice(3).join('\n');
+
         return {
-            title: lines[0] || '标题',
-            subtitle: lines[1] || '副标题',
-            summary: lines[2] || '摘要',
-            content: lines.slice(3).join('\n')
+            title,
+            subtitle,
+            summary,
+            content
         };
     }
 
@@ -1251,6 +1427,44 @@
     }
 
     function parseMarkdownToElements(markdownText) {
+        // 先处理图片引用，将 ![图片1] 转换为实际的 <img> 标签
+        markdownText = markdownText.replace(/!\[([^\]]+)\]/g, (match, label) => {
+            // 尝试解析图片索引
+            let imageIndex = -1;
+            
+            // 格式1：![图片1], ![图片2], ...
+            const numberMatch = label.match(/^图片(\d+)$/);
+            if (numberMatch) {
+                imageIndex = parseInt(numberMatch[1]) - 1;
+            }
+            
+            // 格式2：![img1], ![img2], ...
+            if (imageIndex === -1) {
+                const imgNumberMatch = label.match(/^img(\d+)$/i);
+                if (imgNumberMatch) {
+                    imageIndex = parseInt(imgNumberMatch[1]) - 1;
+                }
+            }
+            
+            // 格式3：直接使用数字 ![1], ![2], ...
+            if (imageIndex === -1) {
+                const directNumberMatch = label.match(/^(\d+)$/);
+                if (directNumberMatch) {
+                    imageIndex = parseInt(directNumberMatch[1]) - 1;
+                }
+            }
+            
+            // 如果找到有效索引且图片存在
+            if (imageIndex >= 0 && imageIndex < imageSrcList.length) {
+                const imageSrc = imageSrcList[imageIndex];
+                const fileName = imageFiles[imageIndex]?.name || `图片${imageIndex + 1}`;
+                return `<img src="${imageSrc}" alt="${label}" style="max-width: 100%; max-height: 450px; height: auto; border-radius: 6px; box-shadow: 0 2px 8px rgba(0,0,0,0.15); margin: 15px auto; display: block;" data-image-ref="${label}" data-image-index="${imageIndex}" data-file-name="${fileName}">`;
+            }
+            
+            // 如果找不到对应的图片，返回原样
+            return match;
+        });
+
         const html = marked.parse(markdownText);
         const tempDiv = document.createElement('div');
         tempDiv.innerHTML = html;
@@ -1343,34 +1557,61 @@
     function splitContentToXiaohongshuImages(markdownText) {
         const articleStructure = extractArticleStructure(markdownText);
         const elements = parseMarkdownToElements(articleStructure.content);
-        
+
         const images = [];
 
-        // 1. 生成主图
+        // 读取页眉页脚配置
+        const headerLeftContent = document.getElementById('header-left-content')?.value || 'none';
+        const headerCenterContent = document.getElementById('header-center-content')?.value || 'none';
+        const headerRightContent = document.getElementById('header-right-content')?.value || 'none';
+        const footerLeftContent = document.getElementById('footer-left-content')?.value || 'none';
+        const footerCenterContent = document.getElementById('footer-center-content')?.value || 'none';
+        const footerRightContent = document.getElementById('footer-right-content')?.value || 'none';
+
+        const showHeaderMain = document.getElementById('header-show-main')?.checked !== false;
+        const showHeaderContent = document.getElementById('header-show-content')?.checked !== false;
+        const showHeaderEnd = document.getElementById('header-show-end')?.checked !== false;
+        const showFooterMain = document.getElementById('footer-show-main')?.checked !== false;
+        const showFooterContent = document.getElementById('footer-show-content')?.checked !== false;
+        const showFooterEnd = document.getElementById('footer-show-end')?.checked !== false;
+
+        // 1. 生成主图（固定显示：居中标题+副标题，不显示作者）
         images.push({
             type: 'main',
             title: articleStructure.title,
+            subtitle: articleStructure.subtitle,
             author: document.getElementById('author-input').value,
-            showAuthor: document.getElementById('show-author').checked,
             followText: document.getElementById('follow-text-input').value,
-            showFollowHeader: document.getElementById('show-follow-main').checked,
-            showFollowFooter: document.getElementById('show-follow-main').checked,
+            showTitle: true,
+            showSubtitle: true,
+            headerLeftContent: showHeaderMain ? headerLeftContent : 'none',
+            headerCenterContent: showHeaderMain ? headerCenterContent : 'none',
+            headerRightContent: showHeaderMain ? headerRightContent : 'none',
+            footerLeftContent: showFooterMain ? footerLeftContent : 'none',
+            footerCenterContent: showFooterMain ? footerCenterContent : 'none',
+            footerRightContent: showFooterMain ? footerRightContent : 'none',
             style: getCurrentStyleConfig()
         });
 
         // 2. 生成内容图（智能拆分）
         const maxWidth = XIAOHONGSHU_IMAGE_CONFIG.width - XIAOHONGSHU_IMAGE_CONFIG.padding * 2;
         const availableHeight = XIAOHONGSHU_IMAGE_CONFIG.availableHeight;
-        
+
         let currentImage = {
             type: 'content',
             index: 1,
+            title: articleStructure.title,
             subtitle: articleStructure.subtitle,
+            author: document.getElementById('author-input').value,
             elements: [],
             currentHeight: XIAOHONGSHU_IMAGE_CONFIG.headerHeight + XIAOHONGSHU_IMAGE_CONFIG.subtitleHeight + XIAOHONGSHU_IMAGE_CONFIG.footerHeight,
             followText: document.getElementById('follow-text-input').value,
-            showFollowHeader: document.getElementById('show-follow-content-header').checked,
-            showFollowFooter: document.getElementById('show-follow-content-footer').checked,
+            headerLeftContent: showHeaderContent ? headerLeftContent : 'none',
+            headerCenterContent: showHeaderContent ? headerCenterContent : 'none',
+            headerRightContent: showHeaderContent ? headerRightContent : 'none',
+            footerLeftContent: showFooterContent ? footerLeftContent : 'none',
+            footerCenterContent: showFooterContent ? footerCenterContent : 'none',
+            footerRightContent: showFooterContent ? footerRightContent : 'none',
             style: getCurrentStyleConfig()
         };
 
@@ -1382,12 +1623,18 @@
                 currentImage = {
                     type: 'content',
                     index: images.length - 1 + 1,
+                    title: articleStructure.title,
                     subtitle: articleStructure.subtitle,
+                    author: document.getElementById('author-input').value,
                     elements: [],
                     currentHeight: XIAOHONGSHU_IMAGE_CONFIG.headerHeight + XIAOHONGSHU_IMAGE_CONFIG.subtitleHeight + XIAOHONGSHU_IMAGE_CONFIG.footerHeight,
                     followText: document.getElementById('follow-text-input').value,
-                    showFollowHeader: document.getElementById('show-follow-content-header').checked,
-                    showFollowFooter: document.getElementById('show-follow-content-footer').checked,
+                    headerLeftContent: showHeaderContent ? headerLeftContent : 'none',
+                    headerCenterContent: showHeaderContent ? headerCenterContent : 'none',
+                    headerRightContent: showHeaderContent ? headerRightContent : 'none',
+                    footerLeftContent: showFooterContent ? footerLeftContent : 'none',
+                    footerCenterContent: showFooterContent ? footerCenterContent : 'none',
+                    footerRightContent: showFooterContent ? footerRightContent : 'none',
                     style: getCurrentStyleConfig()
                 };
             }
@@ -1403,9 +1650,16 @@
         // 3. 生成尾图
         images.push({
             type: 'end',
+            title: articleStructure.title,
+            subtitle: articleStructure.subtitle,
+            author: document.getElementById('author-input').value,
             followText: document.getElementById('follow-text-input').value,
-            showFollowHeader: document.getElementById('show-follow-end').checked,
-            showFollowFooter: document.getElementById('show-follow-end').checked,
+            headerLeftContent: showHeaderEnd ? headerLeftContent : 'none',
+            headerCenterContent: showHeaderEnd ? headerCenterContent : 'none',
+            headerRightContent: showHeaderEnd ? headerRightContent : 'none',
+            footerLeftContent: showFooterEnd ? footerLeftContent : 'none',
+            footerCenterContent: showFooterEnd ? footerCenterContent : 'none',
+            footerRightContent: showFooterEnd ? footerRightContent : 'none',
             style: getCurrentStyleConfig()
         });
 
@@ -1427,62 +1681,114 @@
     // ========== 图片生成和渲染 ==========
     function renderXiaohongshuCard(imageData) {
         const style = imageData.style || {};
-        let html = `<div class="xiaohongshu-card" style="background: ${style.background || '#ffffff'};">`;
+        // 如果背景色为'none'，则使用纯白色
+        const backgroundColor = style.background === 'none' ? '#ffffff' : (style.background || '#ffffff');
+        let html = `<div class="xiaohongshu-card" style="background: ${backgroundColor};">`;
 
-        // 页眉（关注语）- 根据showFollowHeader控制
-        const showHeader = imageData.showFollowHeader || imageData.showFollow || false;
-        if (showHeader && imageData.followText) {
-            html += `
-                <div class="xiaohongshu-card-header">
-                    <div class="xiaohongshu-card-header-text">${imageData.followText}</div>
-                </div>
-            `;
+        // 生成页眉内容
+        const headerHtml = renderHeaderFooterContent(imageData, 'header');
+        if (headerHtml) {
+            html += `<div class="xiaohongshu-card-header">${headerHtml}</div>`;
         }
 
         // 根据类型渲染内容
         switch (imageData.type) {
             case 'main':
-                html += `
-                    <div class="xiaohongshu-card-title" style="text-align: center;">${imageData.title}</div>
-                    ${imageData.showAuthor ? `<div class="xiaohongshu-card-author">@${imageData.author}</div>` : ''}
-                `;
+                // 主图：垂直居中显示标题和副标题，不显示作者
+                html += `<div class="xiaohongshu-card-main-content">`;
+                if (imageData.showTitle && imageData.title) {
+                    html += `<div class="xiaohongshu-card-title">${imageData.title}</div>`;
+                }
+                if (imageData.showSubtitle && imageData.subtitle) {
+                    html += `<div class="xiaohongshu-card-subtitle">${imageData.subtitle}</div>`;
+                }
+                html += `</div>`;
                 break;
             case 'content':
-                html += `<div class="xiaohongshu-card-subtitle">${imageData.subtitle}</div>`;
+                // 内容图：显示元素内容
+                html += `<div class="xiaohongshu-card-content">`;
                 imageData.elements.forEach(element => {
-                    html += renderXiaohongshuElement(element, style); // 传递style参数
+                    html += renderXiaohongshuElement(element, style);
                 });
+                html += `</div>`;
                 break;
             case 'end':
+                // 尾图：正文直接显示作者
+                html += `<div class="xiaohongshu-card-content" style="display: flex; flex-direction: column; justify-content: center; align-items: center;">`;
                 html += `
                     <div class="xiaohongshu-end-card">
                         <div class="xiaohongshu-end-icon">✨</div>
                         <div class="xiaohongshu-end-text">感谢阅读</div>
                         <div class="xiaohongshu-end-subtext">期待下次相遇</div>
+                        ${imageData.author ? `<div class="xiaohongshu-card-author">@${imageData.author}</div>` : ''}
                     </div>
                 `;
+                html += `</div>`;
                 break;
         }
 
-        // 页脚（关注语）- 根据showFollowFooter控制
-        const showFooter = imageData.showFollowFooter || imageData.showFollow || false;
-        if (showFooter && imageData.followText) {
-            html += `
-                <div class="xiaohongshu-card-footer">
-                    <div>${imageData.followText}</div>
-                </div>
-            `;
+        // 生成页脚内容
+        const footerHtml = renderHeaderFooterContent(imageData, 'footer');
+        if (footerHtml) {
+            html += `<div class="xiaohongshu-card-footer">${footerHtml}</div>`;
         }
 
         html += '</div>';
         return html;
     }
 
+    // 生成页眉或页脚的左中右内容
+    function renderHeaderFooterContent(imageData, type) {
+        const prefix = type === 'header' ? 'header' : 'footer';
+        const leftContent = imageData[`${prefix}LeftContent`] || 'none';
+        const centerContent = imageData[`${prefix}CenterContent`] || 'none';
+        const rightContent = imageData[`${prefix}RightContent`] || 'none';
+
+        let html = '';
+
+        // 左侧内容
+        if (leftContent !== 'none') {
+            html += `<div class="xiaohongshu-card-${prefix}-left">${getContentText(imageData, leftContent)}</div>`;
+        } else {
+            html += `<div class="xiaohongshu-card-${prefix}-left"></div>`;
+        }
+
+        // 中间内容
+        if (centerContent !== 'none') {
+            html += `<div class="xiaohongshu-card-${prefix}-center">${getContentText(imageData, centerContent)}</div>`;
+        } else {
+            html += `<div class="xiaohongshu-card-${prefix}-center"></div>`;
+        }
+
+        // 右侧内容
+        if (rightContent !== 'none') {
+            html += `<div class="xiaohongshu-card-${prefix}-right">${getContentText(imageData, rightContent)}</div>`;
+        } else {
+            html += `<div class="xiaohongshu-card-${prefix}-right"></div>`;
+        }
+
+        return html;
+    }
+
+    // 根据内容类型获取显示文本
+    function getContentText(imageData, contentType) {
+        switch (contentType) {
+            case 'author':
+                return imageData.author ? `@${imageData.author}` : '';
+            case 'title':
+                return imageData.title || '';
+            case 'follow':
+                return imageData.followText || '';
+            default:
+                return '';
+        }
+    }
+
     function renderXiaohongshuElement(element, style = {}) {
         const font = style.font || 'template-style-1';
         const background = style.background || 'none';
         const quoteStyle = style.quoteStyle || 'quote-style-1';
-        const quoteSymbol = style.quoteSymbol || 'symbol-0';
+        const quoteSymbolClass = style.quoteSymbol || 'symbol-0';
         
         // 获取字体样式
         function getFontStyle(fontClass) {
@@ -1552,37 +1858,238 @@
             return symbolMap[symbolClass] || '';
         }
 
+        function generateQuoteStyle(style, fontSize, indent, shadow, italic, borderRadius, align) {
+            let baseStyle = `font-size: ${fontSize}; line-height: 1.7; margin: 20px 0; padding: 20px; text-align: ${align};`;
+            
+            // 添加斜体
+            if (italic) {
+                baseStyle += ' font-style: italic;';
+            }
+            
+            // 添加阴影
+            if (shadow) {
+                baseStyle += ' box-shadow: 0 4px 12px rgba(0,0,0,0.1);';
+            }
+            
+            // 添加圆角
+            if (borderRadius) {
+                baseStyle += ' border-radius: 8px;';
+            }
+            
+            // 添加首行缩进
+            if (indent) {
+                baseStyle += ' text-indent: 2em;';
+            }
+            
+            // 根据风格添加特定样式
+            switch (style) {
+                case 'quote-style-1':
+                    return baseStyle + ' color: #4A5568; background-color: #F5F9F7; border-left: 4px solid #07C160;';
+                case 'quote-style-2':
+                    return baseStyle + ' color: #2D3748; font-weight: 600; border-bottom: 2px solid #07C160; padding: 12px 0;';
+                case 'quote-style-3':
+                    return baseStyle + ' color: #4A5568; background-color: #F5F9F7; border-left: 4px solid #07C160; border-radius: 0 4px 4px 0;';
+                case 'quote-style-4':
+                    return baseStyle + ' color: #5C6E70; background-color: #F0F8F5; border-radius: 8px; border: 1px solid #E1F0EB;';
+                case 'quote-style-8':
+                    return baseStyle + ' color: #8A2420; background-color: #FFF6F6; border-radius: 8px; border: 1px solid #FDEEEE;';
+                case 'quote-style-9':
+                    return baseStyle + ' color: #2D3748; font-weight: 500; text-align: center;';
+                case 'quote-style-10':
+                    return baseStyle + ' color: #2D3748; background-color: #F5F6F7; border-radius: 8px;';
+                case 'quote-style-11':
+                    return baseStyle + ' color: #333333; border: 1px solid #4299E1; border-radius: 8px; background-color: #F8FAFF;';
+                case 'quote-style-13':
+                    return baseStyle + ' color: #333333; background: none; border: none; padding: 0;';
+                case 'quote-style-14':
+                    return baseStyle + ' color: #333333; background: none; border: none; padding: 0;';
+                case 'quote-style-15':
+                    return baseStyle + ' font-weight: 500; background: linear-gradient(90deg, #07C160, #4299E1); -webkit-background-clip: text; background-clip: text; color: transparent;';
+                default:
+                    return baseStyle + ' color: #4A5568; background-color: #F5F9F7; border-left: 4px solid #667eea;';
+            }
+        }
+
+        function generateHeadingStyle(styleType, level, align) {
+            // 字号映射
+            const fontSizes = {
+                1: '48px',
+                2: '40px',
+                3: '32px',
+                4: '28px',
+                5: '26px',
+                6: '20px'
+            };
+            
+            const margins = {
+                1: '30px 0',
+                2: '25px 0',
+                3: '20px 0',
+                4: '18px 0',
+                5: '15px 0',
+                6: '12px 0'
+            };
+            
+            // H1-H9风格 - 返回H1标签的样式字符串
+            if (styleType.startsWith('style-')) {
+                const style1Styles = {
+                    "style-1": "font-size: 28px; color: #2D3748; font-weight: 600; margin: 0 0 12px 0; line-height: 1.4; padding-bottom: 8px; border-bottom: 1px solid #E5E7EB;",
+                    "style-2": "font-size: 26px; color: #3C2A21; font-weight: 500; font-family: 'SimSun', serif; margin: 0 0 12px 0; line-height: 1.4; padding-left: 16px; border-left: 4px solid #8B5A2B;",
+                    "style-3": "font-size: 26px; color: #3C2A21; font-weight: 500; font-family: 'Courier New', monospace; margin: 0 0 12px 0; line-height: 1.5; letter-spacing: 2px;",
+                    "style-4": "font-size: 26px; color: #22C55E; font-weight: 500; margin: 0 0 12px 0; line-height: 1.4;",
+                    "style-5": "font-size: 26px; color: #2D3748; font-weight: 700; margin: 0 0 12px 0; line-height: 1.4; border-bottom: 1px solid #FFE4D6; padding-bottom: 1px;",
+                    "style-6": "font-size: 26px; color: #4F46E5; font-weight: 600; margin: 0 0 10px 0; line-height: 1.4;",
+                    "style-7": "font-size: 28px; color: #2D3748; font-weight: 500; margin: 0 0 12px 0; line-height: 1.4; padding-bottom: 8px; border-bottom: 1px solid #E0E7FF; letter-spacing: 0.5px;",
+                    "style-8": "font-size: 24px; color: #2D3748; font-weight: 500; margin: 0 0 15px 0; line-height: 1.4; letter-spacing: -0.5px;",
+                    "style-9": "font-size: 26px; color: #000000; font-weight: 600; margin: 0 0 15px 0; line-height: 1.4; padding-bottom: 6px; border-bottom: 3px solid #FF2E63;"
+                };
+                
+                if (level === 1) {
+                    return (style1Styles[styleType] || `font-size: ${fontSizes[level]}; margin: ${margins[level]};`) + ` text-align: ${align};`;
+                } else if (level === 2) {
+                    // H2也使用相同的风格
+                    return (style1Styles[styleType] || `font-size: ${fontSizes[level]}; margin: ${margins[level]};`) + ` text-align: ${align};`;
+                }
+            }
+            
+            // H3-H6风格
+            const headingStyles = {
+                "heading-style-1": {
+                    2: "font-size: 24px; font-weight: 600; color: #2D3748; margin: 24px 0 16px 0;",
+                    3: "font-size: 20px; font-weight: 500; color: #4A5568; margin: 20px 0 12px 0;",
+                    4: "font-size: 18px; font-weight: 500; color: #718096; margin: 16px 0 10px 0;",
+                    5: "font-size: 16px; font-weight: 400; color: #A0AEC0; margin: 12px 0 8px 0;",
+                    6: "font-size: 14px; font-weight: 400; color: #CBD5E0; margin: 10px 0 6px 0;"
+                },
+                "heading-style-2": {
+                    2: "font-size: 22px; font-weight: 600; color: #8B5A2B; font-family: 'Georgia', serif; margin: 24px 0 16px 0; padding-left: 16px; border-left: 4px solid #8B5A2B;",
+                    3: "font-size: 18px; font-weight: 500; color: #A0522D; font-family: 'Georgia', serif; margin: 20px 0 12px 0; padding-left: 16px; border-left: 4px solid #44b0ce;",
+                    4: "font-size: 16px; font-weight: 500; color: #CD853F; font-family: 'Georgia', serif; margin: 16px 0 10px 0; padding-left: 16px; border-left: 4px solid #1abc9c;",
+                    5: "font-size: 14px; font-weight: 400; color: #D2691E; font-family: 'Georgia', serif; margin: 12px 0 8px 0; padding-left: 16px; border-left: 4px solid #f1c40f;",
+                    6: "font-size: 12px; font-weight: 400; color: #DEB887; font-family: 'Georgia', serif; margin: 10px 0 6px 0; padding-left: 16px; border-left: 4px solid #e67e22;"
+                },
+                "heading-style-3": {
+                    2: "font-size: 22px; font-weight: 600; margin: 24px 0 16px 0; background: linear-gradient(to right, #3B82F6, #8B5CF6); -webkit-background-clip: text; background-clip: text; color: transparent;",
+                    3: "font-size: 18px; font-weight: 500; margin: 20px 0 12px 0; background: linear-gradient(to right, #8B5CF6, #EC4899); -webkit-background-clip: text; background-clip: text; color: transparent;",
+                    4: "font-size: 16px; font-weight: 500; margin: 16px 0 10px 0; background: linear-gradient(to right, #EC4899, #F97316); -webkit-background-clip: text; background-clip: text; color: transparent;",
+                    5: "font-size: 14px; font-weight: 400; margin: 12px 0 8px 0; background: linear-gradient(to right, #F97316, #EAB308); -webkit-background-clip: text; background-clip: text; color: transparent;",
+                    6: "font-size: 12px; font-weight: 400; margin: 10px 0 6px 0; background: linear-gradient(to right, #EAB308, #84CC16); -webkit-background-clip: text; background-clip: text; color: transparent;"
+                },
+                "heading-style-4": {
+                    2: "font-size: 22px; font-weight: 600; margin: 24px 0 16px 0; font-family: 'Courier New', monospace; letter-spacing: 2px;",
+                    3: "font-size: 18px; font-weight: 500; margin: 20px 0 12px 0; font-family: 'Courier New', monospace; letter-spacing: 1.5px;",
+                    4: "font-size: 16px; font-weight: 500; margin: 16px 0 10px 0; font-family: 'Courier New', monospace; letter-spacing: 1px;",
+                    5: "font-size: 14px; font-weight: 400; margin: 12px 0 8px 0; font-family: 'Courier New', monospace; letter-spacing: 0.5px;",
+                    6: "font-size: 12px; font-weight: 400; margin: 10px 0 6px 0; font-family: 'Courier New', monospace; letter-spacing: 0;"
+                },
+                "heading-style-5": {
+                    2: "font-size: 24px; font-weight: 700; margin: 24px 0 16px 0; color: #6366F1; text-shadow: 2px 2px 0 rgba(99, 102, 241, 0.2);",
+                    3: "font-size: 20px; font-weight: 600; margin: 20px 0 12px 0; color: #8B5CF6; text-shadow: 1.5px 1.5px 0 rgba(139, 92, 246, 0.2);",
+                    4: "font-size: 18px; font-weight: 600; margin: 16px 0 10px 0; color: #EC4899; text-shadow: 1px 1px 0 rgba(236, 72, 153, 0.2);",
+                    5: "font-size: 16px; font-weight: 500; margin: 12px 0 8px 0; color: #F97316; text-shadow: 0.5px 0.5px 0 rgba(249, 115, 22, 0.2);",
+                    6: "font-size: 14px; font-weight: 500; margin: 10px 0 6px 0; color: #EAB308; text-shadow: 0px 0px 0 rgba(234, 179, 8, 0.2);"
+                },
+                "heading-style-6": {
+                    2: "font-size: 22px; font-weight: 800; margin: 24px 0 16px 0; text-transform: uppercase; letter-spacing: 1px;",
+                    3: "font-size: 18px; font-weight: 700; margin: 20px 0 12px 0; text-transform: uppercase; letter-spacing: 0.5px;",
+                    4: "font-size: 16px; font-weight: 600; margin: 16px 0 10px 0; text-transform: uppercase; letter-spacing: 0.25px;",
+                    5: "font-size: 14px; font-weight: 500; margin: 12px 0 8px 0; text-transform: uppercase;",
+                    6: "font-size: 12px; font-weight: 400; margin: 10px 0 6px 0; text-transform: uppercase;"
+                },
+                "heading-style-7": {
+                    2: "font-size: 22px; font-weight: 600; margin: 24px 0 16px 0; border-bottom: 3px solid #3B82F6; padding-bottom: 8px; display: inline-block;",
+                    3: "font-size: 18px; font-weight: 500; margin: 20px 0 12px 0; border-bottom: 2px solid #8B5CF6; padding-bottom: 6px; display: inline-block;",
+                    4: "font-size: 16px; font-weight: 500; margin: 16px 0 10px 0; border-bottom: 2px solid #EC4899; padding-bottom: 4px; display: inline-block;",
+                    5: "font-size: 14px; font-weight: 400; margin: 12px 0 8px 0; border-bottom: 1px solid #F97316; padding-bottom: 3px; display: inline-block;",
+                    6: "font-size: 12px; font-weight: 400; margin: 10px 0 6px 0; border-bottom: 1px solid #EAB308; padding-bottom: 2px; display: inline-block;"
+                },
+                "heading-style-8": {
+                    2: "font-size: 22px; font-weight: 600; margin: 24px 0 16px 0; border: 2px solid #10B981; padding: 8px 16px; border-radius: 8px; background: #ECFDF5;",
+                    3: "font-size: 18px; font-weight: 500; margin: 20px 0 12px 0; border: 2px solid #3B82F6; padding: 6px 12px; border-radius: 6px; background: #EFF6FF;",
+                    4: "font-size: 16px; font-weight: 500; margin: 16px 0 10px 0; border: 2px solid #8B5CF6; padding: 4px 10px; border-radius: 4px; background: #F5F3FF;",
+                    5: "font-size: 14px; font-weight: 400; margin: 12px 0 8px 0; border: 1px solid #EC4899; padding: 3px 8px; border-radius: 4px; background: #FDF2F8;",
+                    6: "font-size: 12px; font-weight: 400; margin: 10px 0 6px 0; border: 1px solid #F97316; padding: 2px 6px; border-radius: 3px; background: #FFF7ED;"
+                },
+                "heading-style-9": {
+                    2: "font-size: 22px; font-weight: 600; margin: 24px 0 16px 0; font-family: 'Comic Sans MS', cursive; color: #F59E0B;",
+                    3: "font-size: 18px; font-weight: 500; margin: 20px 0 12px 0; font-family: 'Comic Sans MS', cursive; color: #10B981;",
+                    4: "font-size: 16px; font-weight: 500; margin: 16px 0 10px 0; font-family: 'Comic Sans MS', cursive; color: #3B82F6;",
+                    5: "font-size: 14px; font-weight: 400; margin: 12px 0 8px 0; font-family: 'Comic Sans MS', cursive; color: #8B5CF6;",
+                    6: "font-size: 12px; font-weight: 400; margin: 10px 0 6px 0; font-family: 'Comic Sans MS', cursive; color: #EC4899;"
+                },
+                "heading-style-10": {
+                    2: "font-size: 22px; font-weight: 600; margin: 24px 0 16px 0; text-shadow: 3px 3px 0 rgba(0,0,0,0.1), -1px -1px 0 rgba(0,0,0,0.1);",
+                    3: "font-size: 18px; font-weight: 500; margin: 20px 0 12px 0; text-shadow: 2px 2px 0 rgba(0,0,0,0.1), -1px -1px 0 rgba(0,0,0,0.1);",
+                    4: "font-size: 16px; font-weight: 500; margin: 16px 0 10px 0; text-shadow: 1.5px 1.5px 0 rgba(0,0,0,0.1), -0.5px -0.5px 0 rgba(0,0,0,0.1);",
+                    5: "font-size: 14px; font-weight: 400; margin: 12px 0 8px 0; text-shadow: 1px 1px 0 rgba(0,0,0,0.1), -0.5px -0.5px 0 rgba(0,0,0,0.1);",
+                    6: "font-size: 12px; font-weight: 400; margin: 10px 0 6px 0; text-shadow: 0.5px 0.5px 0 rgba(0,0,0,0.1), -0.5px -0.5px 0 rgba(0,0,0,0.1);"
+                }
+            };
+            
+            if (headingStyles[styleType] && headingStyles[styleType][level]) {
+                return headingStyles[styleType][level] + ` text-align: ${align};`;
+            }
+            
+            return `font-size: ${fontSizes[level]}; margin: ${margins[level]}; text-align: ${align};`;
+        }
+
         const fontStyle = getFontStyle(font);
         const blockStyles = getParagraphBlockStyles();
 
         switch (element.type) {
             case 'h1':
-                return `<h1 style="font-size: 48px; margin: 30px 0; ${fontStyle}">${element.content}</h1>`;
+                const h1Style = document.getElementById('style-select')?.value || 'style-1';
+                const h1Align = document.querySelector('input[name="title-align"]:checked')?.value || 'center';
+                const h1Styles = generateHeadingStyle(h1Style, 1, h1Align);
+                return `<h1 style="${h1Styles}">${element.content}</h1>`;
             case 'h2':
-                return `<h2 style="font-size: 40px; margin: 25px 0; ${fontStyle}">${element.content}</h2>`;
+                const h2Style = document.getElementById('h2-style-select')?.value || 'style-1';
+                const h2Align = document.querySelector('input[name="h2-align"]:checked')?.value || 'center';
+                const h2Styles = generateHeadingStyle(h2Style, 2, h2Align);
+                return `<h2 style="${h2Styles}">${element.content}</h2>`;
             case 'h3':
-                return `<h3 style="font-size: 32px; margin: 20px 0; ${fontStyle}">${element.content}</h3>`;
             case 'h4':
-                return `<h4 style="font-size: 28px; margin: 18px 0; ${fontStyle}">${element.content}</h4>`;
             case 'h5':
-                return `<h5 style="font-size: 24px; margin: 15px 0; ${fontStyle}">${element.content}</h5>`;
             case 'h6':
-                return `<h6 style="font-size: 20px; margin: 12px 0; ${fontStyle}">${element.content}</h6>`;
+                const headingStyle = document.getElementById('heading-style-select')?.value || 'heading-style-1';
+                const h3h6Align = document.querySelector('input[name="h3h6-align"]:checked')?.value || 'left';
+                const level = parseInt(element.type.charAt(1));
+                const headingStyles = generateHeadingStyle(headingStyle, level, h3h6Align);
+                return `<${element.type} style="${headingStyles}">${element.content}</${element.type}>`;
             case 'p':
-                return `<p style="font-size: 24px; line-height: 1.8; margin: 20px 0; ${fontStyle} ${blockStyles}">${element.content}</p>`;
+                const paragraphFontSize = document.getElementById('xiaohongshu-font-size')?.value || '26';
+                return `<p style="font-size: ${paragraphFontSize}px; line-height: 1.8; margin: 20px 0; ${fontStyle} ${blockStyles}">${element.content}</p>`;
             case 'blockquote':
-                const quoteSymbol = getQuoteSymbol(quoteSymbol);
-                return `<blockquote style="font-size: 24px; padding: 20px; margin: 20px 0; background: #f5f5f5; border-left: 4px solid #667eea; ${fontStyle}">${quoteSymbol}${element.content}</blockquote>`;
+                const quoteSymbolHtml = getQuoteSymbol(quoteSymbolClass);
+                const quoteStyle = document.getElementById('quote-style-select')?.value || 'quote-style-1';
+                const quoteFontSize = document.getElementById('quote-font-size-select')?.value || '16px';
+                const quoteIndent = document.getElementById('quote-indent')?.checked || false;
+                const quoteShadow = document.getElementById('quote-shadow')?.checked || false;
+                const quoteItalic = document.getElementById('quote-italic')?.checked || false;
+                const quoteBorderRadius = document.getElementById('quote-border-radius')?.checked || false;
+                const quoteAlign = document.querySelector('input[name="quote-align"]:checked')?.value || 'center';
+                
+                // 获取引用样式
+                let quoteStyles = generateQuoteStyle(quoteStyle, quoteFontSize, quoteIndent, quoteShadow, quoteItalic, quoteBorderRadius, quoteAlign);
+                
+                // 特殊处理首字下沉
+                if (quoteStyle === 'quote-style-14' && element.content && element.content.length > 0) {
+                    const firstChar = element.content.charAt(0);
+                    const restContent = element.content.substring(1);
+                    return `<blockquote style="${quoteStyles}"><span style="font-size: 32px; line-height: 1; font-weight: 600; color: #07C160; float: left; margin: 6px 8px 4px 0;">${firstChar}</span>${restContent}${quoteSymbolHtml}</blockquote>`;
+                }
+                
+                return `<blockquote style="${quoteStyles}">${quoteSymbolHtml}${element.content}</blockquote>`;
             case 'img':
                 return `<img src="${element.attributes.src}" style="max-width: 100%; margin: 20px 0;" alt="">`;
             case 'ul':
-                return `<ul style="font-size: 24px; margin: 20px 0; ${fontStyle}">${element.content}</ul>`;
+                return `<ul style="font-size: 26px; margin: 20px 0; padding-left: 40px;">${element.content}</ul>`;
             case 'ol':
-                return `<ol style="font-size: 24px; margin: 20px 0; ${fontStyle}">${element.content}</ol>`;
+                return `<ol style="font-size: 26px; margin: 20px 0; padding-left: 40px;">${element.content}</ol>`;
             case 'li':
-                return `<li style="margin: 10px 0;">${element.content}</li>`;
+                return `<li style="font-size: 26px;color:red; margin: 20px 0;">${element.content}</li>`;
             default:
-                return `<div style="font-size: 24px; margin: 20px 0; ${fontStyle}">${element.content}</div>`;
+                return `<div style="font-size: 26px; margin: 20px 0; ${fontStyle}">${element.content}</div>`;
         }
     }
 
@@ -1642,7 +2149,10 @@
                     <p style="margin: 0; font-size: 14px;">输入内容后自动生成小红书图片预览</p>
                 </div>
             `;
-            document.getElementById('image-count').textContent = '共 0 张';
+            const imageCountEl = document.getElementById('xiaohongshu-image-count');
+            if (imageCountEl) {
+                imageCountEl.textContent = '共 0 张';
+            }
             xiaohongshuImages = [];
             return;
         }
@@ -1658,7 +2168,10 @@
             previewGrid.appendChild(card);
         });
 
-        document.getElementById('image-count').textContent = `共 ${images.length} 张`;
+        const imageCountEl = document.getElementById('xiaohongshu-image-count');
+        if (imageCountEl) {
+            imageCountEl.textContent = `共 ${images.length} 张`;
+        }
     }
 
     // ========== 批量保存功能 ==========
@@ -1683,6 +2196,11 @@
                 await generateAndSaveXiaohongshuImage(imageData, filename);
                 
                 showToast(`已保存 ${i + 1}/${xiaohongshuImages.length}: ${filename}`);
+                
+                // 添加延迟，避免浏览器阻止批量下载
+                if (i < xiaohongshuImages.length - 1) {
+                    await new Promise(resolve => setTimeout(resolve, 500));
+                }
             }
 
             showToast('✅ 所有图片保存完成！');
@@ -1707,34 +2225,70 @@
     }
 
     function getXiaohongshuFilename(imageData, index) {
-        const timestamp = Date.now();
-        const paddedIndex = String(index).padStart(4, '0');
-        return `${timestamp}${paddedIndex}.png`;
+        const now = new Date();
+        const year = now.getFullYear();
+        const month = String(now.getMonth() + 1).padStart(2, '0');
+        const day = String(now.getDate()).padStart(2, '0');
+        const hours = String(now.getHours()).padStart(2, '0');
+        const minutes = String(now.getMinutes()).padStart(2, '0');
+        const seconds = String(now.getSeconds()).padStart(2, '0');
+        const paddedIndex = String(index).padStart(3, '0');
+        
+        // 只有主图才添加标题
+        let titleSuffix = '';
+        if (imageData.type === 'main' && imageData.title) {
+            // 移除标题中的特殊字符，只保留中文、英文、数字
+            const cleanTitle = imageData.title.replace(/[^\u4e00-\u9fa5a-zA-Z0-9]/g, '');
+            // 截取最多30个字符
+            titleSuffix = cleanTitle.substring(0, 30);
+        }
+        
+        return `${year}${month}${day}${hours}${minutes}${seconds}${paddedIndex}${titleSuffix}.png`;
     }
 
     async function generateAndSaveXiaohongshuImage(imageData, filename) {
+        // 获取背景色，如果为'none'则使用纯白色
+        const backgroundColor = imageData.style.background === 'none' ? '#ffffff' : (imageData.style.background || '#ffffff');
+
         const container = document.createElement('div');
         container.style.position = 'fixed';
         container.style.left = '-9999px';
         container.style.top = '0';
         container.style.width = '1080px';
         container.style.height = '1440px';
-        container.style.background = imageData.style.background || '#ffffff';
-        
-        container.innerHTML = renderXiaohongshuCard(imageData);
+        container.style.padding = '0px 200px 0px 0px'
+        container.style.margin = '0px 200px 0px 0px'
+        container.style.background = backgroundColor;
+        container.style.boxSizing = 'border-box';
+        container.style.overflow = 'hidden';
+
+        // 创建一个内部容器来确保背景色覆盖整个区域
+        const innerContainer = document.createElement('div');
+        innerContainer.style.width = '100%';
+        innerContainer.style.height = '100%';
+        innerContainer.style.backgroundColor = backgroundColor;
+        // innerContainer.style.padding = '60px';
+        innerContainer.style.boxSizing = 'border-box';
+        innerContainer.style.display = 'flex';
+        innerContainer.style.flexDirection = 'column';
+        innerContainer.innerHTML = renderXiaohongshuCard(imageData);
+
+        container.appendChild(innerContainer);
         document.body.appendChild(container);
 
         try {
             const canvas = await html2canvas(container, {
                 width: 1080,
                 height: 1440,
-                scale: 2,
+                scale: 1.2,
                 useCORS: true,
                 allowTaint: false,
-                backgroundColor: imageData.style.background || '#ffffff'
+                backgroundColor: backgroundColor,
+                logging: false
             });
 
-            const blob = await new Promise(resolve => canvas.toBlob(resolve, 'image/png'));
+            // 使用PNG格式，质量1.0
+            const blob = await new Promise(resolve => canvas.toBlob(resolve, 'image/png', 1.0));
             downloadBlob(blob, filename);
         } finally {
             document.body.removeChild(container);
@@ -1868,10 +2422,13 @@
 
     }
 
-    function changeHtml() { 
+    function changeHtml() {
         const editor = document.getElementById('editor');
-        const html = autoFormatText(editor.value);
-        preview.innerHTML = html;
+        const preview = document.getElementById('preview');
+        if (preview && editor) {
+            const html = autoFormatText(editor.value);
+            preview.innerHTML = html;
+        }
     }
 
 
@@ -3394,30 +3951,30 @@ const rawText = "# 欢迎使用马克飞象\n" +
         });
 
         // 段落块设置选项事件监听
-        document.getElementById('enable-block-shadow')?.addEventListener('change', changeHtml);
-        document.getElementById('enable-block-indent')?.addEventListener('change', changeHtml);
-        document.getElementById('style-block-background')?.addEventListener('change', changeHtml);
-        document.getElementById('enable-block-radius')?.addEventListener('change', changeHtml);
+        document.getElementById('enable-block-shadow')?.addEventListener('change', () => { changeHtml(); updateXiaohongshuPreview(); });
+        document.getElementById('enable-block-indent')?.addEventListener('change', () => { changeHtml(); updateXiaohongshuPreview(); });
+        document.getElementById('style-block-background')?.addEventListener('change', () => { changeHtml(); updateXiaohongshuPreview(); });
+        document.getElementById('enable-block-radius')?.addEventListener('change', () => { changeHtml(); updateXiaohongshuPreview(); });
 
         // 引用设置选项事件监听
-        document.getElementById('quote-style-select')?.addEventListener('change', changeHtml);
-        document.getElementById('quote-symbol-select')?.addEventListener('change', changeHtml);
-        document.getElementById('quote-font-select')?.addEventListener('change', changeHtml);
-        document.getElementById('quote-indent')?.addEventListener('change', changeHtml);
-        document.getElementById('quote-shadow')?.addEventListener('change', changeHtml);
-        document.getElementById('quote-italic')?.addEventListener('change', changeHtml);
-        document.getElementById('quote-font-size-select')?.addEventListener('change', changeHtml);
-        document.getElementById('quote-border-radius')?.addEventListener('change', changeHtml);
+        document.getElementById('quote-style-select')?.addEventListener('change', () => { changeHtml(); updateXiaohongshuPreview(); });
+        document.getElementById('quote-symbol-select')?.addEventListener('change', () => { changeHtml(); updateXiaohongshuPreview(); });
+        document.getElementById('quote-font-select')?.addEventListener('change', () => { changeHtml(); updateXiaohongshuPreview(); });
+        document.getElementById('quote-indent')?.addEventListener('change', () => { changeHtml(); updateXiaohongshuPreview(); });
+        document.getElementById('quote-shadow')?.addEventListener('change', () => { changeHtml(); updateXiaohongshuPreview(); });
+        document.getElementById('quote-italic')?.addEventListener('change', () => { changeHtml(); updateXiaohongshuPreview(); });
+        document.getElementById('quote-font-size-select')?.addEventListener('change', () => { changeHtml(); updateXiaohongshuPreview(); });
+        document.getElementById('quote-border-radius')?.addEventListener('change', () => { changeHtml(); updateXiaohongshuPreview(); });
 
         // H2独立对齐和风格事件监听
         document.querySelectorAll('input[name="h2-align"]')?.forEach(radio => {
-            radio.addEventListener('change', changeHtml);
+            radio.addEventListener('change', () => { changeHtml(); updateXiaohongshuPreview(); });
         });
-        document.getElementById('h2-style-select')?.addEventListener('change', changeHtml);
+        document.getElementById('h2-style-select')?.addEventListener('change', () => { changeHtml(); updateXiaohongshuPreview(); });
 
         // H3-H6独立对齐事件监听
         document.querySelectorAll('input[name="h3h6-align"]')?.forEach(radio => {
-            radio.addEventListener('change', changeHtml);
+            radio.addEventListener('change', () => { changeHtml(); updateXiaohongshuPreview(); });
         });
 
         // 图片处理事件监听
@@ -4206,9 +4763,11 @@ function demo() {
                 }
             });
 
-            // 取消插入按钮事件
+            // 取消插入按钮事件（如果存在）
             const cancelInsertBtn = document.getElementById('cancel-insert-btn');
-            cancelInsertBtn.addEventListener('click', hideImageSelectModal);
+            if (cancelInsertBtn) {
+                cancelInsertBtn.addEventListener('click', hideImageSelectModal);
+            }
 
             // 拖拽事件
             imageList.addEventListener('dragover', (e) => {
@@ -4305,6 +4864,7 @@ function demo() {
             
             // 触发预览更新
             changeHtml();
+            updateXiaohongshuPreview();
             
             showToast(`图片已插入到文章中：${file.name} (格式: ${imageMarkdown.trim()})`);
         }
@@ -4316,6 +4876,20 @@ function demo() {
             }
         });
     </script>
+    
+    <!-- 图片选择模态框 -->
+    <div id="image-select-modal" style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.5); z-index: 9999; justify-content: center; align-items: center;">
+        <div style="background: white; width: 90%; max-width: 800px; max-height: 80vh; border-radius: 12px; padding: 20px; box-shadow: 0 4px 20px rgba(0,0,0,0.3); display: flex; flex-direction: column;">
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px; padding-bottom: 10px; border-bottom: 2px solid #f0f0f0;">
+                <h3 style="margin: 0; color: #333; font-size: 18px;">📷 选择要插入的图片</h3>
+                <button onclick="hideImageSelectModal()" style="background: none; border: none; font-size: 24px; cursor: pointer; color: #999;">×</button>
+            </div>
+            <div id="image-select-grid" style="display: grid; grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)); gap: 15px; overflow-y: auto; flex: 1; padding: 10px;"></div>
+            <div style="margin-top: 15px; padding-top: 10px; border-top: 2px solid #f0f0f0; text-align: right;">
+                <button onclick="hideImageSelectModal()" style="padding: 8px 20px; background: #6c757d; color: white; border: none; border-radius: 6px; cursor: pointer;">取消</button>
+            </div>
+        </div>
+    </div>
     
     <!-- 代码高亮 -->
     <script src="../js/highlight.min.js"></script>
