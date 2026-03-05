@@ -1381,7 +1381,7 @@
                 const pLineHeight = pFontSize * 1.6;
                 const pCharsPerLine = Math.floor(maxWidth / 18); // 每行约18个字符（考虑中文字符宽度）
                 const pLines = Math.max(2, Math.ceil(textLength / pCharsPerLine)); // 最少2行
-                const pHeight = pLines * pLineHeight + 30; // +30是上下边距
+                const pHeight = pLines * pLineHeight; // +30是上下边距
                 console.log(`    段落计算: 字符数=${textLength}, 每行字符=${pCharsPerLine}, 行数=${pLines}, 高度=${pHeight}`);
                 return pHeight;
             case 'blockquote':
@@ -1471,6 +1471,64 @@
 
         const elements = [];
         
+
+        /**
+         * 单方法实现：按全角35字符长度拆分文本（修正全角符号判定），返回带<p>标签的字符串
+         * @param {string} content 待拆分的原始文本内容
+         * @returns {string} 拆分后每个段落包裹<p>标签的完整字符串
+         */
+        function splitContentToParagraphs(content) {
+            // 1. 基础配置：字体大小 + 每段最大全角长度
+            const paragraphFontSize = document.getElementById('xiaohongshu-font-size')?.value || '26';
+            const MAX_FULL_WIDTH_LENGTH = 30;
+
+            // 2. 修正后的全角字符判定：覆盖所有中文/全角字符（包括中文标点、全角符号）
+            // 正则包含：中文汉字 + 全角字母/数字/符号 + 中文标点（顿号、书名号、括号等）
+            const getCharFullWidthLength = (char) => {
+                if (!char || char.length !== 1) return 0;
+                // 全角字符正则：
+                // \u4e00-\u9fa5 ：中文汉字
+                // \uff00-\uffef ：全角ASCII字符（全角字母/数字/!@#等）
+                // \u3000-\u303f ：中文标点（顿号、逗号、句号、书名号、括号等）
+                // \u201c\u201d\u2018\u2019 ：全角引号
+                const fullWidthReg = /[\u4e00-\u9fa5\uff00-\uffef\u3000-\u303f\u201c\u201d\u2018\u2019\u2013\u2014\u2026\u00a0\uff5b\uff5d\uff5e\ufe4f\u30fb]/;
+        
+                return fullWidthReg.test(char) ? 1 : 0.5;
+            };
+ 
+
+            // 3. 空值处理
+            if (!content) return '';
+
+            // 4. 核心拆分逻辑（不变）
+            const splitArray = [];
+            let currentSegment = '';
+            let currentLength = 0;
+
+            for (let i = 0; i < content.length; i++) {
+                const char = content[i];
+                const charLength = getCharFullWidthLength(char);
+
+                if (currentLength + charLength > MAX_FULL_WIDTH_LENGTH) {
+                    splitArray.push(currentSegment);
+                    currentSegment = char;
+                    currentLength = charLength;
+                } else {
+                    currentSegment += char;
+                    currentLength += charLength;
+                }
+            }
+            if (currentSegment) splitArray.push(currentSegment);
+
+            // 5. 生成<p>标签
+            // return splitArray.map(segment => 
+            //     `<p style="font-size: ${paragraphFontSize}px; line-height: 1.8;">${segment}</p>`
+            // ).join('');
+
+            return splitArray;
+        }
+
+
         function processNode(node) {
             if (node.nodeType === Node.ELEMENT_NODE) {
                 const tagName = node.tagName.toLowerCase();
@@ -1485,46 +1543,17 @@
                 const content = node.innerHTML || node.textContent;
                 const attributes = getAttributes(node);
                 
+                debugger
                 // 特殊处理段落：如果段落很长，拆分成多个小段落
-                if (tagName === 'p' && content.length > 100) {
-                    // 基于字符数拆分，每段最多100字符
-                    const charsPerParagraph = 100;
-                    const totalParagraphs = Math.ceil(content.length / charsPerParagraph);
-                    
-                    for (let i = 0; i < totalParagraphs; i++) {
-                        const start = i * charsPerParagraph;
-                        const end = start + charsPerParagraph;
-                        let paragraphContent = content.substring(start, end);
-                        
-                        // 避免在句子中间拆分，尝试在标点符号处拆分
-                        if (i < totalParagraphs - 1 && paragraphContent.length === charsPerParagraph) {
-                            const lastPunctuation = Math.max(
-                                paragraphContent.lastIndexOf('。'),
-                                paragraphContent.lastIndexOf('！'),
-                                paragraphContent.lastIndexOf('？'),
-                                paragraphContent.lastIndexOf('，'),
-                                paragraphContent.lastIndexOf('；')
-                            );
-                            if (lastPunctuation > charsPerParagraph * 0.5) {
-                                paragraphContent = paragraphContent.substring(0, lastPunctuation + 1);
-                            }
-                        }
-                        
-                        if (paragraphContent.trim()) {
-                            elements.push({
-                                type: 'p',
-                                content: paragraphContent.trim(),
-                                attributes: attributes
-                            });
-                        }
-                    }
-                } else if (tagName === 'p' && content.length > 0) {
-                    // 普通段落，直接添加
-                    elements.push({
-                        type: tagName,
-                        content: content,
-                        attributes: attributes
-                    });
+                if (tagName === 'p') {
+                    let arr = splitContentToParagraphs(content)
+                    for (let i = 0; i < arr.length; i++) {
+                        elements.push({
+                            type: tagName,
+                            content: '<span style="display:inline-block;margin-left:20px">'+arr[i]+'</span>',
+                            attributes: attributes
+                        });
+                    } 
                 } else if (tagName !== 'p' && tagName !== 'div') {
                     // 非段落元素，直接添加
                     elements.push({
@@ -2058,7 +2087,10 @@
                 return `<${element.type} style="${headingStyles}">${element.content}</${element.type}>`;
             case 'p':
                 const paragraphFontSize = document.getElementById('xiaohongshu-font-size')?.value || '26';
-                return `<p style="font-size: ${paragraphFontSize}px; line-height: 1.8; margin: 20px 0; ${fontStyle} ${blockStyles}">${element.content}</p>`;
+                return `<p style="font-size: ${paragraphFontSize}px; line-height: 2.8; margin: 20px 20px; ${fontStyle} ${blockStyles}">${element.content}</p>`;
+
+                // return `<br><br><br><br><span style="font-size: ${paragraphFontSize}px; line-height: 1.8;>${element.content}</span>`;
+
             case 'blockquote':
                 const quoteSymbolHtml = getQuoteSymbol(quoteSymbolClass);
                 const quoteStyle = document.getElementById('quote-style-select')?.value || 'quote-style-1';
@@ -2073,11 +2105,11 @@
                 let quoteStyles = generateQuoteStyle(quoteStyle, quoteFontSize, quoteIndent, quoteShadow, quoteItalic, quoteBorderRadius, quoteAlign);
                 
                 // 特殊处理首字下沉
-                if (quoteStyle === 'quote-style-14' && element.content && element.content.length > 0) {
-                    const firstChar = element.content.charAt(0);
-                    const restContent = element.content.substring(1);
-                    return `<blockquote style="${quoteStyles}"><span style="font-size: 32px; line-height: 1; font-weight: 600; color: #07C160; float: left; margin: 6px 8px 4px 0;">${firstChar}</span>${restContent}${quoteSymbolHtml}</blockquote>`;
-                }
+                // if (quoteStyle === 'quote-style-14' && element.content && element.content.length > 0) {
+                //     const firstChar = element.content.charAt(0);
+                //     const restContent = element.content.substring(1);
+                //     return `<blockquote style="${quoteStyles}"><span style="font-size: 32px; line-height: 1; font-weight: 600; color: #07C160; float: left; margin: 6px 8px 4px 0;">${firstChar}</span>${restContent}${quoteSymbolHtml}</blockquote>`;
+                // }
                 
                 return `<blockquote style="${quoteStyles}">${quoteSymbolHtml}${element.content}</blockquote>`;
             case 'img':
@@ -2089,7 +2121,7 @@
             case 'li':
                 return `<li style="font-size: 26px;color:red; margin: 20px 0;">${element.content}</li>`;
             default:
-                return `<div style="font-size: 26px; margin: 20px 0; ${fontStyle}">${element.content}</div>`;
+                return `<div style="font-size: 26px; margin: 20px 0;  ${fontStyle}">${element.content}</div>`;
         }
     }
 
@@ -2139,6 +2171,7 @@
         }
     }
 
+    // hoho
     function updateXiaohongshuPreview() {
         const markdownText = document.getElementById('editor').value;
         
@@ -2243,7 +2276,7 @@
             titleSuffix = cleanTitle.substring(0, 30);
         }
         
-        return `${year}${month}${day}${hours}${minutes}${seconds}${paddedIndex}${titleSuffix}.png`;
+        return `${year}${month}${day}${hours}${minutes}${seconds}-${paddedIndex}${titleSuffix}.png`;
     }
 
     async function generateAndSaveXiaohongshuImage(imageData, filename) {
@@ -2427,7 +2460,9 @@
         const preview = document.getElementById('preview');
         if (preview && editor) {
             const html = autoFormatText(editor.value);
-            preview.innerHTML = html;
+            if(preview!=null){
+                preview.innerHTML = html+'';
+            }
         }
     }
 
@@ -3238,12 +3273,20 @@
 
             // 将段落行合并为完整段落文本
             if (paragraphLines.length > 0) {
-                const paragraphText = paragraphLines.join('\n');
-                const content = processInlineMarkdown(paragraphText);
+                // const paragraphText = paragraphLines.join('\n');
+                // const paragraphText = paragraphLines.join('\n');
+                // const content = processInlineMarkdown(paragraphText);
                 
-                // 普通段落应用选定的段落块设置和字体风格
-                let normalParagraphHTML = generateNormalParagraphHTML(content, templateStyleType);
-                html.push(normalParagraphHTML);
+                // // 普通段落应用选定的段落块设置和字体风格
+                // let normalParagraphHTML = generateNormalParagraphHTML(content, templateStyleType);
+                // html.push(normalParagraphHTML);
+
+                paragraphLines.array.forEach(element => {
+                        const content = processInlineMarkdown(paragraphText);
+                        let normalParagraphHTML = generateNormalParagraphHTML(content, templateStyleType);
+                        html.push(normalParagraphHTML);
+                });
+                
             }
             
             }
@@ -3947,7 +3990,9 @@ const rawText = "# 欢迎使用马克飞象\n" +
         editor.addEventListener('input', () => {
             const markdown = editor.value;
             const html = autoFormatText(markdown);
-            preview.innerHTML = html;
+             if(preview!=null){
+                preview.innerHTML = html+'';
+            }
         });
 
         // 段落块设置选项事件监听
