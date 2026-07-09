@@ -27,21 +27,21 @@ button{font-family:inherit;cursor:pointer;border:none;background:none;color:inhe
 
 /* ========== 顶栏 ========== */
 .topbar{
-  height:58px; background:linear-gradient(90deg,#0f172a,#1e293b); color:#fff;
+  height:58px; background:#ffffff; color:#333;
   display:flex; align-items:center; padding:0 18px; gap:14px; flex-shrink:0;
-  box-shadow:0 2px 12px rgba(15,23,42,.18); z-index:30;
+  border-bottom:1px solid #e8e8e8; box-shadow:0 1px 8px rgba(0,0,0,.04); z-index:30;
 }
-.topbar .brand{display:flex;align-items:center;gap:10px;font-size:17px;font-weight:700;letter-spacing:.3px;}
-.topbar .brand .logo{width:30px;height:30px;border-radius:8px;background:linear-gradient(135deg,#3b82f6,#8b5cf6);display:flex;align-items:center;justify-content:center;font-size:16px;}
+.topbar .brand{display:flex;align-items:center;gap:10px;font-size:17px;font-weight:700;letter-spacing:.3px;color:#1e293b;}
+.topbar .brand .logo{width:30px;height:30px;border-radius:8px;background:linear-gradient(135deg,#fe2c55,#ff6b81);display:flex;align-items:center;justify-content:center;font-size:16px;}
 .topbar .brand small{font-size:12px;font-weight:400;color:#94a3b8;margin-left:2px;}
 .topbar .spacer{flex:1;}
 .tbtn{
   height:36px; padding:0 14px; border-radius:9px; font-size:13px; font-weight:600;
   display:inline-flex; align-items:center; gap:6px; transition:.15s; white-space:nowrap;
 }
-.tbtn.ghost{background:rgba(255,255,255,.08);color:#e2e8f0;}
-.tbtn.ghost:hover{background:rgba(255,255,255,.16);}
-.tbtn.primary{background:linear-gradient(135deg,#3b82f6,#2563eb);color:#fff;box-shadow:0 3px 10px rgba(37,99,235,.4);}
+.tbtn.ghost{background:#f1f4f8;color:#475569;}
+.tbtn.ghost:hover{background:#e2e8f0;}
+.tbtn.primary{background:linear-gradient(135deg,#fe2c55,#ff6b81);color:#fff;box-shadow:0 3px 10px rgba(254,44,85,.3);}
 .tbtn.primary:hover{filter:brightness(1.08);}
 .tbtn.success{background:linear-gradient(135deg,#22c55e,#16a34a);color:#fff;box-shadow:0 3px 10px rgba(22,163,74,.4);}
 .tbtn.success:hover{filter:brightness(1.08);}
@@ -411,7 +411,7 @@ const phone = $('#phone');
 
 let mdMode = false;
 let savedRange = null;
-let currentTplId = 'orange';
+let currentTplId = 'xhs';
 let favorites = load('gzh_favorites', []);
 let saveTimer = null;
 
@@ -434,6 +434,19 @@ function toast(msg, type=''){
 const TEMPLATES = [
   // 设计语言（参考 mdnice）：正文灰 #595959、行高1.75、字间距1px；
   // H1 主题色居中带底边框；H2 主题色底色块白字胶囊；H3 主题色带底/左边框；
+  { id:'xhs', name:'小红书', accent:'#fe2c55', hSizes:{h1:23,h2:18,h3:16}, defaultBodySize:16, defaultHeadingScale:1,
+    styles:{
+      '':'color:#333333;background:#ffffff;line-height:1.75;font-size:16px;letter-spacing:1px;',
+      'h1':'color:#fe2c55;font-weight:bold;text-align:center;margin:28px 0 14px;border-bottom:2px solid #fe2c55;padding-bottom:8px;letter-spacing:2px;',
+      'h2':'color:#ffffff;font-weight:bold;margin:24px 0 12px;background:#fe2c55;padding:6px 16px;border-radius:20px;display:inline-block;',
+      'h3':'color:#fe2c55;font-weight:bold;margin:20px 0 8px;border-left:4px solid #fe2c55;padding:3px 0 3px 10px;',
+      'blockquote':'border-left:4px solid #fe2c55;color:#555;background:#fff5f7;margin:14px 0;padding:8px 14px;border-radius:0 8px 8px 0;',
+      'hr':'border:none;border-top:1px dashed #ffb3c1;margin:20px 0;',
+      'a':'color:#fe2c55;text-decoration:none;border-bottom:1px solid #fe2c55;',
+      'code':'background:#fff0f2;color:#fe2c55;padding:2px 6px;border-radius:3px;font-size:90%;',
+      'pre':'background:#fff5f7;padding:12px;border-radius:8px;overflow:auto;border:1px solid #ffe0e6;'
+    }
+  },
   // 强调（strong/em）用蓝色 #3eb0e0 区分；引用浅灰底带主题色左边框
   { id:'orange', name:'橙心', accent:'#f27979', hSizes:{h1:23,h2:18,h3:16}, defaultBodySize:16, defaultHeadingScale:1,
     styles:{
@@ -1202,7 +1215,7 @@ function loadDraft(){
     editor.innerHTML=d.html||'';
     mdArea.value=d.mdText||'';
     mdMode=!!d.md;
-    if(d.tpl) applyTemplate(d.tpl); else applyTemplate('orange');
+    if(d.tpl) applyTemplate(d.tpl); else applyTemplate('xhs');
     // 恢复字号偏好（覆盖模板默认）
     if(d.bodySize){ bodyFontSize=d.bodySize; const bs=$('#bodySize'); if(bs) bs.value=String(bodyFontSize); applyFontSizes(); }
     if(d.hScale){ headingScale=d.hScale; const hs=$('#headingScale'); if(hs) hs.value=String(headingScale); applyFontSizes(); }
@@ -1354,7 +1367,7 @@ $('#btnClear').onclick=()=>{
   syncPreview(); autosave();
   toast('已清空','ok');
 };
-$('#btnTplReset').onclick=()=>{ applyTemplate('orange'); toast('已恢复默认模板','ok'); };
+$('#btnTplReset').onclick=()=>{ applyTemplate('xhs'); toast('已恢复默认模板','ok'); };
 
 /* ============================================================
    十二、事件绑定
@@ -1462,7 +1475,7 @@ setupDragDrop();
 if(!loadDraft()){
   // 示例内容
   editor.innerHTML=`<h1>欢迎来到公众号排版工具</h1><p>这是一款<strong>纯前端本地</strong>排版工具，左中右三栏协同，<em>所见即所得</em>。</p><h2>核心功能</h2><ul><li>富文本 + Markdown 双模式</li><li>数十种风格模板一键换肤</li><li>快捷标点符号与组件插入</li><li>一键复制粘贴到公众号后台</li></ul><blockquote>提示：右侧可切换模板、插入组件与符号。</blockquote><p>开始你的创作吧 ✨</p>`;
-  applyTemplate('orange');
+  applyTemplate('xhs');
   syncPreview();
 }
 updateModeUI();
