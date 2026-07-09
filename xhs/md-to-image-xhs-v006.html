@@ -713,6 +713,9 @@ async function dlA(){
     var ts=now.getFullYear()+String(now.getMonth()+1).padStart(2,'0')+String(now.getDate()).padStart(2,'0')+'_'+String(now.getHours()).padStart(2,'0')+String(now.getMinutes()).padStart(2,'0')+String(now.getSeconds()).padStart(2,'0');
     var prefix=gi('auth').value||'配图';
     var authorName=prefix;
+    // 从MD内容提取标题（第一行非空行）
+    var mdLines=gi('mi').value.split('\n').filter(function(l){return l.trim()});
+    var title=(mdLines[0]||'').replace(/^#+\s*/,'').replace(/[\\/:*?"<>|]/g,'_').trim().slice(0,30)||'无标题';
     const zip=new JSZip();
     for(let i=0;i<elts.length;i++){setP(10+((i/elts.length)*70));const card=elts[i];if(!card)continue;try{const cv=await html2canvas(card,{scale:2,allowTaint:true,backgroundColor:null,logging:false});const bl=await new Promise(r=>cv.toBlob(r,'image/png'));var seq=String(i+1).padStart(3,'0');var label=i===0?'封面':i===elts.length-1?'尾页':'内容';zip.file(prefix+'_'+seq+'_'+label+'.png',bl)}catch(e){console.warn(i+1,'failed:',e)}}
     // 添加 MD 源文件
@@ -724,7 +727,7 @@ async function dlA(){
     var info='小红书图文排版导出\n生成时间: '+now.toLocaleString()+'\n作者: '+authorName+'\n共 '+elts.length+' 页图片\n\n封面标题: '+(gi('mi').value.split('\n').filter(function(l){return l.trim()})[0]||'')+'\n';
     zip.file('README.txt',info);
     setP(95);const zb=await zip.generateAsync({type:'blob'});setP(98);
-    const ln=document.createElement('a');ln.href=URL.createObjectURL(zb);ln.download='小红书_'+prefix+'_'+ts+'.zip';
+    const ln=document.createElement('a');ln.href=URL.createObjectURL(zb);ln.download=ts+'_'+title+'.zip';
     document.body.appendChild(ln);ln.click();document.body.removeChild(ln);URL.revokeObjectURL(ln.href);
     setP(100);shT('✅ 下载完成！含 '+elts.length+' 张图片 + MD源文件');setTimeout(()=>setP(0),2000);
   }catch(err){console.error(err);shT('下载失败: '+err.message,true);setP(0)}
