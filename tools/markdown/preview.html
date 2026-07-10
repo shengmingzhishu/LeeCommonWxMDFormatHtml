@@ -1,171 +1,73 @@
 <!DOCTYPE html>
 <html lang="zh-CN">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="微信Markdown转换器">
-    <title>Markdown 预览 · 渲染工具</title>
-    <!-- Markdown解析和样式 -->
-    <script src="../../assets/js/marked.min.js"></script>
-    <link rel="stylesheet" href="../../assets/css/github.min.css">
-    <style>
-        body {
-            margin: 0;
-            padding: 20px;
-            display: flex;
-            flex-direction: column;
-            height: 100vh;
-            box-sizing: border-box;
-        }
-
-        .container {
-            display: flex;
-            gap: 20px;
-            flex: 1;
-        }
-
-        .editor-box {
-            flex: 1;
-            display: flex;
-            flex-direction: column;
-        }
-
-        textarea {
-            flex: 1;
-            padding: 15px;
-            border: 1px solid #ddd;
-            border-radius: 4px;
-            resize: none;
-            font-family: 'Courier New', monospace;
-        }
-
-        #preview {
-            flex: 1;
-            padding: 15px;
-            border: 1px solid #ddd;
-            border-radius: 4px;
-            overflow-y: auto;
-            background: #fff;
-        }
-
-        .copy-btn {
-            position: fixed;
-            bottom: 20px;
-            right: 135px; /* 与返回主页按钮保持一定距离 */
-            padding: 8px 15px;
-            background: #07c160;
-            color: white;
-            border: none;
-            border-radius: 20px;
-            cursor: pointer;
-            font-size: 14px;
-            display: flex;
-            align-items: center;
-            gap: 5px;
-            transition: all 0.3s ease, opacity 0.3s ease;
-            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
-            z-index: 1000;
-            opacity: 0.3;
-        }
-
-        .copy-btn:hover {
-            background: #06ad56;
-            transform: translateY(-2px);
-            box-shadow: 0 4px 8px rgba(0,0,0,0.15);
-            opacity: 1;
-        }
-
-        .copy-btn::before {
-            content: "📋";
-            font-size: 16px;
-        }
-
-        /* 微信公众号样式优化 */
-        .wx-content {
-            line-height: 1.6;
-            font-size: 16px;
-            color: #333;
-        }
-        
-        .wx-content img {
-            max-width: 100%!important;
-            height: auto!important;
-        }
-
-        /* 返回主页按钮样式 */
-        .back-home {
-            position: fixed;
-            bottom: 20px;
-            right: 20px;
-            padding: 8px 15px;
-            background: #ffd93d;
-            color: #333;
-            border: none;
-            border-radius: 20px;
-            cursor: pointer;
-            font-size: 14px;
-            display: flex;
-            align-items: center;
-            gap: 5px;
-            text-decoration: none;
-            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
-            transition: all 0.3s ease, opacity 0.3s ease;
-            z-index: 1000;
-            opacity: 0.7;
-        }
-
-        .back-home:hover {
-            background: #ffc107;
-            transform: translateY(-2px);
-            box-shadow: 0 4px 8px rgba(0,0,0,0.15);
-            opacity: 0.9;
-        }
-
-        .back-home::before {
-            content: "🏠";
-            font-size: 16px;
-        }
-
-        /* 浮动提示样式 */
-        .toast {
-            position: fixed;
-            top: 20px;
-            left: 50%;
-            transform: translateX(-50%);
-            background: linear-gradient(45deg, #FFD1DC, #FFB5E8);
-            color: #444;
-            padding: 12px 24px;
-            border-radius: 20px;
-            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
-            z-index: 1000;
-            opacity: 0;
-            transition: opacity 0.3s ease;
-            font-size: 14px;
-            display: flex;
-            align-items: center;
-            gap: 8px;
-        }
-
-        .toast.show { opacity: 1; }
-        .toast::before { content: "🎈"; }
-    </style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="微信Markdown转换器">
+<title>Markdown 预览 · 渲染工具</title>
+<script src="../../assets/js/marked.min.js"></script>
+<link rel="stylesheet" href="../../assets/css/github.min.css">
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+:root{--bg:#eef2f7;--panel:#fff;--line:#e7ecf3;--text:#1e293b;--sub:#64748b;--muted:#94a3b8;--accent:#3b82f6;--accent-2:#2563eb;--accent-soft:#dbeafe;--radius:12px;--shadow:0 4px 16px rgba(15,23,42,.06)}
+html,body{height:100%}
+body{background:var(--bg);font-family:-apple-system,"PingFang SC","Microsoft YaHei",sans-serif;color:var(--text);line-height:1.6;overflow:hidden}
+button{font-family:inherit;cursor:pointer;border:none;background:none;color:inherit}
+.topbar{height:56px;background:#fff;color:#333;display:flex;align-items:center;padding:0 16px;gap:10px;flex-shrink:0;border-bottom:1px solid #e8e8e8;box-shadow:0 1px 6px rgba(0,0,0,.04);z-index:30}
+.topbar .brand{display:flex;align-items:center;gap:8px;font-size:16px;font-weight:700;color:#1e293b}
+.topbar .brand .logo{width:28px;height:28px;border-radius:7px;background:linear-gradient(135deg,#3b82f6,#8b5cf6);display:flex;align-items:center;justify-content:center;font-size:14px;color:#fff}
+.topbar .spacer{flex:1}
+.tbtn{height:34px;padding:0 12px;border-radius:8px;font-size:12px;font-weight:600;display:inline-flex;align-items:center;gap:5px;transition:.15s;white-space:nowrap}
+.tbtn.ghost{background:#f1f4f8;color:#475569}
+.tbtn.ghost:hover{background:#e2e8f0}
+.tbtn.success{background:linear-gradient(135deg,#22c55e,#16a34a);color:#fff;box-shadow:0 2px 8px rgba(22,163,74,.3);height:32px;font-size:12px}
+.tbtn.success:hover{filter:brightness(1.08)}
+.workspace{display:flex;height:calc(100vh - 56px);gap:10px;padding:10px}
+.col{background:var(--panel);border-radius:var(--radius);box-shadow:var(--shadow);display:flex;flex-direction:column;overflow:hidden;min-width:0}
+.col-left{flex:0 0 45%}
+.col-right{flex:1}
+.col-head{height:40px;padding:0 14px;display:flex;align-items:center;gap:8px;flex-shrink:0;border-bottom:1px solid var(--line);background:#fbfcfe;font-size:13px;font-weight:700;color:#334155}
+.col-head .hint{margin-left:auto;font-weight:400;color:var(--muted);font-size:11px}
+.editor-wrap{flex:1;position:relative;display:flex;flex-direction:column;min-height:0}
+textarea{flex:1;padding:14px 16px;outline:none;border:none;resize:none;font-family:'Courier New',monospace;font-size:13px;line-height:1.7;color:#334155;width:100%;background:#fcfdff}
+#preview{flex:1;padding:14px 16px;overflow-y:auto;background:#fff;line-height:1.6;font-size:16px;color:#333}
+#preview img{max-width:100%!important;height:auto!important}
+.wx-content{line-height:1.6;font-size:16px;color:#333}
+.wx-content img{max-width:100%!important;height:auto!important}
+#toast{position:fixed;top:22px;left:50%;transform:translateX(-50%) translateY(-60px);background:linear-gradient(45deg,#FFD1DC,#FFB5E8);color:#444;padding:10px 22px;border-radius:10px;font-size:13px;font-weight:600;opacity:0;pointer-events:none;transition:.25s;z-index:100;box-shadow:0 4px 12px rgba(0,0,0,.1);display:flex;align-items:center;gap:6px}
+#toast.show{opacity:1;transform:translateX(-50%) translateY(0)}
+@media (max-width:768px){.workspace{flex-direction:column;height:auto}.col-left,.col-right{flex:1 1 auto;width:100%;min-height:300px}}
+</style>
 </head>
 <body>
-    <a href="../../index.html" class="back-home"> 返回主页</a>
-    <div class="container">
-        <div class="editor-box">
-            <textarea id="editor" placeholder="输入Markdown内容..."></textarea>
-        </div>
-        <div class="editor-box">
-            <div id="preview" class="wx-content"></div>
-            <button class="copy-btn" onclick="copyWechatHTML()">复制公众号内容</button>
-        </div>
+
+<header class="topbar">
+  <div class="brand"><span class="logo">📝</span>Markdown 预览</div>
+  <span style="font-size:11px;color:var(--muted)">实时渲染 · 复制公众号内容</span>
+  <div class="spacer"></div>
+  <a href="../../index.html" class="tbtn ghost" style="text-decoration:none">🏠 返回主页</a>
+</header>
+
+<div class="workspace">
+  <section class="col col-left">
+    <div class="col-head"><span>📝 Markdown 输入</span></div>
+    <div class="editor-wrap">
+      <textarea id="editor" placeholder="输入Markdown内容..."></textarea>
     </div>
+  </section>
+  <section class="col col-right">
+    <div class="col-head"><span>📄 预览</span></div>
+    <div id="preview" class="wx-content"></div>
+    <div style="padding:8px 12px;border-top:1px solid var(--line);display:flex;gap:8px;flex-shrink:0;background:#fafbfc;align-items:center">
+      <span style="font-size:11px;color:var(--muted)">📋 复制到公众号：</span>
+      <button class="tbtn success" onclick="copyWechatHTML()">📋 一键复制</button>
+    </div>
+  </section>
+</div>
 
-    <!-- 添加提示元素 -->
-    <div id="toast" class="toast">复制成功！</div>
+<div id="toast">🎈 复制成功！</div>
 
-    <script>
+<script>
         const strval = "# 欢迎使用马克飞象\n" +
                     "\n" +
                     "@(示例笔记本)[马克飞象|帮助|Markdown]\n" +

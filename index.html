@@ -1,308 +1,548 @@
 <!DOCTYPE html>
 <html lang="zh-CN">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>在线工具集</title>
-    <style>
-        :root {
-            --color-pink: #FFE5E5;
-            --color-pink-dark: #FF7B7B;
-            --color-green: #E5FFE5;
-            --color-green-dark: #7BFF7B;
-            --color-blue: #E5E5FF;
-            --color-blue-dark: #7B7BFF;
-            --color-purple: #FFE5FF;
-            --color-purple-dark: #FF7BFF;
-            --color-orange: #FFE8D6;
-            --color-orange-dark: #FFB347;
-            --color-yellow: #FFF9C4;
-            --color-yellow-dark: #FFD54F;
-        }
-        *{margin:0;padding:0;box-sizing:border-box}
-        body{font-family:-apple-system,BlinkMacSystemFont,"Helvetica Neue","PingFang SC","Microsoft YaHei",sans-serif;background:#f8f9fa;color:#333;line-height:1.6}
-        .container{max-width:1400px;margin:0 auto;padding:0 20px}
-        .header{text-align:center;padding:30px 20px;background:linear-gradient(135deg,#fff6e5,#ffeaf4);margin-bottom:20px}
-        .title{font-size:2.8rem;color:#2c3e50;margin-bottom:10px;font-weight:700}
-        .subtitle{font-size:1.1rem;color:#7f8c8d;margin-bottom:25px}
-        .search-box{width:100%;max-width:500px;margin:0 auto 20px}
-        .search-input{width:100%;padding:10px 20px;border:2px solid #e0e0e0;border-radius:30px;font-size:15px;outline:none;transition:all .3s}
-        .search-input:focus{border-color:#7B7BFF;box-shadow:0 0 8px rgba(123,123,255,.3)}
-        .category-filters{display:flex;flex-wrap:wrap;justify-content:center;gap:8px;margin-bottom:20px}
-        .category-btn{padding:7px 16px;background:#ecf0f1;color:#2c3e50;border:none;border-radius:20px;cursor:pointer;font-size:13px;transition:all .3s}
-        .category-btn:hover{background:#d5dbdb;transform:translateY(-2px)}
-        .category-btn.active{background:#2c3e50;color:#fff}
-        .tool-section{margin-bottom:50px}
-        .section-title{font-size:1.8rem;color:#2c3e50;text-align:center;padding:10px 0;border-bottom:3px solid #eee;margin-bottom:20px}
-        .tools-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:20px}
-        .tool-card{background:#fff;border-radius:15px;overflow:hidden;box-shadow:0 5px 15px rgba(0,0,0,.05);transition:all .3s;position:relative;height:100%;display:flex;flex-direction:column}
-        .tool-card:hover{transform:translateY(-6px);box-shadow:0 12px 25px rgba(0,0,0,.1)}
-        .tool-card-content{padding:22px;flex-grow:1;display:flex;flex-direction:column}
-        .tool-icon{font-size:2.5rem;margin-bottom:12px;text-align:center}
-        .tool-icon img{width:80px;height:80px;object-fit:contain;border-radius:8px}
-        .tool-name{font-size:1.15rem;font-weight:600;margin-bottom:8px;color:#2c3e50}
-        .tool-desc{font-size:.9rem;color:#7f8c8d;margin-bottom:12px;flex-grow:1}
-        .tool-link{display:inline-block;padding:7px 14px;background:rgba(0,0,0,.05);border-radius:20px;color:inherit;text-decoration:none;font-size:.85rem;text-align:center;transition:all .3s}
-        .tool-link:hover{background:rgba(0,0,0,.1);transform:scale(1.05)}
-        .tool-card.color-1{background:var(--color-pink);color:var(--color-pink-dark)}
-        .tool-card.color-2{background:var(--color-green);color:var(--color-green-dark)}
-        .tool-card.color-3{background:var(--color-blue);color:var(--color-blue-dark)}
-        .tool-card.color-4{background:var(--color-purple);color:var(--color-purple-dark)}
-        .tool-card.color-5{background:var(--color-orange);color:var(--color-orange-dark)}
-        .tool-card.color-6{background:var(--color-yellow);color:var(--color-yellow-dark)}
-        .footer{text-align:center;padding:30px 20px;color:#95a5a6;font-size:.9rem;background:#f1f2f6;margin-top:40px}
-        .back-to-top{position:fixed;bottom:30px;right:30px;width:45px;height:45px;background:#2c3e50;color:#fff;border-radius:50%;display:flex;justify-content:center;align-items:center;text-decoration:none;opacity:0;transition:all .3s;box-shadow:0 4px 12px rgba(0,0,0,.15);z-index:1000;font-size:18px}
-        .back-to-top.visible{opacity:.8}
-        .back-to-top:hover{opacity:1;transform:translateY(-5px)}
-        @media (max-width:768px){
-            .title{font-size:2rem}
-            .section-title{font-size:1.5rem}
-            .tools-grid{grid-template-columns:1fr}
-        }
-    </style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>墨韵 · 在线工具集</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;600;700;900&family=Inter:wght@400;500;600&display=swap');
+
+*{margin:0;padding:0;box-sizing:border-box}
+
+body{
+  font-family:"Inter","Noto Serif SC","PingFang SC",sans-serif;
+  background:#f8f5f0;
+  color:#2c2c2c;
+  overflow-x:hidden;
+  line-height:1.6;
+}
+
+/* ===== HERO ===== */
+.hero{
+  position:relative;
+  min-height:520px;
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  justify-content:center;
+  text-align:center;
+  background:linear-gradient(165deg,#faf6ef 0%,#f0e6d8 30%,#e8d9c4 60%,#f5ede4 100%);
+  overflow:hidden;
+}
+
+/* 背景装饰 - 星星/墨点 */
+.hero-stars{
+  position:absolute;
+  top:0;left:0;width:100%;height:100%;
+  pointer-events:none;
+  z-index:0;
+}
+.hero-star{
+  position:absolute;
+  width:4px;height:4px;
+  background:#c23a2b;
+  border-radius:50%;
+  opacity:0.15;
+  animation:twinkle 3s ease-in-out infinite;
+}
+@keyframes twinkle{
+  0%,100%{opacity:0.1;transform:scale(1)}
+  50%{opacity:0.3;transform:scale(1.5)}
+}
+
+/* Canvas 遮罩层 */
+#canvasMask{
+  position:absolute;
+  top:0;left:0;width:100%;height:100%;
+  z-index:1;
+  pointer-events:none;
+}
+
+/* 前景内容 */
+.hero-content{
+  position:relative;
+  z-index:2;
+  padding:80px 20px 60px;
+  max-width:800px;
+}
+
+.logo-icon{
+  width:64px;height:64px;
+  background:linear-gradient(135deg,#c23a2b,#8b2500);
+  border-radius:16px;
+  display:flex;align-items:center;justify-content:center;
+  margin:0 auto 20px;
+  font-size:30px;
+  color:#fff;
+  box-shadow:0 8px 24px rgba(194,58,43,.25);
+  font-family:"Noto Serif SC",serif;
+  font-weight:900;
+}
+
+.hero h1{
+  font-size:3.2rem;
+  font-weight:700;
+  color:#2c2c2c;
+  letter-spacing:4px;
+  margin-bottom:8px;
+  font-family:"Noto Serif SC",serif;
+}
+.hero h1 span{color:#c23a2b}
+
+.hero .sub{
+  font-size:1.05rem;
+  color:#8a7a6a;
+  letter-spacing:6px;
+  margin-bottom:24px;
+}
+
+.hero .sub i{
+  font-style:italic;
+  font-size:0.85rem;
+  letter-spacing:2px;
+  color:#b8aa92;
+}
+
+/* 搜索框 */
+.hero-search{
+  position:relative;
+  max-width:480px;
+  margin:0 auto;
+}
+.hero-search input{
+  width:100%;
+  padding:14px 24px;
+  border:1.5px solid #e0d5c4;
+  border-radius:12px;
+  font-size:15px;
+  outline:none;
+  background:rgba(255,255,255,.7);
+  backdrop-filter:blur(8px);
+  font-family:inherit;
+  transition:all .3s;
+  color:#2c2c2c;
+}
+.hero-search input::placeholder{color:#b8aa92}
+.hero-search input:focus{
+  border-color:#c23a2b;
+  box-shadow:0 0 0 3px rgba(194,58,43,.1);
+  background:rgba(255,255,255,.9);
+}
+
+/* 分类标签 */
+.categories{
+  display:flex;
+  flex-wrap:wrap;
+  justify-content:center;
+  gap:8px;
+  margin-top:20px;
+}
+.cat-btn{
+  padding:6px 18px;
+  background:rgba(255,255,255,.5);
+  backdrop-filter:blur(4px);
+  border:1px solid #e0d5c4;
+  border-radius:20px;
+  font-size:13px;
+  color:#7a6a5a;
+  cursor:pointer;
+  transition:all .25s;
+  font-family:inherit;
+  letter-spacing:1px;
+}
+.cat-btn:hover{
+  background:#c23a2b;
+  color:#fff;
+  border-color:#c23a2b;
+  transform:translateY(-2px);
+  box-shadow:0 4px 12px rgba(194,58,43,.2);
+}
+.cat-btn.active{
+  background:#c23a2b;
+  color:#fff;
+  border-color:#c23a2b;
+  box-shadow:0 4px 12px rgba(194,58,43,.2);
+}
+
+/* ===== 内容区 ===== */
+.container{
+  max-width:1320px;
+  margin:0 auto;
+  padding:40px 24px 20px;
+}
+
+.section-title{
+  display:flex;
+  align-items:center;
+  gap:10px;
+  font-size:1.4rem;
+  font-weight:600;
+  color:#2c2c2c;
+  margin-bottom:20px;
+  padding-bottom:10px;
+  border-bottom:2px solid #ece4d8;
+  letter-spacing:2px;
+  font-family:"Noto Serif SC",serif;
+}
+.section-title::before{
+  content:'◆';
+  color:#c23a2b;
+  font-size:12px;
+}
+
+.tools-grid{
+  display:grid;
+  grid-template-columns:repeat(auto-fill,minmax(280px,1fr));
+  gap:20px;
+  margin-bottom:48px;
+}
+
+/* ===== 玻璃卡片 ===== */
+.tool-card{
+  position:relative;
+  background:rgba(255,255,255,.6);
+  backdrop-filter:blur(12px);
+  -webkit-backdrop-filter:blur(12px);
+  border:1px solid rgba(255,255,255,.8);
+  border-radius:16px;
+  padding:24px 22px;
+  transition:all .35s cubic-bezier(.25,.46,.45,.94);
+  cursor:default;
+  display:flex;
+  flex-direction:column;
+  box-shadow:0 2px 12px rgba(0,0,0,.04);
+}
+
+.tool-card:hover{
+  transform:translateY(-8px);
+  background:rgba(255,255,255,.9);
+  border-color:rgba(194,58,43,.2);
+  box-shadow:
+    0 20px 40px rgba(0,0,0,.08),
+    0 0 0 1px rgba(194,58,43,.06);
+}
+
+.tool-card::after{
+  content:'';
+  position:absolute;
+  top:0;left:0;right:0;
+  height:3px;
+  background:linear-gradient(90deg,transparent,#c23a2b,transparent);
+  opacity:0;
+  transition:opacity .35s;
+  border-radius:16px 16px 0 0;
+}
+.tool-card:hover::after{opacity:1}
+
+.tool-icon{
+  font-size:2rem;
+  margin-bottom:12px;
+  text-align:left;
+}
+.tool-icon img{
+  width:56px;height:56px;
+  object-fit:contain;
+  border-radius:10px;
+  filter:drop-shadow(0 2px 4px rgba(0,0,0,.04));
+}
+
+.tool-name{
+  font-size:1.05rem;
+  font-weight:600;
+  margin-bottom:4px;
+  color:#1a1a1a;
+  letter-spacing:1px;
+}
+
+.tool-desc{
+  font-size:.82rem;
+  color:#8a7a6a;
+  margin-bottom:14px;
+  flex-grow:1;
+  line-height:1.6;
+}
+
+.tool-link{
+  display:inline-flex;
+  align-items:center;
+  gap:4px;
+  padding:6px 16px;
+  background:rgba(194,58,43,.06);
+  border:1px solid rgba(194,58,43,.12);
+  border-radius:20px;
+  color:#c23a2b;
+  text-decoration:none;
+  font-size:.8rem;
+  transition:all .25s;
+  align-self:flex-start;
+  font-weight:500;
+}
+.tool-link:hover{
+  background:#c23a2b;
+  color:#fff;
+  border-color:#c23a2b;
+  transform:translateY(-1px);
+  box-shadow:0 4px 12px rgba(194,58,43,.2);
+}
+
+/* ===== 页脚 ===== */
+.footer{
+  text-align:center;
+  padding:32px 20px;
+  color:#b8aa92;
+  font-size:.8rem;
+  background:#efe6d8;
+  letter-spacing:2px;
+  margin-top:20px;
+}
+
+/* 返回顶部 */
+.back-top{
+  position:fixed;
+  bottom:28px;right:28px;
+  width:42px;height:42px;
+  background:rgba(255,255,255,.8);
+  backdrop-filter:blur(8px);
+  border:1px solid #e0d5c4;
+  border-radius:12px;
+  display:flex;justify-content:center;align-items:center;
+  text-decoration:none;
+  color:#7a6a5a;
+  font-size:16px;
+  opacity:0;transform:translateY(12px);
+  transition:all .3s;
+  z-index:100;
+  box-shadow:0 2px 8px rgba(0,0,0,.04);
+}
+.back-top.visible{opacity:1;transform:translateY(0)}
+.back-top:hover{
+  background:#c23a2b;
+  color:#fff;
+  border-color:#c23a2b;
+  box-shadow:0 4px 16px rgba(194,58,43,.2);
+}
+
+/* ===== 响应式 ===== */
+@media (max-width:768px){
+  .hero{min-height:400px}
+  .hero h1{font-size:2rem;letter-spacing:2px}
+  .hero .sub{font-size:.9rem;letter-spacing:3px}
+  .tools-grid{grid-template-columns:1fr}
+  .tool-card{padding:18px}
+}
+</style>
 </head>
 <body>
-    <header class="header">
-        <div class="container">
-            <h1 class="title">🛠 在线工具集</h1>
-            <p class="subtitle">简单、高效的在线工具集合，提升您的工作效率</p>
-            <div class="search-box">
-                <input type="text" class="search-input" placeholder="搜索工具...">
-            </div>
-            <div class="category-filters">
-                <button class="category-btn active" data-category="all">全部工具</button>
-                <button class="category-btn" data-category="wechat">公众号排版</button>
-                <button class="category-btn" data-category="xiaohongshu">小红书作图</button>
-                <button class="category-btn" data-category="image">图片排版</button>
-                <button class="category-btn" data-category="markdown">Markdown</button>
-                <button class="category-btn" data-category="other">其他工具</button>
-            </div>
-        </div>
-    </header>
 
-    <main class="container">
+<div class="hero" id="hero">
+  <!-- 装饰星星 -->
+  <div class="hero-stars" id="stars"></div>
 
-        <!-- 公众号排版 -->
-        <section class="tool-section">
-            <h2 class="section-title">📰 公众号排版</h2>
-            <div class="tools-grid">
-                <div class="tool-card color-1" data-category="wechat">
-                    <div class="tool-card-content">
-                        <div class="tool-icon"><img src="assets/img/C1.png" alt="公众号编辑器"></div>
-                        <h3 class="tool-name">公众号编辑器</h3>
-                        <p class="tool-desc">富文本 + Markdown 双模式，多种模板一键换肤</p>
-                        <a href="tools/wechat/editor.html" class="tool-link">使用工具</a>
-                    </div>
-                </div>
-                <div class="tool-card color-2" data-category="wechat">
-                    <div class="tool-card-content">
-                        <div class="tool-icon"><img src="assets/img/C1.png" alt="公众号编辑器旧版"></div>
-                        <h3 class="tool-name">公众号编辑器 v1</h3>
-                        <p class="tool-desc">早期版本，保留原始风格</p>
-                        <a href="tools/wechat/editor-v1.html" class="tool-link">使用工具</a>
-                    </div>
-                </div>
-            </div>
-        </section>
+  <!-- Canvas 遮罩 -->
+  <canvas id="canvasMask"></canvas>
 
-        <!-- 小红书作图 -->
-        <section class="tool-section">
-            <h2 class="section-title">📕 小红书作图</h2>
-            <div class="tools-grid">
-                <div class="tool-card color-1" data-category="xiaohongshu">
-                    <div class="tool-card-content">
-                        <div class="tool-icon"><img src="assets/img/C2.png" alt="小红书海报"></div>
-                        <h3 class="tool-name">小红书海报生成</h3>
-                        <p class="tool-desc">MD 转小红书风格图片，支持图片拖拽、多模板</p>
-                        <a href="tools/xiaohongshu/poster.html" class="tool-link">使用工具</a>
-                    </div>
-                </div>
-                <div class="tool-card color-2" data-category="xiaohongshu">
-                    <div class="tool-card-content">
-                        <div class="tool-icon"><img src="assets/img/C2.png" alt="小红书海报旧版"></div>
-                        <h3 class="tool-name">小红书海报 v5</h3>
-                        <p class="tool-desc">早期版本</p>
-                        <a href="tools/xiaohongshu/poster-v5.html" class="tool-link">使用工具</a>
-                    </div>
-                </div>
-            </div>
-        </section>
+  <!-- 前景 -->
+  <div class="hero-content">
+    <div class="logo-icon">墨</div>
+    <h1>墨<span>·</span>韵</h1>
+    <p class="sub">雅致工具 · 随心所用<br><i>—— 让创作回归本真</i></p>
+    <div class="hero-search">
+      <input type="text" id="searchInput" placeholder="搜 寻 工 具 ...">
+    </div>
+    <div class="categories" id="categories">
+      <button class="cat-btn active" data-cat="all">全 部</button>
+      <button class="cat-btn" data-cat="wechat">公众号</button>
+      <button class="cat-btn" data-cat="xiaohongshu">小红书</button>
+      <button class="cat-btn" data-cat="image">图片排版</button>
+      <button class="cat-btn" data-cat="markdown">Markdown</button>
+      <button class="cat-btn" data-cat="other">其 他</button>
+    </div>
+  </div>
+</div>
 
-        <!-- 图片排版工具 -->
-        <section class="tool-section">
-            <h2 class="section-title">🖼 图片排版工具</h2>
-            <div class="tools-grid">
-                <div class="tool-card color-1" data-category="image">
-                    <div class="tool-card-content">
-                        <div class="tool-icon"><img src="assets/img/B1.png" alt="URL双排图"></div>
-                        <h3 class="tool-name">URL 双排图</h3>
-                        <p class="tool-desc">图片链接双列排版</p>
-                        <a href="tools/image-layout/url-2col.html" class="tool-link">使用工具</a>
-                    </div>
-                </div>
-                <div class="tool-card color-2" data-category="image">
-                    <div class="tool-card-content">
-                        <div class="tool-icon"><img src="assets/img/B2.png" alt="URL三排图"></div>
-                        <h3 class="tool-name">URL 三排图</h3>
-                        <p class="tool-desc">图片链接三列排版</p>
-                        <a href="tools/image-layout/url-3col.html" class="tool-link">使用工具</a>
-                    </div>
-                </div>
-                <div class="tool-card color-3" data-category="image">
-                    <div class="tool-card-content">
-                        <div class="tool-icon"><img src="assets/img/B3.png" alt="Base64双排图"></div>
-                        <h3 class="tool-name">Base64 双排图</h3>
-                        <p class="tool-desc">图片数据双列排版</p>
-                        <a href="tools/image-layout/base64-2col.html" class="tool-link">使用工具</a>
-                    </div>
-                </div>
-                <div class="tool-card color-4" data-category="image">
-                    <div class="tool-card-content">
-                        <div class="tool-icon"><img src="assets/img/B4.png" alt="Base64三排图"></div>
-                        <h3 class="tool-name">Base64 三排图</h3>
-                        <p class="tool-desc">图片数据三列排版</p>
-                        <a href="tools/image-layout/base64-3col.html" class="tool-link">使用工具</a>
-                    </div>
-                </div>
-                <div class="tool-card color-1" data-category="image">
-                    <div class="tool-card-content">
-                        <div class="tool-icon"><img src="assets/img/A1.png" alt="艺术字排版"></div>
-                        <h3 class="tool-name">艺术字排版</h3>
-                        <p class="tool-desc">文字艺术排版效果</p>
-                        <a href="tools/image-layout/word-art.html" class="tool-link">使用工具</a>
-                    </div>
-                </div>
-                <div class="tool-card color-2" data-category="image">
-                    <div class="tool-card-content">
-                        <div class="tool-icon"><img src="assets/img/A2.png" alt="方框字排版"></div>
-                        <h3 class="tool-name">方框字排版</h3>
-                        <p class="tool-desc">文字方框排版效果</p>
-                        <a href="tools/image-layout/word-box.html" class="tool-link">使用工具</a>
-                    </div>
-                </div>
-                <div class="tool-card color-3" data-category="image">
-                    <div class="tool-card-content">
-                        <div class="tool-icon"><img src="assets/img/A3.png" alt="朋友圈排版"></div>
-                        <h3 class="tool-name">朋友圈排版</h3>
-                        <p class="tool-desc">朋友圈风格文字排版</p>
-                        <a href="tools/image-layout/word-moment.html" class="tool-link">使用工具</a>
-                    </div>
-                </div>
-                <div class="tool-card color-4" data-category="image">
-                    <div class="tool-card-content">
-                        <div class="tool-icon"><img src="assets/img/A4.png" alt="书籍排版"></div>
-                        <h3 class="tool-name">书籍排版</h3>
-                        <p class="tool-desc">书籍风格文字排版</p>
-                        <a href="tools/image-layout/word-book.html" class="tool-link">使用工具</a>
-                    </div>
-                </div>
-            </div>
-        </section>
+<div class="container" id="toolContainer">
+  <!-- 由 JS 动态渲染 -->
+</div>
 
-        <!-- Markdown 工具 -->
-        <section class="tool-section">
-            <h2 class="section-title">📝 Markdown 工具</h2>
-            <div class="tools-grid">
-                <div class="tool-card color-2" data-category="markdown">
-                    <div class="tool-card-content">
-                        <div class="tool-icon"><img src="assets/img/D1.png" alt="文本转MD"></div>
-                        <h3 class="tool-name">文本 → Markdown</h3>
-                        <p class="tool-desc">普通文本快速转为 Markdown</p>
-                        <a href="tools/markdown/text-to-md.html" class="tool-link">使用工具</a>
-                    </div>
-                </div>
-                <div class="tool-card color-3" data-category="markdown">
-                    <div class="tool-card-content">
-                        <div class="tool-icon"><img src="assets/img/D2.png" alt="MD预览"></div>
-                        <h3 class="tool-name">Markdown 预览</h3>
-                        <p class="tool-desc">实时渲染 Markdown 内容</p>
-                        <a href="tools/markdown/preview.html" class="tool-link">使用工具</a>
-                    </div>
-                </div>
-                <div class="tool-card color-4" data-category="markdown">
-                    <div class="tool-card-content">
-                        <div class="tool-icon"><img src="assets/img/D3.png" alt="MD换行格式化"></div>
-                        <h3 class="tool-name">MD 换行格式化 v4</h3>
-                        <p class="tool-desc">统一风格 · 保留原版所有功能与模板</p>
-                        <a href="tools/markdown/line-break-v4.html" class="tool-link">使用工具</a>
-                    </div>
-                </div>
-                <div class="tool-card color-1" data-category="markdown">
-                    <div class="tool-card-content">
-                        <div class="tool-icon"><img src="assets/img/D3.png" alt="MD换行格式化"></div>
-                        <h3 class="tool-name">MD 换行格式化</h3>
-                        <p class="tool-desc">旧版 · 含文章模板与个人名片</p>
-                        <a href="tools/markdown/line-break.html" class="tool-link">使用工具</a>
-                    </div>
-                </div>
-            </div>
-        </section>
+<footer class="footer"><p>© 2025 墨韵 · 在线工具集</p></footer>
+<a href="#" class="back-top" id="backTop">↑</a>
 
-        <!-- 其他工具 -->
-        <section class="tool-section">
-            <h2 class="section-title">🔧 其他工具</h2>
-            <div class="tools-grid">
-                <div class="tool-card color-3" data-category="other">
-                    <div class="tool-card-content">
-                        <div class="tool-icon"><img src="assets/img/D4.png" alt="URL提取"></div>
-                        <h3 class="tool-name">HTML URL 提取</h3>
-                        <p class="tool-desc">从 HTML 中提取所有链接与图片地址</p>
-                        <a href="tools/html-tools/url-extractor.html" class="tool-link">使用工具</a>
-                    </div>
-                </div>
-                <div class="tool-card color-5" data-category="other">
-                    <div class="tool-card-content">
-                        <div class="tool-icon">🎨</div>
-                        <h3 class="tool-name">上上签</h3>
-                        <p class="tool-desc">随机抽签小工具</p>
-                        <a href="tools/fun/fortune.html" class="tool-link">使用工具</a>
-                    </div>
-                </div>
-            </div>
-        </section>
+<script>
+// ===== 工具数据 =====
+const TOOLS = [
+  {cat:'wechat', name:'公众号编辑器 v1', desc:'早期版本，保留原始风格', icon:'C1.png', link:'tools/wechat/editor-v1.html'},
+  {cat:'xiaohongshu', name:'小红书海报生成', desc:'MD 转小红书风格图片，支持图片拖拽、多模板', icon:'C2.png', link:'tools/xiaohongshu/poster.html'},
+  {cat:'image', name:'URL 双排图 v1', desc:'统一风格 · 图片链接双列排版', icon:'B1.png', link:'tools/image-layout/url-2col-v1.html'},
+  {cat:'image', name:'URL 三排图 v1', desc:'统一风格 · 图片链接三列排版', icon:'B2.png', link:'tools/image-layout/url-3col-v1.html'},
+  {cat:'image', name:'Base64 双排图 v1', desc:'统一风格 · 图片数据双列排版', icon:'B3.png', link:'tools/image-layout/base64-2col-v1.html'},
+  {cat:'image', name:'Base64 三排图 v1', desc:'统一风格 · 图片数据三列排版', icon:'B4.png', link:'tools/image-layout/base64-3col-v1.html'},
+  {cat:'image', name:'艺术字排版 v1', desc:'统一风格 · 文字艺术排版', icon:'A1.png', link:'tools/image-layout/word-art-v1.html'},
+  {cat:'image', name:'方框字排版 v1', desc:'统一风格 · 文字方框排版', icon:'A2.png', link:'tools/image-layout/word-box-v1.html'},
+  {cat:'image', name:'朋友圈排版 v1', desc:'统一风格 · 朋友圈文字排版', icon:'A3.png', link:'tools/image-layout/word-moment-v1.html'},
+  {cat:'image', name:'书籍排版 v1', desc:'统一风格 · 书籍文字排版', icon:'A4.png', link:'tools/image-layout/word-book-v1.html'},
+  {cat:'markdown', name:'文本 → Markdown', desc:'普通文本快速转为 Markdown', icon:'D1.png', link:'tools/markdown/text-to-md.html'},
+  {cat:'markdown', name:'Markdown 预览', desc:'实时渲染 Markdown 内容', icon:'D2.png', link:'tools/markdown/preview.html'},
+  {cat:'markdown', name:'MD 换行格式化 v4', desc:'统一风格 · 保留原版所有功能', icon:'D3.png', link:'tools/markdown/line-break-v4.html'},
+  {cat:'markdown', name:'HTML URL 提取 v1', desc:'统一风格 · 提取链接与图片地址', icon:'D4.png', link:'tools/html-tools/url-extractor-v1.html'},
+  {cat:'other', name:'上上签', desc:'随机抽签小工具', icon:'', link:'tools/fun/fortune.html'},
+];
 
-    </main>
+// ===== 分组 =====
+const GROUPS = [
+  {title:'公众号排版', key:'wechat'},
+  {title:'小红书作图', key:'xiaohongshu'},
+  {title:'图片排版', key:'image'},
+  {title:'Markdown 工具', key:'markdown'},
+  {title:'其他工具', key:'other'},
+];
 
-    <footer class="footer">
-        <div class="container"><p>© 2025 在线工具集 | 让工作更轻松</p></div>
-    </footer>
+// ===== 渲染工具卡片 =====
+function renderTools(filterCat, query){
+  const container = document.getElementById('toolContainer');
+  let html = '';
+  GROUPS.forEach(g=>{
+    const items = TOOLS.filter(t=>t.cat===g.key);
+    const filtered = items.filter(t=>{
+      const matchCat = filterCat==='all'||t.cat===filterCat;
+      const matchQ = !query||t.name.toLowerCase().includes(query)||t.desc.toLowerCase().includes(query);
+      return matchCat&&matchQ;
+    });
+    if(!filtered.length)return;
+    html += `<h2 class="section-title">${g.title}</h2><div class="tools-grid">`;
+    filtered.forEach(t=>{
+      const iconHtml = t.icon ? `<img src="assets/img/${t.icon}" alt="${t.name}">` : '🎨';
+      html += `<div class="tool-card" data-cat="${t.cat}">
+        <div class="tool-icon">${iconHtml}</div>
+        <div class="tool-name">${t.name}</div>
+        <div class="tool-desc">${t.desc}</div>
+        <a href="${t.link}" class="tool-link">使用 →</a>
+      </div>`;
+    });
+    html += '</div>';
+  });
+  container.innerHTML = html || '<div style="text-align:center;padding:60px 0;color:#b8aa92;font-size:15px">暂无匹配工具</div>';
+}
 
-    <a href="#" class="back-to-top">↑</a>
+// ===== 搜索和筛选 =====
+let currentCat = 'all';
+let currentQuery = '';
 
-    <script>
-        const backToTop = document.querySelector('.back-to-top');
-        window.addEventListener('scroll', () => backToTop.classList.toggle('visible', window.scrollY > 300));
-        backToTop.addEventListener('click', e => { e.preventDefault(); window.scrollTo({ top: 0, behavior: 'smooth' }); });
+document.getElementById('searchInput').addEventListener('input', function(){
+  currentQuery = this.value.toLowerCase().trim();
+  renderTools(currentCat, currentQuery);
+});
 
-        const searchInput = document.querySelector('.search-input');
-        const cards = document.querySelectorAll('.tool-card');
-        const catBtns = document.querySelectorAll('.category-btn');
+document.querySelectorAll('.cat-btn').forEach(btn=>{
+  btn.addEventListener('click',function(){
+    document.querySelectorAll('.cat-btn').forEach(b=>b.classList.remove('active'));
+    this.classList.add('active');
+    currentCat = this.dataset.cat;
+    renderTools(currentCat, currentQuery);
+  });
+});
 
-        function filterTools() {
-            const q = searchInput.value.toLowerCase().trim();
-            const activeCat = document.querySelector('.category-btn.active').dataset.category;
-            cards.forEach(card => {
-                const name = card.querySelector('.tool-name').textContent.toLowerCase();
-                const desc = card.querySelector('.tool-desc').textContent.toLowerCase();
-                const cat = card.dataset.category;
-                const match = (q === '' || name.includes(q) || desc.includes(q)) && (activeCat === 'all' || cat === activeCat);
-                card.style.display = match ? 'flex' : 'none';
-            });
-        }
+// ===== 返回顶部 =====
+const backTop = document.getElementById('backTop');
+window.addEventListener('scroll',()=>backTop.classList.toggle('visible',window.scrollY>300));
+backTop.addEventListener('click',e=>{e.preventDefault();window.scrollTo({top:0,behavior:'smooth'})});
 
-        searchInput.addEventListener('input', filterTools);
-        catBtns.forEach(btn => btn.addEventListener('click', () => {
-            catBtns.forEach(b => b.classList.remove('active'));
-            btn.classList.add('active');
-            filterTools();
-        }));
+// ===== 初始渲染 =====
+renderTools('all','');
 
-        document.addEventListener('DOMContentLoaded', () => {
-            cards.forEach(card => {
-                card.classList.remove('color-1','color-2','color-3','color-4','color-5','color-6');
-                card.classList.add('color-' + (Math.floor(Math.random() * 6) + 1));
-            });
-        });
-    </script>
+// ===== 星星装饰 =====
+(function(){
+  const container = document.getElementById('stars');
+  for(let i=0;i<30;i++){
+    const star = document.createElement('div');
+    star.className = 'hero-star';
+    star.style.left = Math.random()*100+'%';
+    star.style.top = Math.random()*100+'%';
+    star.style.width = star.style.height = (1+Math.random()*3)+'px';
+    star.style.animationDelay = Math.random()*5+'s';
+    star.style.animationDuration = (2+Math.random()*3)+'s';
+    container.appendChild(star);
+  }
+})();
+
+// ===== Canvas 鼠标遮罩擦除效果 =====
+(function(){
+  const canvas = document.getElementById('canvasMask');
+  const hero = document.getElementById('hero');
+  let ctx = canvas.getContext('2d');
+  let w,h;
+  let circles = [];
+
+  function resize(){
+    w = hero.offsetWidth;
+    h = hero.offsetHeight;
+    canvas.width = w;
+    canvas.height = h;
+    // 初始填充遮罩颜色（半透明暖色）
+    ctx.fillStyle = 'rgba(248,245,240,.3)';
+    ctx.fillRect(0,0,w,h);
+    // 绘制装饰性墨迹纹理
+    drawTexture();
+  }
+
+  function drawTexture(){
+    // 绘制一些淡墨晕染效果
+    const spots = [
+      {x:0.15,y:0.2,r:0.3},
+      {x:0.8,y:0.15,r:0.2},
+      {x:0.5,y:0.7,r:0.35},
+      {x:0.2,y:0.8,r:0.15},
+      {x:0.85,y:0.6,r:0.25},
+    ];
+    spots.forEach(s=>{
+      const g = ctx.createRadialGradient(w*s.x,h*s.y,0,w*s.x,h*s.y,w*s.r);
+      g.addColorStop(0,'rgba(194,58,43,.06)');
+      g.addColorStop(1,'rgba(194,58,43,0)');
+      ctx.fillStyle = g;
+      ctx.fillRect(0,0,w,h);
+    });
+  }
+
+  function drawCircle(x,y,r){
+    ctx.globalCompositeOperation = 'destination-out';
+    const g = ctx.createRadialGradient(x,y,0,x,y,r);
+    g.addColorStop(0,'rgba(0,0,0,1)');
+    g.addColorStop(0.5,'rgba(0,0,0,.8)');
+    g.addColorStop(1,'rgba(0,0,0,0)');
+    ctx.fillStyle = g;
+    ctx.beginPath();
+    ctx.arc(x,y,r,0,Math.PI*2);
+    ctx.fill();
+    ctx.globalCompositeOperation = 'source-over';
+  }
+
+  let animId;
+  function animateCircles(){
+    circles = circles.filter(c=>{
+      c.r += c.speed;
+      c.life -= 1;
+      if(c.life<=0) return false;
+      drawCircle(c.x,c.y,c.r);
+      return true;
+    });
+    if(circles.length) animId = requestAnimationFrame(animateCircles);
+  }
+
+  hero.addEventListener('mousemove',function(e){
+    const rect = canvas.getBoundingClientRect();
+    const x = e.clientX - rect.left;
+    const y = e.clientY - rect.top;
+    circles.push({x,y,r:15,speed:2.5,life:25});
+    drawCircle(x,y,30);
+    if(!animId) animId = requestAnimationFrame(animateCircles);
+  });
+
+  hero.addEventListener('mouseleave',function(){
+    if(animId){cancelAnimationFrame(animId);animId=null}
+  });
+
+  window.addEventListener('resize',resize);
+  resize();
+})();
+</script>
 </body>
 </html>
