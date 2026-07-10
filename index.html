@@ -20,148 +20,68 @@ body{
 /* ===== HERO ===== */
 .hero{
   position:relative;
-  min-height:520px;
-  display:flex;
-  flex-direction:column;
-  align-items:center;
-  justify-content:center;
-  text-align:center;
-  background:linear-gradient(165deg,#faf6ef 0%,#f0e6d8 30%,#e8d9c4 60%,#f5ede4 100%);
+  height:520px;
   overflow:hidden;
+  isolation:isolate;
+  background:linear-gradient(180deg,#fcfaf8 0%,#f5f0e8 100%);
 }
 
-/* 背景装饰 - 星星/墨点 */
-.hero-stars{
+/* 背景图 — 古风飞天 */
+.hero__bg{
   position:absolute;
-  top:0;left:0;width:100%;height:100%;
-  pointer-events:none;
+  inset:0;
+  background-image:url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 592"><defs><linearGradient id="g" x2="0" y2="1"><stop offset="0" stop-color="%23fcfaf8"/><stop offset="1" stop-color="%23f0e6d8"/></linearGradient></defs><rect fill="url(%23g)" width="1440" height="592"/><circle cx="300" cy="200" r="180" fill="%23c23a2b" opacity=".03"/><circle cx="1100" cy="180" r="140" fill="%23c23a2b" opacity=".025"/><circle cx="720" cy="350" r="200" fill="%23c23a2b" opacity=".035"/><circle cx="180" cy="400" r="100" fill="%23c23a2b" opacity=".02"/><circle cx="1200" cy="380" r="120" fill="%23c23a2b" opacity=".03"/></svg>');
+  background-size:1440px 520px;
+  background-position:bottom center;
+  background-repeat:no-repeat;
   z-index:0;
 }
-.hero-star{
-  position:absolute;
-  width:4px;height:4px;
-  background:#c23a2b;
-  border-radius:50%;
-  opacity:0.15;
-  animation:twinkle 3s ease-in-out infinite;
-}
-@keyframes twinkle{
-  0%,100%{opacity:0.1;transform:scale(1)}
-  50%{opacity:0.3;transform:scale(1.5)}
-}
 
-/* Canvas 遮罩层 */
-#canvasMask{
+/* Canvas 遮罩层 — 鼠标擦除露出背景 */
+.hero__mask{
   position:absolute;
-  top:0;left:0;width:100%;height:100%;
+  inset:0;
   z-index:1;
   pointer-events:none;
+  display:block;
 }
 
 /* 前景内容 */
-.hero-content{
+.hero__content{
   position:relative;
   z-index:2;
-  padding:80px 20px 60px;
   max-width:800px;
-}
-
-.logo-icon{
-  width:64px;height:64px;
-  background:linear-gradient(135deg,#c23a2b,#8b2500);
-  border-radius:16px;
-  display:flex;align-items:center;justify-content:center;
-  margin:0 auto 20px;
-  font-size:30px;
-  color:#fff;
-  box-shadow:0 8px 24px rgba(194,58,43,.25);
-  font-family:"Noto Serif SC",serif;
-  font-weight:900;
-}
-
-.hero h1{
-  font-size:3.2rem;
-  font-weight:700;
-  color:#2c2c2c;
-  letter-spacing:4px;
-  margin-bottom:8px;
-  font-family:"Noto Serif SC",serif;
-}
-.hero h1 span{color:#c23a2b}
-
-.hero .sub{
-  font-size:1.05rem;
-  color:#8a7a6a;
-  letter-spacing:6px;
-  margin-bottom:24px;
-}
-
-.hero .sub i{
-  font-style:italic;
-  font-size:0.85rem;
-  letter-spacing:2px;
-  color:#b8aa92;
-}
-
-/* 搜索框 */
-.hero-search{
-  position:relative;
-  max-width:480px;
   margin:0 auto;
+  padding-top:120px;
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  gap:28px;
+  text-align:center;
 }
+
+.hero__title{margin:0;font-size:2.8rem;font-weight:700;color:#2c2c2c;letter-spacing:4px;font-family:"Noto Serif SC",serif}
+.hero__title span{color:#c23a2b}
+
+.hero__sub{margin:0;font-size:1rem;color:#8a7a6a;letter-spacing:6px}
+
+.hero-search{width:100%;max-width:480px;position:relative}
 .hero-search input{
-  width:100%;
-  padding:14px 24px;
-  border:1.5px solid #e0d5c4;
-  border-radius:12px;
-  font-size:15px;
-  outline:none;
-  background:rgba(255,255,255,.7);
-  backdrop-filter:blur(8px);
-  font-family:inherit;
-  transition:all .3s;
-  color:#2c2c2c;
+  width:100%;padding:14px 24px;border:1px solid #e0d5c4;border-radius:12px;
+  font-size:15px;outline:none;background:rgba(255,255,255,.7);backdrop-filter:blur(8px);
+  font-family:inherit;transition:all .3s;color:#2c2c2c;box-sizing:border-box
 }
 .hero-search input::placeholder{color:#b8aa92}
-.hero-search input:focus{
-  border-color:#c23a2b;
-  box-shadow:0 0 0 3px rgba(194,58,43,.1);
-  background:rgba(255,255,255,.9);
-}
+.hero-search input:focus{border-color:#c23a2b;box-shadow:0 0 0 3px rgba(194,58,43,.1)}
 
-/* 分类标签 */
-.categories{
-  display:flex;
-  flex-wrap:wrap;
-  justify-content:center;
-  gap:8px;
-  margin-top:20px;
-}
+.categories{display:flex;flex-wrap:wrap;justify-content:center;gap:8px}
 .cat-btn{
-  padding:6px 18px;
-  background:rgba(255,255,255,.5);
-  backdrop-filter:blur(4px);
-  border:1px solid #e0d5c4;
-  border-radius:20px;
-  font-size:13px;
-  color:#7a6a5a;
-  cursor:pointer;
-  transition:all .25s;
-  font-family:inherit;
-  letter-spacing:1px;
+  padding:6px 18px;background:transparent;border:1px solid #d4c9b8;border-radius:20px;
+  font-size:13px;color:#7a6a5a;cursor:pointer;transition:all .25s;font-family:inherit;letter-spacing:1px
 }
-.cat-btn:hover{
-  background:#c23a2b;
-  color:#fff;
-  border-color:#c23a2b;
-  transform:translateY(-2px);
-  box-shadow:0 4px 12px rgba(194,58,43,.2);
-}
-.cat-btn.active{
-  background:#c23a2b;
-  color:#fff;
-  border-color:#c23a2b;
-  box-shadow:0 4px 12px rgba(194,58,43,.2);
+.cat-btn:hover,.cat-btn.active{
+  background:#c23a2b;color:#fff;border-color:#c23a2b;
+  box-shadow:0 4px 12px rgba(194,58,43,.2)
 }
 
 /* ===== 内容区 ===== */
@@ -169,7 +89,22 @@ body{
   max-width:1320px;
   margin:0 auto;
   padding:40px 24px 20px;
+  position:relative;
 }
+.container::before{
+  content:'';
+  position:fixed;
+  top:0;left:0;width:100%;height:100%;
+  background-image:var(--bg-url, none);
+  background-size:cover;
+  background-position:top center;
+  background-attachment:fixed;
+  opacity:0;
+  transition:opacity 1s ease;
+  pointer-events:none;
+  z-index:-1;
+}
+.container.has-bg::before{opacity:0.5}
 
 .section-title{
   display:flex;
@@ -200,10 +135,10 @@ body{
 /* ===== 玻璃卡片 ===== */
 .tool-card{
   position:relative;
-  background:rgba(255,255,255,.6);
-  backdrop-filter:blur(12px);
-  -webkit-backdrop-filter:blur(12px);
-  border:1px solid rgba(255,255,255,.8);
+  background:rgba(255,255,255,.55);
+  backdrop-filter:blur(16px);
+  -webkit-backdrop-filter:blur(16px);
+  border:1px solid rgba(255,255,255,.6);
   border-radius:16px;
   padding:24px 22px;
   transition:all .35s cubic-bezier(.25,.46,.45,.94);
@@ -335,17 +270,16 @@ body{
 <body>
 
 <div class="hero" id="hero">
-  <!-- 装饰星星 -->
-  <div class="hero-stars" id="stars"></div>
+  <!-- 背景底图 -->
+  <div class="hero__bg"></div>
 
   <!-- Canvas 遮罩 -->
-  <canvas id="canvasMask"></canvas>
+  <canvas class="hero__mask" id="heroMask" aria-hidden="true"></canvas>
 
-  <!-- 前景 -->
-  <div class="hero-content">
-    <div class="logo-icon">墨</div>
-    <h1>墨<span>·</span>韵</h1>
-    <p class="sub">雅致工具 · 随心所用<br><i>—— 让创作回归本真</i></p>
+  <!-- 前景内容 -->
+  <div class="hero__content">
+    <h1 class="hero__title">墨<span>·</span>韵</h1>
+    <p class="hero__sub">雅致工具 · 随心所用</p>
     <div class="hero-search">
       <input type="text" id="searchInput" placeholder="搜 寻 工 具 ...">
     </div>
@@ -449,99 +383,172 @@ backTop.addEventListener('click',e=>{e.preventDefault();window.scrollTo({top:0,b
 // ===== 初始渲染 =====
 renderTools('all','');
 
-// ===== 星星装饰 =====
+// ===== Canvas 擦除遮罩效果（移植 MiMo Code） =====
 (function(){
-  const container = document.getElementById('stars');
-  for(let i=0;i<30;i++){
-    const star = document.createElement('div');
-    star.className = 'hero-star';
-    star.style.left = Math.random()*100+'%';
-    star.style.top = Math.random()*100+'%';
-    star.style.width = star.style.height = (1+Math.random()*3)+'px';
-    star.style.animationDelay = Math.random()*5+'s';
-    star.style.animationDuration = (2+Math.random()*3)+'s';
-    container.appendChild(star);
-  }
-})();
-
-// ===== Canvas 鼠标遮罩擦除效果 =====
-(function(){
-  const canvas = document.getElementById('canvasMask');
   const hero = document.getElementById('hero');
-  let ctx = canvas.getContext('2d');
-  let w,h;
-  let circles = [];
+  const canvas = document.getElementById('heroMask');
+  if(!hero || !canvas) return;
 
+  const canHover = window.matchMedia('(hover: hover)').matches;
+  if(!canHover) return;
+
+  const ctx = canvas.getContext('2d');
+  if(!ctx) return;
+
+  const MASK = '248, 245, 240';
+  const R_START = 8;
+  const R_END = 128;
+  const R_VARY = 0.45;
+  const LIFETIME = 520;
+  const STAMP_STEP = 12;
+  const MAX_STAMPS = 160;
+  const DPR = Math.min(window.devicePixelRatio || 1, 2);
+
+  let w = 0, h = 0;
   function resize(){
-    w = hero.offsetWidth;
-    h = hero.offsetHeight;
-    canvas.width = w;
-    canvas.height = h;
-    // 初始填充遮罩颜色（半透明暖色）
-    ctx.fillStyle = 'rgba(248,245,240,.3)';
-    ctx.fillRect(0,0,w,h);
-    // 绘制装饰性墨迹纹理
-    drawTexture();
+    const rect = hero.getBoundingClientRect();
+    w = rect.width;
+    h = rect.height;
+    canvas.width = Math.round(w * DPR);
+    canvas.height = Math.round(h * DPR);
+    canvas.style.width = w + 'px';
+    canvas.style.height = h + 'px';
+    ctx.setTransform(DPR, 0, 0, DPR, 0, 0);
+    ctx.globalCompositeOperation = 'source-over';
+    ctx.fillStyle = 'rgb(' + MASK + ')';
+    ctx.fillRect(0, 0, w, h);
   }
+  resize();
+  window.addEventListener('resize', resize);
 
-  function drawTexture(){
-    // 绘制一些淡墨晕染效果
-    const spots = [
-      {x:0.15,y:0.2,r:0.3},
-      {x:0.8,y:0.15,r:0.2},
-      {x:0.5,y:0.7,r:0.35},
-      {x:0.2,y:0.8,r:0.15},
-      {x:0.85,y:0.6,r:0.25},
-    ];
-    spots.forEach(s=>{
-      const g = ctx.createRadialGradient(w*s.x,h*s.y,0,w*s.x,h*s.y,w*s.r);
-      g.addColorStop(0,'rgba(194,58,43,.06)');
-      g.addColorStop(1,'rgba(194,58,43,0)');
-      ctx.fillStyle = g;
-      ctx.fillRect(0,0,w,h);
+  const stamps = [];
+  let lastX = null, lastY = null;
+
+  function addStamp(x, y){
+    if(stamps.length >= MAX_STAMPS) stamps.shift();
+    stamps.push({
+      x, y,
+      born: performance.now(),
+      seed: Math.random() * Math.PI * 2,
+      rmax: R_END * (1 - R_VARY + Math.random() * R_VARY)
     });
   }
 
-  function drawCircle(x,y,r){
-    ctx.globalCompositeOperation = 'destination-out';
-    const g = ctx.createRadialGradient(x,y,0,x,y,r);
-    g.addColorStop(0,'rgba(0,0,0,1)');
-    g.addColorStop(0.5,'rgba(0,0,0,.8)');
-    g.addColorStop(1,'rgba(0,0,0,0)');
+  function stampAlong(x, y){
+    if(lastX === null){
+      addStamp(x, y);
+    }else{
+      const dx = x - lastX, dy = y - lastY;
+      const dist = Math.hypot(dx, dy);
+      const steps = Math.max(1, Math.ceil(dist / STAMP_STEP));
+      for(let i = 1; i <= steps; i++)
+        addStamp(lastX + (dx * i) / steps, lastY + (dy * i) / steps);
+    }
+    lastX = x; lastY = y;
+  }
+
+  function carveInk(x, y, r, alpha, seed){
+    const g = ctx.createRadialGradient(x, y, r * 0.25, x, y, r);
+    g.addColorStop(0, 'rgba(0,0,0,' + (0.95 * alpha) + ')');
+    g.addColorStop(0.55, 'rgba(0,0,0,' + (0.88 * alpha) + ')');
+    g.addColorStop(1, 'rgba(0,0,0,0)');
     ctx.fillStyle = g;
     ctx.beginPath();
-    ctx.arc(x,y,r,0,Math.PI*2);
+    const segs = 32;
+    for(let i = 0; i <= segs; i++){
+      const a = (i / segs) * Math.PI * 2;
+      const wob = 0.78 + 0.14 * Math.sin(a * 3 + seed) + 0.08 * Math.sin(a * 7 + seed * 2.1) + 0.05 * Math.sin(a * 13 + seed * 0.7);
+      const rr = r * wob;
+      const px = x + Math.cos(a) * rr;
+      const py = y + Math.sin(a) * rr;
+      if(i === 0) ctx.moveTo(px, py);
+      else ctx.lineTo(px, py);
+    }
+    ctx.closePath();
     ctx.fill();
+  }
+
+  let running = false;
+  function loop(){
+    const now = performance.now();
     ctx.globalCompositeOperation = 'source-over';
+    ctx.fillStyle = 'rgb(' + MASK + ')';
+    ctx.fillRect(0, 0, w, h);
+
+    ctx.globalCompositeOperation = 'destination-out';
+    for(let i = stamps.length - 1; i >= 0; i--){
+      const t = (now - stamps[i].born) / LIFETIME;
+      if(t >= 1){ stamps.splice(i, 1); continue; }
+      const ease = 1 - Math.pow(1 - t, 3);
+      const r = R_START + (stamps[i].rmax - R_START) * ease;
+      const alpha = 1 - t * t;
+      carveInk(stamps[i].x, stamps[i].y, r, alpha, stamps[i].seed);
+    }
+
+    if(stamps.length) requestAnimationFrame(loop);
+    else running = false;
   }
 
-  let animId;
-  function animateCircles(){
-    circles = circles.filter(c=>{
-      c.r += c.speed;
-      c.life -= 1;
-      if(c.life<=0) return false;
-      drawCircle(c.x,c.y,c.r);
-      return true;
-    });
-    if(circles.length) animId = requestAnimationFrame(animateCircles);
-  }
+  function start(){ if(!running){ running = true; requestAnimationFrame(loop); } }
 
-  hero.addEventListener('mousemove',function(e){
-    const rect = canvas.getBoundingClientRect();
-    const x = e.clientX - rect.left;
-    const y = e.clientY - rect.top;
-    circles.push({x,y,r:15,speed:2.5,life:25});
-    drawCircle(x,y,30);
-    if(!animId) animId = requestAnimationFrame(animateCircles);
+  hero.addEventListener('mouseenter', function(e){
+    const rect = hero.getBoundingClientRect();
+    lastX = e.clientX - rect.left;
+    lastY = e.clientY - rect.top;
+    stampAlong(lastX, lastY);
+    start();
   });
 
-  hero.addEventListener('mouseleave',function(){
-    if(animId){cancelAnimationFrame(animId);animId=null}
+  hero.addEventListener('mousemove', function(e){
+    const rect = hero.getBoundingClientRect();
+    stampAlong(e.clientX - rect.left, e.clientY - rect.top);
+    start();
   });
 
-  window.addEventListener('resize',resize);
-  resize();
+  hero.addEventListener('mouseleave', function(){
+    lastX = null; lastY = null;
+    // 将擦除效果合成后同步到内容区背景
+    if(w > 0 && h > 0){
+      try {
+        // 用离屏 canvas 合成背景纹理 + 遮罩擦除效果
+        const off = document.createElement('canvas');
+        off.width = canvas.width;
+        off.height = canvas.height;
+        const offCtx = off.getContext('2d');
+        offCtx.scale(DPR, DPR);
+
+        // 1. 画背景纹理（与 hero__bg 一致）
+        offCtx.fillStyle = '#fcfaf8';
+        offCtx.fillRect(0, 0, w, h);
+        const dots = [
+          [0.15,0.2,0.25,'rgba(194,58,43,0.04)'],
+          [0.8,0.15,0.2,'rgba(194,58,43,0.03)'],
+          [0.5,0.7,0.3,'rgba(194,58,43,0.035)'],
+          [0.2,0.8,0.15,'rgba(194,58,43,0.025)'],
+          [0.85,0.55,0.18,'rgba(194,58,43,0.025)'],
+        ];
+        dots.forEach(([px,py,pr,pc]) => {
+          const g = offCtx.createRadialGradient(w*px,h*py,0,w*px,h*py,w*pr);
+          g.addColorStop(0, pc);
+          g.addColorStop(1, 'transparent');
+          offCtx.fillStyle = g;
+          offCtx.fillRect(0, 0, w, h);
+        });
+
+        // 2. 把主 canvas 的遮罩层以 destination-in 方式应用
+        offCtx.globalCompositeOperation = 'destination-in';
+        offCtx.drawImage(canvas, 0, 0);
+        offCtx.globalCompositeOperation = 'source-over';
+
+        const dataUrl = off.toDataURL('image/png');
+        const container = document.querySelector('.container');
+        if(container){
+          container.style.setProperty('--bg-url', 'url(' + dataUrl + ')');
+          container.classList.add('has-bg');
+        }
+      } catch(e) {/* ignore */}
+    }
+  });
 })();
 </script>
 </body>
