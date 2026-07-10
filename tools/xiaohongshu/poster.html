@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1.0">
-<title>小红书MD成图排版工具 v0.01</title>
+<title>小红书海报生成 · 排版工具</title>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
 <style>
 *{margin:0;padding:0;box-sizing:border-box}
@@ -112,6 +112,21 @@ input.cchk{width:12px;height:12px;cursor:pointer;vertical-align:middle;margin:0}
 .emp{display:flex;flex-direction:column;align-items:center;justify-content:center;padding:50px 20px;color:#bbb;text-align:center}
 .emp .ei{font-size:40px;margin-bottom:10px}
 .emp p{font-size:13px;line-height:1.7}
+/* 图片上传相关 */
+.ib{padding:2px 6px;border:1px solid #ddd;border-radius:3px;background:#fafafa;cursor:pointer;font-size:10px;color:#555;transition:all .1s;line-height:1.3;display:inline-flex;align-items:center;gap:2px}
+.ib:hover{background:#eee;border-color:#ccc}
+.ib.act{background:#fe2c55;color:#fff;border-color:#fe2c55}
+.ib-pic{color:#fe2c55;border-color:#fe2c55}
+.ib-pic:hover{background:#fff0f2}
+#imgStrip{display:flex;gap:6px;flex-wrap:wrap;padding:6px 6px;max-height:80px;overflow-y:auto;min-height:48px;border:2px dashed #ddd;border-radius:6px;background:#fafafa;transition:all .2s;margin-bottom:3px;align-items:center;position:relative}
+#imgStrip.drag-over{border-color:#fe2c55;background:#fff0f2}
+#imgStrip .img-wrap{position:relative;display:inline-block;width:42px;height:42px;flex-shrink:0}
+#imgStrip .img-thumb{width:42px;height:42px;border-radius:5px;object-fit:cover;border:1px solid #eee;cursor:grab;transition:all .15s;background:#f5f5f5;display:block}
+#imgStrip .img-thumb:hover{transform:scale(1.12);box-shadow:0 2px 8px rgba(0,0,0,.15);border-color:#fe2c55;z-index:2;position:relative}
+#imgStrip .img-del{position:absolute;top:-5px;right:-5px;width:16px;height:16px;background:#fe2c55;color:#fff;border-radius:50%;font-size:10px;line-height:16px;text-align:center;cursor:pointer;z-index:3;display:none;box-shadow:0 1px 3px rgba(0,0,0,.2)}
+#imgStrip .img-wrap:hover .img-del{display:block}
+#imgStrip .img-idx{position:absolute;bottom:-1px;left:-1px;background:rgba(254,44,85,.85);color:#fff;font-size:8px;padding:0 3px;border-radius:3px;line-height:14px;z-index:3;font-weight:600}
+#imgStrip .strip-hint{font-size:10px;color:#bbb;pointer-events:none;position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);white-space:nowrap}
 </style>
 </head>
 <body>
@@ -154,6 +169,23 @@ input.cchk{width:12px;height:12px;cursor:pointer;vertical-align:middle;margin:0}
 	      <div style="flex:1;text-align:center"><div style="font-size:8px;color:#999;margin-bottom:1px">📄内容</div><div class="bua" onclick="gi('bci2').click()" style="padding:3px"><img id="bcp2" class="bpr"><span id="bct2" style="font-size:8px;color:#bbb">上传</span></div><input type="file" id="bci2" accept="image/*" style="display:none" onchange="hBU(this,'content')"><button class="cb xs" onclick="clrBg('content')" style="margin-top:1px">✕</button><button class="cb xs" onclick="openBgPick('content')" style="margin-top:1px;color:#27ae60">✓</button></div>
 	      <div style="flex:1;text-align:center"><div style="font-size:8px;color:#999;margin-bottom:1px">📗尾页</div><div class="bua" onclick="gi('bci3').click()" style="padding:3px"><img id="bcp3" class="bpr"><span id="bct3" style="font-size:8px;color:#bbb">上传</span></div><input type="file" id="bci3" accept="image/*" style="display:none" onchange="hBU(this,'end')"><button class="cb xs" onclick="clrBg('end')" style="margin-top:1px">✕</button><button class="cb xs" onclick="openBgPick('end')" style="margin-top:1px;color:#27ae60">✓</button></div>
 	    </div></div>
+    <div class="cg"><div class="cgt">🖼 图片样式</div>
+    <div class="cr" style="gap:4px;flex-wrap:wrap">
+      <label style="font-size:8px;display:flex;align-items:center;gap:2px"><input type="checkbox" class="cchk" id="imgShadow">阴影</label>
+      <span style="font-size:8px;color:#999">圆角</span>
+      <button class="cb xs" data-radius="6" onclick="setImgRadius(6)">6</button>
+      <button class="cb xs act" data-radius="12" onclick="setImgRadius(12)">12</button>
+      <button class="cb xs" data-radius="20" onclick="setImgRadius(20)">20</button>
+      <button class="cb xs" data-radius="999" onclick="setImgRadius(999)">全圆</button>
+      <span style="font-size:8px;color:#999;margin-left:2px">宽度</span>
+      <button class="cb xs" data-w="100" onclick="setImgWidth(100)">100%</button>
+      <button class="cb xs act" data-w="80" onclick="setImgWidth(80)">80%</button>
+      <button class="cb xs" data-w="60" onclick="setImgWidth(60)">60%</button>
+      <span style="font-size:8px;color:#999;margin-left:2px">边距</span>
+      <button class="cb xs act" data-m="8" onclick="setImgMargin(8)">8</button>
+      <button class="cb xs" data-m="16" onclick="setImgMargin(16)">16</button>
+      <button class="cb xs" data-m="24" onclick="setImgMargin(24)">24</button>
+    </div></div>
     <div class="cg"><div class="cgt">🎨 颜色</div>
     <div class="cr" style="gap:6px">
       <label style="font-size:9px;display:flex;align-items:center;gap:2px">文字<input type="color" id="tc" class="cc" value="#333333"></label>
@@ -188,10 +220,13 @@ input.cchk{width:12px;height:12px;cursor:pointer;vertical-align:middle;margin:0}
       <span style="display:flex;gap:4px">
         <button class="cb" onclick="copyNP()" title="复制强制分页标记" style="font-size:9px;color:#fe2c55;border-color:#fe2c55">⏎ 复制 &lt;!-- np --&gt;</button>
         <button class="cb" onclick="compressBlanks()" style="font-size:9px">📏 保留两行</button>
+        <button class="cb ib-pic" onclick="gi('imgInput').click()" title="上传图片支持多选拖拽" style="font-size:9px">🖼️ 图片</button>
         <button class="cb" onclick="ldS()" style="color:#fe2c55;border-color:#fe2c55">📋 示例</button>
       </span>
     </div>
-    <textarea id="mi" placeholder="首行 = 封面大标题&#10;第二行 = 封面副标题&#10;最后一行 = 尾页文案&#10;&#10;支持 #标题 **加粗** >引用 -列表 等语法&#10;&#10;输入右侧实时预览"></textarea>
+    <input type="file" id="imgInput" accept="image/*" multiple style="display:none">
+    <div id="imgStrip"><span class="strip-hint">📁 点击「图片」按钮上传 / 拖拽图片到此区域</span></div>
+    <textarea id="mi" placeholder="首行 = 封面大标题&#10;第二行 = 封面副标题&#10;最后一行 = 尾页文案&#10;&#10;支持 #标题 **加粗** >引用 -列表 等语法&#10;支持粘贴/上传图片自动转换为 Markdown 图片语法&#10;&#10;输入右侧实时预览"></textarea>
   </div>
 </div>
 
@@ -266,6 +301,163 @@ function toggleBlanks(){_showBlanks=!_showBlanks;gi('blankToggle').style.borderC
 function hBU(inp,ty){const f=inp.files[0];if(!f)return;const r=new FileReader();r.onload=function(e){bgImg[ty]=e.target.result;const pi=gi('bcp'+(ty==='cover'?'':ty==='content'?'2':'3'));const tx=gi('bct'+(ty==='cover'?'':ty==='content'?'2':'3'));pi.src=e.target.result;pi.style.display='block';tx.style.display='none';flush();shT('背景已上传')};r.readAsDataURL(f);inp.value=''}
 function clrBg(ty){bgImg[ty]=null;flush();shT('已清除背景')}
 
+// ===================== 图片处理 =====================
+var _imgList=[];
+var _imgIdCounter=0;
+// 图片样式设置
+var _imgCfg={radius:12,width:80,margin:8,shadow:false};
+
+function setImgRadius(v){
+  _imgCfg.radius=v;
+  document.querySelectorAll('[data-radius]').forEach(function(el){el.classList.toggle('act',parseInt(el.getAttribute('data-radius'))===v)});
+  flush();
+}
+function setImgWidth(v){
+  _imgCfg.width=v;
+  document.querySelectorAll('[data-w]').forEach(function(el){el.classList.toggle('act',parseInt(el.getAttribute('data-w'))===v)});
+  flush();
+}
+function setImgMargin(v){
+  _imgCfg.margin=v;
+  document.querySelectorAll('[data-m]').forEach(function(el){el.classList.toggle('act',parseInt(el.getAttribute('data-m'))===v)});
+  flush();
+}
+
+function refreshImgStrip(){
+  var s=gi('imgStrip');
+  if(_imgList.length===0){
+    s.innerHTML='<span class="strip-hint">📁 点击「图片」按钮上传 / 拖拽图片到此区域</span>';
+    return;
+  }
+  var html='';
+  for(var i=0;i<_imgList.length;i++){
+    var item=_imgList[i];
+    html+='<div class="img-wrap" data-idx="'+i+'">'+
+      '<img class="img-thumb" src="'+item.base64+'" title="'+item.name+'" data-id="'+item.id+'">'+
+      '<span class="img-idx">'+(i+1)+'</span>'+
+      '<span class="img-del" data-id="'+item.id+'">×</span>'+
+    '</div>';
+  }
+  s.innerHTML=html;
+  s.querySelectorAll('.img-del').forEach(function(el){
+    el.onclick=function(e){
+      e.stopPropagation();
+      var id=parseInt(this.getAttribute('data-id'));
+      removeImageById(id);
+    };
+  });
+}
+
+function removeImageById(id){
+  var idx=_imgList.findIndex(function(item){return item.id===id});
+  if(idx===-1)return;
+  _imgList.splice(idx,1);
+  rebuildEditorRefs();
+  refreshImgStrip();
+  flush();
+}
+
+function rebuildEditorRefs(){
+  var ta=gi('mi');
+  var text=ta.value.replace(/\[图片(\d+)\]/g,'__IMG_PLACEHOLDER__');
+  for(var i=0;i<_imgList.length;i++){
+    text=text.replace('__IMG_PLACEHOLDER__','[图片'+(i+1)+']');
+  }
+  text=text.replace(/__IMG_PLACEHOLDER__/g,'');
+  ta.value=text;
+}
+
+function addImages(files){
+  var remaining=[];
+  for(var i=0;i<files.length;i++){
+    var f=files[i];
+    if(!f.type.startsWith('image/'))continue;
+    remaining.push(f);
+  }
+  if(!remaining.length){shT('没有有效的图片文件',true);return;}
+  var loaded=0;
+  remaining.forEach(function(f){
+    _imgIdCounter++;
+    var id=_imgIdCounter;
+    var r=new FileReader();
+    r.onload=function(e){
+      _imgList.push({id:id,name:f.name,base64:e.target.result,file:f});
+      loaded++;
+      if(loaded===remaining.length){
+        refreshImgStrip();
+        insertImageRefs(remaining.length);
+        flush();
+        shT('🖼️ 已添加 '+remaining.length+' 张图片');
+      }
+    };
+    r.readAsDataURL(f);
+  });
+}
+
+function insertImageRefs(count){
+  var ta=gi('mi');
+  var refs='';
+  var startIdx=_imgList.length-count+1;
+  for(var i=0;i<count;i++){
+    refs+='\n[图片'+startIdx+']';
+    startIdx++;
+  }
+  refs+='\n';
+  insertAtCursor(ta,refs);
+}
+
+function insertAtCursor(ta,text){
+  var start=ta.selectionStart,end=ta.selectionEnd;
+  ta.value=ta.value.substring(0,start)+text+ta.value.substring(end);
+  var pos=start+text.length;
+  ta.selectionStart=ta.selectionEnd=pos;
+  ta.focus();
+}
+
+function handleImageUpload(inp){
+  var files=inp.files;
+  if(!files||!files.length)return;
+  addImages(Array.from(files));
+  inp.value='';
+}
+
+function handlePasteMD(e){
+  var items=e.clipboardData&&e.clipboardData.items;
+  if(!items)return;
+  var hasImage=false;
+  for(var i=0;i<items.length;i++){
+    if(items[i].type.indexOf('image')!==-1){
+      e.preventDefault();
+      var file=items[i].getAsFile();
+      if(!file)continue;
+      addImages([file]);
+      hasImage=true;
+    }
+  }
+  if(hasImage)shT('📋 图片已粘贴');
+}
+
+function setupDragDrop(){
+  var strip=gi('imgStrip');
+  ['dragenter','dragover','dragleave','drop'].forEach(function(ev){
+    strip.addEventListener(ev,function(e){
+      e.preventDefault();
+      e.stopPropagation();
+    },false);
+  });
+  ['dragenter','dragover'].forEach(function(ev){
+    strip.addEventListener(ev,function(){strip.classList.add('drag-over');},false);
+  });
+  ['dragleave','drop'].forEach(function(ev){
+    strip.addEventListener(ev,function(){strip.classList.remove('drag-over');},false);
+  });
+  strip.addEventListener('drop',function(e){
+    var files=e.dataTransfer.files;
+    if(files&&files.length>0){
+      addImages(Array.from(files));
+    }
+  },false);
+}
 var _bgPickTarget='cover',_bgPickSelected='';
 
 function openBgPick(ty){_bgPickTarget=ty;_bgPickSelected='';
@@ -438,7 +630,18 @@ function flush(){
         var seg=segments[si];
         if(!seg.length)continue;
         hasContent=true;
-        var segRendered=rMD((_showBlanks?seg:seg.filter(function(l){return l.trim()})).join('\n'));
+        var segText=(_showBlanks?seg:seg.filter(function(l){return l.trim()})).join('\n');
+        // 替换 [图片N] 为实际 img 标签
+        segText=segText.replace(/\[图片(\d+)\]/g,function(m,a){
+          var idx=parseInt(a)-1;
+          if(idx>=0&&idx<_imgList.length&&_imgList[idx].base64){
+            var imgStyle='max-width:'+_imgCfg.width+'%;display:block;margin:'+_imgCfg.margin+'px auto;border-radius:'+_imgCfg.radius+'px';
+            if(_imgCfg.shadow)imgStyle+=';box-shadow:0 4px 16px rgba(0,0,0,.1)';
+            return '\n<img src="'+_imgList[idx].base64+'" alt="'+_imgList[idx].name+'" style="'+imgStyle+'">\n';
+          }
+          return m;
+        });
+        var segRendered=rMD(segText);
         var segPages=measurePages(segRendered,fs,font,tc,ac,hfs,hdrTxt, fmtFtr,author,authAlign,hCn,fCn,bgc,bgImg.content);
         pages=pages.concat(segPages);
       }
@@ -504,18 +707,27 @@ async function dlA(){
     await new Promise(r=>setTimeout(r,400));
     // 确保 JSZip 已加载
     if(typeof JSZip==='undefined'){setP(0);shT('JSZip 加载中，请稍后重试',true);btn.innerHTML=orig;btn.disabled=false;dlBusy=false;return}
-    setP(10);const zip=new JSZip();
-    for(let i=0;i<elts.length;i++){setP(10+((i/elts.length)*70));const card=elts[i];if(!card)continue;try{const cv=await html2canvas(card,{scale:2,allowTaint:true,backgroundColor:null,logging:false});const bl=await new Promise(r=>cv.toBlob(r,'image/png'));const nm=['cover'];for(let j=1;j<=elts.length-2;j++)nm.push('content_'+j);nm.push('end');zip.file('xhs_'+(nm[i]||'p'+(i+1))+'.png',bl)}catch(e){console.warn(i+1,'failed:',e)}}
+    setP(10);
+    // 生成时间戳和文件名前缀
+    var now=new Date();
+    var ts=now.getFullYear()+String(now.getMonth()+1).padStart(2,'0')+String(now.getDate()).padStart(2,'0')+'_'+String(now.getHours()).padStart(2,'0')+String(now.getMinutes()).padStart(2,'0')+String(now.getSeconds()).padStart(2,'0');
+    var prefix=gi('auth').value||'配图';
+    var authorName=prefix;
+    // 从MD内容提取标题（第一行非空行）
+    var mdLines=gi('mi').value.split('\n').filter(function(l){return l.trim()});
+    var title=(mdLines[0]||'').replace(/^#+\s*/,'').replace(/[\\/:*?"<>|]/g,'_').trim().slice(0,30)||'无标题';
+    const zip=new JSZip();
+    for(let i=0;i<elts.length;i++){setP(10+((i/elts.length)*70));const card=elts[i];if(!card)continue;try{const cv=await html2canvas(card,{scale:2,allowTaint:true,backgroundColor:null,logging:false});const bl=await new Promise(r=>cv.toBlob(r,'image/png'));var seq=String(i+1).padStart(3,'0');var label=i===0?'封面':i===elts.length-1?'尾页':'内容';zip.file(prefix+'_'+seq+'_'+label+'.png',bl)}catch(e){console.warn(i+1,'failed:',e)}}
     // 添加 MD 源文件
     setP(85);
     var mdContent=gi('mi').value;
     var mdBlob=new Blob([mdContent],{type:'text/markdown;charset=utf-8'});
-    zip.file('xhs_source.md',mdBlob);
+    zip.file(prefix+'_source_'+ts+'.md',mdBlob);
     // 添加说明文件
-    var info='小红书图文排版导出\n生成时间: '+new Date().toLocaleString()+'\n共 '+elts.length+' 页图片\n\n封面标题: '+(gi('mi').value.split('\n').filter(l=>l.trim())[0]||'')+'\n作者: '+(gi('auth').value||'');
-    zip.file('info.txt',info);
+    var info='小红书图文排版导出\n生成时间: '+now.toLocaleString()+'\n作者: '+authorName+'\n共 '+elts.length+' 页图片\n\n封面标题: '+(gi('mi').value.split('\n').filter(function(l){return l.trim()})[0]||'')+'\n';
+    zip.file('README.txt',info);
     setP(95);const zb=await zip.generateAsync({type:'blob'});setP(98);
-    const ln=document.createElement('a');ln.href=URL.createObjectURL(zb);ln.download='小红书_'+(gi('auth').value||'配图')+'_'+new Date().toISOString().slice(0,10)+'.zip';
+    const ln=document.createElement('a');ln.href=URL.createObjectURL(zb);ln.download=ts+'_'+title+'.zip';
     document.body.appendChild(ln);ln.click();document.body.removeChild(ln);URL.revokeObjectURL(ln.href);
     setP(100);shT('✅ 下载完成！含 '+elts.length+' 张图片 + MD源文件');setTimeout(()=>setP(0),2000);
   }catch(err){console.error(err);shT('下载失败: '+err.message,true);setP(0)}
@@ -554,7 +766,7 @@ function compressBlanks(){
 }
 
 function ldS(){
-  const s=`从零开始做小红书\n\n三个月涨粉5万的运营心得\n\n---\n\n### 🎯 精准定位\n\n做小红书的第一步，**不是发笔记，而是找到你的定位**。\n\n> "你不可能服务所有人，你只能服务一部分人。"\n\n找准目标受众，才能做出爆款内容。\n\n### 📸 封面设计\n\n- **统一风格**：保持视觉一致性\n- **文字清晰**：标题要一眼看懂\n- **色彩搭配**：不超过3种主色\n\n### ✍️ 内容创作\n\n1. 开头3秒抓住注意力\n2. 中间用故事串联干货\n3. 结尾引导互动收藏\n\n优质内容 = 有用 + 有趣 + 有共鸣\n\n\`\`\`python\n# 数据分析小工具\nimport pandas as pd\n\ndata = pd.read_csv("xhs_data.csv")\nprint(f"总笔记数: {len(data)}")\nprint(f"平均点赞: {data['likes'].mean():.0f}")\n\`\`\`\n\n也可以直接贴命令行的执行结果：\n\n\`\`\`\n$ node --version\nv20.11.0\n$ npm run build\n> blog@1.0.0 build\n> next build\n\n✓ Built in 2.3s\n\`\`\`\n\n### 🔥 运营技巧\n\n早 7-9 | 干货知识类\n中 12-14 | 生活方式类\n晚 20-22 | 深度内容类\n\n### 💡 小结\n\n**坚持更新** + **优化封面** + **互动维护**\n\n三个关键词，做好小红书运营。\n\n---\n\n感谢阅读，希望对你有所帮助❤️`;
+  const s=`从零开始做小红书\n\n三个月涨粉5万的运营心得\n\n---\n\n### 🎯 精准定位\n\n做小红书的第一步，**不是发笔记，而是找到你的定位**。\n\n> "你不可能服务所有人，你只能服务一部分人。"\n\n找准目标受众，才能做出爆款内容。\n\n### 📸 封面设计\n\n- **统一风格**：保持视觉一致性\n- **文字清晰**：标题要一眼看懂\n- **色彩搭配**：不超过3种主色\n\n### ✍️ 内容创作\n\n1. 开头3秒抓住注意力\n2. 中间用故事串联干货\n3. 结尾引导互动收藏\n\n优质内容 = 有用 + 有趣 + 有共鸣\n\n\`\`\`python\n# 数据分析小工具\nimport pandas as pd\n\ndata = pd.read_csv("xhs_data.csv")\nprint(f"总笔记数: {len(data)}")\nprint(f"平均点赞: {data['likes'].mean():.0f}")\n\`\`\`\n\n也可以直接贴命令行的执行结果：\n\n\`\`\`\n$ node --version\nv20.11.0\n$ npm run build\n> blog@1.0.0 build\n> next build\n\n✓ Built in 2.3s\n\`\`\`\n\n### 🔥 运营技巧\n\n早 7-9 | 干货知识类\n中 12-14 | 生活方式类\n晚 20-22 | 深度内容类\n\n### 💡 小结\n\n**坚持更新** + **优化封面** + **互动维护**\n\n三个关键词，做好小红书运营。\n\n💡 提示：点击「🖼️ 图片」上传图片后，编辑器会自动插入 [图片1] [图片2] 等标记，预览区会渲染实际图片\n\n---\n\n感谢阅读，希望对你有所帮助❤️`;
   gi('mi').value=s;flush();shT('已加载示例');
 }
 
@@ -564,8 +776,12 @@ document.addEventListener('DOMContentLoaded',function(){
   rTpl();
   gi('mi').dataset.ets='64';gi('mi').dataset.hfs='20';
   gi('mi').addEventListener('input',flush);
+  gi('mi').addEventListener('paste',handlePasteMD);
+  gi('imgInput').addEventListener('change',function(){handleImageUpload(this)});
+  setupDragDrop();
   ['tc','ac','bc','ctc','csc','auth','hdr','ftr'].forEach(function(id){gi(id).addEventListener('input',flush)});
   ['hCv','hCn','hEd','fCv','fCn','fEd'].forEach(function(id){gi(id).addEventListener('change',flush)});
+  ['imgShadow'].forEach(function(id){gi(id).addEventListener('change',function(){_imgCfg.shadow=this.checked;flush()})});
   setTimeout(ldS,60);
   var rt;window.addEventListener('resize',function(){clearTimeout(rt);rt=setTimeout(flush,250)});
 });

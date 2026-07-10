@@ -4,10 +4,10 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description" content="微信Markdown转换器">
-    <title>MD转公众号HTML工具</title>
+    <title>URL 提取 · HTML 工具</title>
     <!-- Markdown解析和样式 -->
-    <script src="../js/marked.min.js"></script>
-    <link rel="stylesheet" href="../css/github.min.css">
+    <script src="../../assets/js/marked.min.js"></script>
+    <link rel="stylesheet" href="../../assets/css/github.min.css">
     <style>
         body {
             margin: 0;
@@ -168,7 +168,7 @@
     </style>
 </head>
 <body>
-    <a href="../index.html" class="back-home"> 返回主页</a>
+    <a href="../../index.html" class="back-home"> 返回主页</a>
     <div class="container">
         <div class="editor-box">
             <div class="options-bar">
@@ -182,15 +182,15 @@
                     <label><input type="radio" name="alignMode" value="center" id="align-center" checked>居中</label>
                     <span style="display: inline-block; width: 20px;margin: 10px 0px;"></span>
                     <span>URL：</span>
-                    <label><input type="radio" name="urlMode" value="qpic.cn" id="url-pic" checked>图片URL</label>
+                    <label><input type="radio" name="urlMode" value="qpic.cn" id="url-pic" >图片URL</label>
                     <label><input type="radio" name="urlMode" value="mp.weixin.qq.com" id="url-wz">文章URL</label>
-                    <label><input type="radio" name="urlMode" value="fullurl" id="url-fullurl">全部URL</label>
+                    <label><input type="radio" name="urlMode" value="fullurl" id="url-fullurl" checked>全部URL</label>
                     <span style="display: inline-block; width: 20px;margin: 10px 0px;"></span>
                 </div>
-                <div style="text-align: right;"><input type="button" name="clearEnter" value="删除空行" id="clear-enter"/></div>
-                <div style="text-align: right;"><input type="button" name="clearSort" value="内容乱序" id="clear-sort"/></div>
-                <div style="text-align: right;"><input type="button" name="clearShort" value="删除短词" id="clear-short"/></div>
-                <div style="text-align: right;"><input type="button" name="formatUrl" value="提取URL" id="format-url"/></div>
+                <div text-align: right;"><input type="button" name="clearEnter" value="删除空行" id="clear-enter"/></div>
+                <div text-align: right;"><input type="button" name="clearSort" value="内容乱序" id="clear-sort"/></div>
+                <div text-align: right;"><input type="button" name="clearShort" value="删除短词" id="clear-short"/></div>
+                <div text-align: right;"><input type="button" name="formatUrl" value="提取URL" id="format-url"/></div>
             </div>
 			<div class="options-bar">
 				<div style="text-align: right;">
@@ -312,29 +312,7 @@
             updatePreview();
     } 
 
-    function formatMD(text) {
-        // 定义需要匹配的正则表达式模式，涵盖所有指定的标记
-        const patterns = [
-            /#{1,8}\s/g,   // 八级标题 ######## 后接任意空白字符
-            /\d+\./g,          // 文字 - 后接任意空白字符
-            /-\s/g,          // 无序列表项 - 后接任意空白字符
-            />\s/g,          // 引用块 > 后接任意空白字符
-            /```\s/g         // 代码块 ``` 后接任意空白字符
-        ];
-
-        let formattedText = text;
-        // 遍历所有模式，在匹配到的字符串前添加换行符
-        patterns.forEach(pattern => {
-            formattedText = formattedText.replace(pattern, match => `\n${match}`);
-        });
-
-        return formattedText;
-    }
-
-
-
     function autoFormatText(rawText) {
-        debugger
         // 段落分割
         let paragraphs = [];
         if (paragraphMode) {
@@ -451,13 +429,65 @@
             return text;
         }
 
-
-        
         // 遍历每个段落或行
         paragraphs.forEach((para) => {
             // 段落内容按换行分句
             // 将段落内容按行分割，提取所有以 https:// 开头的图片链接
-            html.push(formatMD(para))
+            let lines = para
+                .split('\n')
+                .map(line => line.trim())
+                .filter(line => line.length > 0);
+
+            // 提取所有以 https:// 开头的图片链接
+            let imageLinks = [];
+            lines.forEach(line => {
+                // 允许一行有多个链接，用正则提取
+                const matches = line.match(/https:\/\/[^\s",]+/g);
+                if (matches) {
+                    imageLinks.push(...matches);
+                }
+            });
+ 
+            debugger
+            if (imageLinks.length === 0) return;
+
+
+            // 遍历处理每个URL
+            imageLinks = imageLinks.map(url => {
+                // 先移除末尾可能存在的 );
+                let processedUrl = url.replace(/\);$/, '');
+                
+                // 再移除末尾的 /300 或 /640
+                processedUrl = processedUrl.replace(/\/(300|640)*$/, '/');
+                console.log('url:', processedUrl)
+                
+                return processedUrl;
+            });
+            
+            index++;
+            const symbol = getRandomItem(symbols);
+            // const name = getRandomItem(names);
+            // const time = getRandomItem(times);
+            const imgbjurl = getRandomItem(imgbj);
+
+            // 句子分割（可根据需要更细致分割）
+            
+            
+            let sentenceHtmlArr = [];
+            let sentenceUrlArr = imageLinks
+
+            debugger
+            if(sentenceUrlArr.length>0 && sentenceUrlArr.length %2 !== 0){
+                sentenceUrlArr.push(imgbjurl)
+            }
+
+ 
+            for(let i = 0; i < sentenceUrlArr.length; i++){
+                debugger
+                const imgurl= sentenceUrlArr[i]
+                sentenceHtmlArr.push(`<span style='font-size:10px'>${imgurl}</span><br>`)
+            }
+            html.push(sentenceHtmlArr.join(''))
         });
 
         
@@ -490,8 +520,8 @@
                         </p>
                     </section>
                 </section>
-                <section style="width:95%;text-align:left;">
-                   <pre> ${html.join('')} </pre>
+                <section style="width:95%;text-align:center;">
+                    ${html.join('')}
                 </section>
 
                 <p style="font-size: 16px;font-weight: 400;font-style: normal;white-space: normal;margin: 0px;padding: 0px;box-sizing: border-box;">
@@ -675,10 +705,22 @@
                 }
             </style>
         `;
-        
     }
 
-    const rawText = `### 一、角色定位与核心目标- **角色定位**：咪蒙风格公众号“情绪爆破手”，专注挖掘年轻人“隐忍的委屈/愤怒/不甘”，用“反常识观点”打破“沉默的共识”。- **核心目标**：生成3-5个“具体场景+极端情绪”选题，兼顾“痛点戳中率”（≥80%）、“反常识指数”（≥70%）与“传播潜力”（家庭群/朋友圈转发率预测）。### 二、工具能力范围与限制- **工具清单**：年轻人情绪痛点库（如“职场甩锅/情感背叛/原生家庭控制”）、反常识观点生成工具（如“职场不相信眼泪→要哭回家哭”）、情绪传播潜力预测模型。- **能力边界**：仅围绕“职场/情感/原生家庭”三大年轻人核心情绪赛道，禁用抽象概念（如“成长”“治愈”），需含“具体冲突场景”（如“同事甩锅”“男友冷暴力”）。### 三、标准操作流程1. 需求接收：获取热点榜单（如“职场PUA”）、用户画像（如“25岁职场新人/被同事甩锅”）、竞品高转发文章关键词（如“反常识/情绪爆发”）。2. 需求确认：明确公众号定位（如“职场情绪反击”）及禁忌方向（避免“说教式”“治愈系”）。3. 工具调用：用痛点库筛选“隐忍情绪”（如“被同事抢功劳”），用反常识工具生成观点（如“我凭什么要帮你？”）。4. 执行监控：检查选题是否符合“具体场景+反常识”（如“同事甩锅→我当众怼回去”），避免与历史3个月“职场”类选题重复。5. 结果整理：按“情绪传播潜力”排序，附理由（如“‘职场不相信眼泪’→戳中85%职场新人的委屈”）。### 四、输入输出规范- **输入要求**：需提供具体热点（如“某明星职场PUA事件”）、用户画像（如“25岁/职场新人/被同事甩锅”）、竞品高转发关键词（如“反常识/情绪爆发”）。- **输出规范**：每个选题含20字内标题（如《职场不相信眼泪，要哭回家哭》）、30字内痛点理由（如“戳中职场新人‘被甩锅的委屈’”）、反常识观点（如“职场不是慈善机构，你的善良要带锋芒”）、传播指数（1-10分，基于“情绪戳中率+反常识指数”）。### 五、异常处理机制- 输入异常：热点数据不足时，调用“历史高转发情绪痛点”（如“情感背叛/原生家庭控制”）生成备选。- 工具异常：反常识工具失效时，基于“用户画像”直接生成（如“25岁职场新人→‘我凭什么要帮你？’”）。### 六、示例场景参考*示例场景*：“用户指令：结合‘同事甩锅’热点生成选题你的处理步骤：1. 确认需求：定位‘职场情绪反击’，需突出‘反常识+情绪爆发’。2. 调用工具：筛选“被同事甩锅”痛点，生成反常识观点“职场不相信眼泪”。3. 输出结果：选题《职场不相信眼泪，要哭回家哭》（传播指数9分，理由：戳中85%职场新人的委屈，反常识观点引发共鸣）。### 总结：用“具体冲突场景+反常识观点”，让选题“一戳就炸”。`;
+    const rawText = `"https://tencentcdna.production.link3.cc/user_create_images/link3_1741542924688/multiple_images/1752400242579", 
+            "https://tencentcdna.production.link3.cc/user_create_images/link3_1741542924688/multiple_images/1752400242375", 
+            "https://tencentcdna.production.link3.cc/user_create_images/link3_1741542924688/multiple_images/1752400242155", 
+            "https://tencentcdna.production.link3.cc/user_create_images/link3_1741542924688/multiple_images/1752400242488", 
+            "https://tencentcdna.production.link3.cc/user_create_images/link3_1741542924688/multiple_images/1752400242881", 
+            "https://tencentcdna.production.link3.cc/user_create_images/link3_1741542924688/multiple_images/1752400242781", 
+            "https://tencentcdna.production.link3.cc/user_create_images/link3_1741542924688/multiple_images/1752400277068", 
+            "https://tencentcdna.production.link3.cc/user_create_images/link3_1741542924688/multiple_images/1752400277220", 
+            "https://tencentcdna.production.link3.cc/user_create_images/link3_1741542924688/multiple_images/1752400410984", 
+            "https://tencentcdna.production.link3.cc/user_create_images/link3_1741542924688/multiple_images/1752400500142", 
+            "https://tencentcdna.production.link3.cc/user_create_images/link3_1741542924688/multiple_images/1752400551667", 
+			
+			
+		    n2.AAA\n1.BBB\n1.CCC\n并均匀分散于固体材料中的一类 高分子材料。`;
 
     // 初始化Markdown解析器
     marked.setOptions({
@@ -704,6 +746,79 @@
     // 页面加载时，自动预览
     editor.value = rawText;
     updatePreview();
+
+
+    // 重新设置id="editor"的文本框内容，只保留去重后的url，每行一个
+    function setUniqueUrlsToEditor() {
+        // 匹配所有以 http 或 https 开头的 url
+        const urlRegex = /https?:\/\/[^\s",]+/g;
+        const textarea = document.getElementById('editor');
+        const text = textarea.value;
+        let urls = text.match(urlRegex) || [];
+
+
+        debugger
+        // 遍历处理每个URL
+        urls = urls.map(url => {
+            // 先移除末尾可能存在的 );
+            let processedUrl = url.replace(/\);$/, '');
+            
+            // 再移除末尾的 /300 或 /640
+            processedUrl = processedUrl.replace(/\/(300|640)*$/, '/');
+            console.log('url:', processedUrl)
+            
+            return processedUrl;
+        });
+
+        // 获取当前选中的urlMode
+        const urlMode = document.querySelector('input[name="urlMode"]:checked').value;
+
+        // 根据urlMode过滤url
+        if (urlMode !== 'fullurl') {
+            // 只保留包含选中value的url
+            urls = urls.filter(url => url.includes(urlMode));
+        }
+
+
+        // 去重
+        const uniqueUrls = Array.from(new Set(urls));
+
+
+        // 进一步去重：如果多个url图片名相同，只保留最短的那个
+        // 提取图片名的函数
+        function getImgName(url) {
+            // 仅处理 mmbiz.qpic.cn 的图片链接，其他直接返回url
+            if (!url.includes('mmbiz.qpic.cn')) {
+                return url;
+            }
+            // 用 / 分割，取分割后最长的部分作为图片名
+            let parts = url.split('/');
+            let maxPart = parts.reduce((a, b) => a.length >= b.length ? a : b, '');
+            return maxPart;
+        }
+        // 用Map存储图片名到url
+        const imgNameToUrl = new Map();
+        debugger
+        uniqueUrls.forEach(url => {
+            const imgName = getImgName(url);
+            if (!imgNameToUrl.has(imgName)) {
+                imgNameToUrl.set(imgName, url);
+            } else {
+                // 如果已存在，保留更短的url
+                if (url.length < imgNameToUrl.get(imgName).length) {
+                    imgNameToUrl.set(imgName, url);
+                }
+            }
+        });
+        // 最终只保留Map中的url
+        const finalUrls = Array.from(imgNameToUrl.values());
+        // 换行拼接
+        const result = finalUrls.join('\n');
+        textarea.value = result;
+        updatePreview();
+    }
+    // 你可以在需要的时候调用 setUniqueUrlsToEditor()
+    setUniqueUrlsToEditor()
 
     // 复制公众号兼容内容的html 用于代码push到公众号
     function copyWechatHTML() {
@@ -749,7 +864,6 @@
     </script>
     
     <!-- 代码高亮 -->
-    <script src="../js/highlight.min.js"></script>
+    <script src="../../assets/js/highlight.min.js"></script>
 </body>
-</html>
 </html>
