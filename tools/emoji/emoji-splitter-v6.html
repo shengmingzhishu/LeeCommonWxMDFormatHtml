@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>表情包智能拆解工具 V5 — 矩形分割 + 横幅制作</title>
+<title>表情包智能拆解工具 V6 — 橡皮擦 + 画笔</title>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js"></script>
 <style>
 *{margin:0;padding:0;box-sizing:border-box}
@@ -172,13 +172,58 @@ textarea:focus{border-color:var(--primary)}
 .banner-crop-hint{font-size:11px;color:var(--text-light);text-align:center;margin-top:4px}
 .banner-result-wrap{text-align:center;margin-top:12px}
 .banner-result-wrap canvas{border-radius:6px;border:1px solid var(--border);max-width:100%}
+
+/* V6: Paint-style eraser modal */
+.eraser-modal{max-width:94vw;width:94vw;height:88vh;display:flex;flex-direction:column}
+.eraser-modal .modal-header{flex-shrink:0}
+.eraser-modal .modal-footer{flex-shrink:0}
+.eraser-body{flex:1;display:flex;gap:0;padding:0;min-height:0;overflow:hidden}
+.eraser-toolbar{width:150px;flex-shrink:0;background:#f8f8f8;border-right:1px solid var(--border);padding:12px 10px;display:flex;flex-direction:column;gap:8px;overflow-y:auto}
+.eraser-toolbar .tb-label{font-size:10px;color:var(--text-light);text-transform:uppercase;letter-spacing:1px;margin-top:4px}
+.eraser-toolbar .tb-group{border-bottom:1px solid var(--border);padding-bottom:8px;margin-bottom:4px}
+.eraser-toolbar .tb-group:last-child{border-bottom:none;margin-bottom:0}
+.eraser-tool-btn{display:flex;align-items:center;gap:8px;padding:6px 10px;border-radius:6px;cursor:pointer;font-size:13px;transition:all .12s;border:1px solid transparent;user-select:none}
+.eraser-tool-btn:hover{background:var(--primary-light)}
+.eraser-tool-btn.active{background:var(--primary-light);border-color:var(--primary);color:var(--primary-dark);font-weight:500}
+.eraser-tool-btn .icon{font-size:16px}
+.eraser-canvas-area{flex:1;display:flex;flex-direction:column;padding:12px;min-width:0;min-height:0}
+.eraser-canvas-wrap{flex:1;background:#1a1a1a;border-radius:8px;overflow:hidden;display:flex;align-items:center;justify-content:center;position:relative;min-height:0;user-select:none}
+.eraser-canvas-wrap canvas#eraserCanvas{display:block;position:absolute;top:0;left:0;z-index:1;cursor:none}
+.eraser-hover-circle{position:absolute;border:2px solid rgba(7,193,96,0.9);border-radius:50%;pointer-events:none;z-index:3;transform:translate(-50%,-50%);background:rgba(7,193,96,0.07);box-shadow:0 0 8px rgba(7,193,96,0.15)}
+.eraser-zoom-bar{display:flex;align-items:center;gap:6px;margin-top:8px;flex-shrink:0}
+.eraser-zoom-bar input[type=range]{width:120px;height:4px;accent-color:var(--primary)}
+.eraser-zoom-bar .zoom-lvl{font-size:12px;color:var(--text-light);min-width:44px;font-variant-numeric:tabular-nums}
+.eraser-status{font-size:11px;color:#888}
+.eraser-lasso-point{fill:rgba(7,193,96,0.9)}.eraser-lasso-line{stroke:rgba(7,193,96,0.8);stroke-width:2;stroke-dasharray:4 3;fill:none}
+.eraser-modal{max-width:960px}
+.eraser-body{display:flex;gap:0;padding:0;min-height:420px}
+.eraser-toolbar{width:140px;flex-shrink:0;background:#f8f8f8;border-right:1px solid var(--border);padding:12px 10px;display:flex;flex-direction:column;gap:10px}
+.eraser-toolbar .tb-label{font-size:10px;color:var(--text-light);text-transform:uppercase;letter-spacing:1px;margin-top:4px}
+.eraser-toolbar .tb-group{border-bottom:1px solid var(--border);padding-bottom:8px;margin-bottom:4px}
+.eraser-toolbar .tb-group:last-child{border-bottom:none;margin-bottom:0}
+.eraser-tool-btn{display:flex;align-items:center;gap:8px;padding:6px 10px;border-radius:6px;cursor:pointer;font-size:13px;transition:all .12s;border:1px solid transparent;user-select:none}
+.eraser-tool-btn:hover{background:var(--primary-light)}
+.eraser-tool-btn.active{background:var(--primary-light);border-color:var(--primary);color:var(--primary-dark);font-weight:500}
+.eraser-tool-btn .icon{font-size:16px}
+.eraser-canvas-area{flex:1;display:flex;flex-direction:column;padding:12px;min-width:0}
+.eraser-canvas-wrap{flex:1;background:#1a1a1a;border-radius:8px;overflow:hidden;display:flex;align-items:center;justify-content:center;position:relative;min-height:350px;user-select:none}
+.eraser-canvas-wrap canvas{display:block;position:absolute;top:0;left:0}
+.eraser-canvas-wrap canvas#eraserCanvas{z-index:1;cursor:none}
+.eraser-canvas-wrap canvas#eraserOverlay{z-index:2;pointer-events:none}
+.eraser-hover-circle{position:absolute;border:2px solid rgba(7,193,96,0.9);border-radius:50%;pointer-events:none;z-index:3;transform:translate(-50%,-50%);background:rgba(7,193,96,0.07);box-shadow:0 0 8px rgba(7,193,96,0.15)}
+.eraser-bottom-bar{display:flex;align-items:center;gap:8px;margin-top:10px;flex-wrap:wrap}
+.eraser-bottom-bar .size-row{display:flex;align-items:center;gap:4px}
+.eraser-bottom-bar .size-row input[type=range]{width:80px;height:4px}
+.eraser-bottom-bar .color-row{display:flex;align-items:center;gap:4px}
+.eraser-bottom-bar .color-row input[type=color]{width:28px;height:26px;border:1px solid var(--border);border-radius:4px;padding:1px;cursor:pointer}
+.eraser-bottom-bar .action-row{margin-left:auto;display:flex;gap:4px}
 </style>
 </head>
 <body>
 
 <div class="header">
   <div>
-    <h1><span class="icon">😀</span> 表情包智能拆解工具 V5<span class="square-badge">矩形分割</span></h1>
+    <h1><span class="icon">😀</span> 表情包智能拆解工具 V6<span class="square-badge">矩形分割</span></h1>
     <div class="subtitle">上传网格图 → 拖拽/缩放底图对齐网格 → 矩形/正方形拆分 → 智能抠图 → 导出微信表情包</div>
   </div>
   <div class="header-actions">
@@ -385,6 +430,98 @@ textarea:focus{border-color:var(--primary)}
   </div>
 </div>
 
+<!-- Eraser Modal V6 — Paint-style -->
+<div class="modal-overlay" id="eraserModal">
+  <div class="modal eraser-modal">
+    <div class="modal-header">
+      <h2 id="eraserModalTitle">✏️ 编辑 — 表情 #1</h2>
+      <button class="modal-close" onclick="closeEraserModal(true)">×</button>
+    </div>
+    <div class="eraser-body">
+      <!-- Left Toolbar -->
+      <div class="eraser-toolbar">
+        <div class="tb-group">
+          <div class="tb-label">工具</div>
+          <div class="eraser-tool-btn active" id="eraserToolErase" onclick="setEraserTool('erase')">
+            <span class="icon">🧹</span> 擦除
+          </div>
+          <div class="eraser-tool-btn" id="eraserToolPaint" onclick="setEraserTool('paint')">
+            <span class="icon">🎨</span> 画笔
+          </div>
+          <div class="eraser-tool-btn" id="eraserToolPan" onclick="setEraserTool('pan')">
+            <span class="icon">✋</span> 拖拽
+          </div>
+          <div class="eraser-tool-btn" id="eraserToolLasso" onclick="setEraserTool('lasso')">
+            <span class="icon">🔗</span> 套索
+          </div>
+          <div class="eraser-tool-btn" id="eraserToolMagic" onclick="setEraserTool('magic')">
+            <span class="icon">⚡</span> 魔力擦
+          </div>
+          <div class="eraser-tool-btn" id="eraserToolBgErase" onclick="setEraserTool('bgerase')">
+            <span class="icon">🎯</span> 背景色擦
+          </div>
+          <div class="eraser-tool-btn" id="eraserToolSel" onclick="setEraserTool('sel')">
+            <span class="icon">🔲</span> 选框
+          </div>
+        </div>
+        <div class="tb-group">
+          <div class="tb-label">笔刷大小</div>
+          <div style="display:flex;align-items:center;gap:4px">
+            <button class="zoom-btn" style="width:22px;height:22px;font-size:13px" onclick="eraserModalSizeStep(-1)">−</button>
+            <span style="font-size:13px;font-weight:600;min-width:32px;text-align:center" id="eraserModalSizeLabel">20</span>
+            <button class="zoom-btn" style="width:22px;height:22px;font-size:13px" onclick="eraserModalSizeStep(1)">+</button>
+          </div>
+          <input type="range" id="eraserModalSize" min="2" max="200" value="20" oninput="eraserModalSizeChange(this.value)" style="width:100%;height:4px;margin-top:4px;accent-color:var(--primary)">
+          <div style="display:flex;justify-content:space-between;font-size:9px;color:var(--text-light);margin-top:1px"><span>2</span><span>200</span></div>
+        </div>
+        <div class="tb-group" id="eraserColorGroup">
+          <div class="tb-label">画笔颜色</div>
+          <input type="color" id="eraserPaintColor" value="#000000" style="width:100%;height:32px;border:1px solid var(--border);border-radius:6px;padding:2px;cursor:pointer">
+        </div>
+        <div class="tb-group" id="eraserBgColorGroup" style="display:none">
+          <div class="tb-label">背景色</div>
+          <input type="color" id="eraserBgColor" value="#ffffff" style="width:100%;height:32px;border:1px solid var(--border);border-radius:6px;padding:2px;cursor:pointer">
+          <div style="display:flex;align-items:center;gap:4px;margin-top:4px">
+            <span style="font-size:10px;color:var(--text-light)">容差</span>
+            <input type="range" id="eraserTolerance" min="5" max="120" value="40" style="flex:1;height:4px;accent-color:var(--primary)">
+            <span style="font-size:11px;min-width:24px;text-align:center" id="eraserTolLabel">40</span>
+          </div>
+        </div>
+        <div class="tb-group" style="flex:1;display:flex;flex-direction:column;justify-content:flex-end">
+          <div style="display:flex;gap:3px;flex-wrap:wrap">
+            <button class="btn btn-outline btn-xs" style="flex:1" onclick="eraserModalUndo()" id="eraserModalUndoBtn" disabled>↩️ 撤销</button>
+            <button class="btn btn-outline btn-xs" style="flex:1" onclick="eraserModalRedo()" id="eraserModalRedoBtn" disabled>↪️ 重做</button>
+            <button class="btn btn-outline btn-xs" style="width:100%;margin-top:4px" onclick="clearSelection()" id="clearSelBtn">✕ 清除选框</button>
+          </div>
+          <button class="btn btn-outline btn-xs" style="width:100%;margin-top:4px" onclick="eraserModalReset()">🔄 恢复原图</button>
+        </div>
+      </div>
+      <!-- Canvas Area -->
+      <div class="eraser-canvas-area">
+        <div class="eraser-canvas-wrap" id="eraserCanvasWrap">
+          <canvas id="eraserCanvas"></canvas>
+          <div class="eraser-hover-circle" id="eraserHoverCircle" style="display:none"></div>
+        </div>
+        <div class="eraser-zoom-bar">
+          <button class="zoom-btn" onclick="eraserZoomStep(-1)" title="缩小">−</button>
+          <input type="range" id="eraserZoomSlider" min="10" max="800" value="100" oninput="eraserZoomChange(this.value)">
+          <button class="zoom-btn" onclick="eraserZoomStep(1)" title="放大">+</button>
+          <span class="zoom-lvl" id="eraserZoomLabel">100%</span>
+          <button class="btn btn-xs btn-outline" onclick="eraserZoomReset()">适应</button>
+          <span class="eraser-status" id="eraserStatus">滚轮缩放 · [ ] 调整笔刷</span>
+        </div>
+      </div>
+    </div>
+    <div class="modal-footer">
+      <span style="font-size:12px;color:var(--text-light)">🧹擦除 🎨画笔 ✋拖拽 🔗套索 ⚡魔力擦 🎯背景色擦 🔲选框 · [ ]笔刷 · 空格拖拽 · 选框限制所有操作</span>
+      <div style="display:flex;gap:8px">
+        <button class="btn btn-outline btn-sm" onclick="closeEraserModal(true)">取消</button>
+        <button class="btn btn-primary btn-sm" onclick="closeEraserModal(false)">✓ 确认</button>
+      </div>
+    </div>
+  </div>
+</div>
+
 <!-- Banner Modal -->
 <div class="modal-overlay" id="bannerModal">
   <div class="modal banner-modal">
@@ -486,9 +623,7 @@ function createDefaultCustom(){
     imgEnabled:false, offsetX:0, offsetY:0, imgScale:1,
     flipH:false, flipV:false, rotation:0,
     // V5: 单独抠图设置 + 橡皮擦
-    cutoutOverride:false,
-    cutoutBgColor:null, cutoutTolerance:null, cutoutFeather:null,
-    eraserMode:false, eraserSize:12,
+    eraserSize:12,
     undoStack:[],
   };
 }
@@ -1135,21 +1270,7 @@ function removeBackground(imageData,opts){
   const bg=opts&&opts.bgColor?opts.bgColor:state.bgColor;
   const tol=opts&&opts.tolerance!=null?opts.tolerance:state.tolerance;
   const feather=opts&&opts.feather!=null?opts.feather:state.edgeFeather;
-  // V5: 边缘感知 — 预计算梯度
-  const grad=new Float32Array(w*h);
-  for(let y=0;y<h;y++){
-    for(let x=0;x<w;x++){
-      const idx=(y*w+x)*4;
-      let mg=0;
-      if(x>0){const g=Math.abs(data[idx]-data[idx-4])+Math.abs(data[idx+1]-data[idx-3])+Math.abs(data[idx+2]-data[idx-2]);if(g>mg)mg=g}
-      if(y>0){const g=Math.abs(data[idx]-data[idx-w*4])+Math.abs(data[idx+1]-data[idx-w*4+1])+Math.abs(data[idx+2]-data[idx-w*4+2]);if(g>mg)mg=g}
-      grad[idx/4]=mg;
-    }
-  }
-  let s1=0,s2=0;
-  for(let i=0;i<w*h;i++){s1+=grad[i];s2+=grad[i]*grad[i]}
-  const mn=s1/(w*h);
-  const edgeTh=Math.max(60,mn+Math.sqrt(Math.max(0,s2/(w*h)-mn*mn))*0.8);
+  // 经典洪水填充 — 可预测、稳定
   const visited=new Uint8Array(w*h);
   const queue=[];
   const isBg=(idx)=>{
@@ -1169,15 +1290,10 @@ function removeBackground(imageData,opts){
     const pos=queue[head++];
     const x=pos%w,y=(pos-x)/w;
     data[pos*4+3]=0;
-    const go=(ni)=>{
-      if(visited[ni]||!isBg(ni*4))return;
-      if(Math.max(grad[pos],grad[ni])>edgeTh)return;
-      visited[ni]=1;queue.push(ni);
-    };
-    if(x>0)go(pos-1);
-    if(x<w-1)go(pos+1);
-    if(y>0)go(pos-w);
-    if(y<h-1)go(pos+w);
+    if(x>0&&!visited[pos-1]&&isBg((pos-1)*4)){visited[pos-1]=1;queue.push(pos-1)}
+    if(x<w-1&&!visited[pos+1]&&isBg((pos+1)*4)){visited[pos+1]=1;queue.push(pos+1)}
+    if(y>0&&!visited[pos-w]&&isBg((pos-w)*4)){visited[pos-w]=1;queue.push(pos-w)}
+    if(y<h-1&&!visited[pos+w]&&isBg((pos+w)*4)){visited[pos+w]=1;queue.push(pos+w)}
   }
   if(feather){
     for(let y=0;y<h;y++){
@@ -1268,34 +1384,13 @@ function renderSettings(i){
   const c=state.emojis[i].custom;
   return `
     <div class="setting-group">
-      <div class="group-title"><span>单独抠图</span>
-        <label class="toggle"><input type="checkbox" id="cutoutOverride-${i}" ${c.cutoutOverride?'checked':''} onchange="updateCutoutOverride(${i})"><span class="toggle-slider"></span></label>
-      </div>
-      <div class="mini-row"><label>背景色</label>
-        <input type="color" id="cutoutColor-${i}" value="${c.cutoutBgColor||'#ffffff'}" ${c.cutoutOverride?'':'disabled'} onchange="setCutoutVal(${i},'cutoutBgColor',this.value)">
-        <button class="btn btn-primary btn-xs" style="padding:2px 8px;font-size:11px" onclick="doPerCutout(${i})">✂️ 抠图</button>
-      </div>
-      <div class="mini-row"><label>容差</label>
-        <input type="range" min="0" max="120" value="${c.cutoutTolerance!=null?c.cutoutTolerance:state.tolerance}" ${c.cutoutOverride?'':'disabled'} oninput="setCutoutVal(${i},'cutoutTolerance',parseInt(this.value));document.getElementById('cutoutTolTag-${i}').textContent=this.value">
-        <span class="mini-val" id="cutoutTolTag-${i}">${c.cutoutTolerance!=null?c.cutoutTolerance:state.tolerance}</span>
-      </div>
+      <div class="group-title"><span>橡皮擦</span></div>
       <div class="mini-row">
-        <label class="checkbox-row" style="margin:0;font-size:11px">
-          <input type="checkbox" id="cutoutFeather-${i}" ${c.cutoutFeather!=null?c.cutoutFeather:state.edgeFeather?'checked':''} ${c.cutoutOverride?'':'disabled'} onchange="setCutoutVal(${i},'cutoutFeather',this.checked)">
-          <span>羽化</span>
-        </label>
+        <button class="btn btn-primary btn-xs" style="flex:1" onclick="openEraserModal(${i})">🧹 打开橡皮擦编辑器</button>
       </div>
       <div class="mini-row" style="margin-top:2px">
-        <button class="btn btn-outline btn-xs" style="flex:1;${c.eraserMode?'background:var(--primary);color:#fff;border-color:var(--primary)':''}" onclick="toggleEraser(${i})">🧹 橡皮${c.eraserMode?'✓':''}</button>
-        <button class="btn btn-outline btn-xs" style="flex:1" onclick="undoEraser(${i})" ${c.undoStack.length?'':'disabled'}>↩️ 撤销</button>
-      </div>
-      <div class="mini-row" style="margin-top:2px">
-        <button class="zoom-btn" style="width:20px;height:20px;font-size:12px" onclick="eraserSizeStep(${i},-1)">−</button>
-        <div class="zoom-track-wrap">
-          <input type="range" min="2" max="80" value="${c.eraserSize}" oninput="eraserSizeSet(${i},this.value);document.getElementById('eraserSizeTag-${i}').textContent=this.value">
-        </div>
-        <button class="zoom-btn" style="width:20px;height:20px;font-size:12px" onclick="eraserSizeStep(${i},1)">+</button>
-        <span class="mini-val" id="eraserSizeTag-${i}" style="min-width:24px">${c.eraserSize}</span>
+        <button class="btn btn-outline btn-xs" style="flex:1" onclick="resetEmojiCanvas(${i})">🔄 恢复原图</button>
+        <button class="btn btn-outline btn-xs" style="flex:1" onclick="resetCustom(${i})">↩️ 重置全部</button>
       </div>
     </div>
     <div class="setting-group">
@@ -1357,13 +1452,7 @@ function renderSettings(i){
         <span class="mini-val" id="rotationTag-${i}">${c.rotation}°</span>
       </div>
     </div>
-    <div class="setting-group">
-      <div class="group-title"><span>操作</span></div>
-      <div class="mini-row">
-        <button class="btn btn-outline btn-xs" style="flex:1" onclick="recutoutEmoji(${i})">🔄 全局参数重抠</button>
-        <button class="btn btn-outline btn-xs" style="flex:1" onclick="resetCustom(${i})">↩️重置设置</button>
-      </div>
-    </div>
+
   `;
 }
 
@@ -1398,29 +1487,52 @@ function updateCustom(i){
   updateBadge(i);
 }
 
-// V5: 单独抠图控制
-function updateCutoutOverride(i){
+// V5: 橡皮擦缩放控制
+function setEraserZoom(i,v){
+  state.emojis[i].custom.eraserZoom=Math.max(1,Math.min(5,v));
+  renderEmojiPreview(i);
+}
+function previewZoomStep(i,dir){
   const c=state.emojis[i].custom;
-  c.cutoutOverride=$('cutoutOverride-'+i).checked;
+  const cur=c.eraserZoom;
+  const next=Math.max(1,Math.min(5,Math.round((cur+dir*0.25)*20)/20));
+  c.eraserZoom=next;
+  const tag=$('eraserZoomTag-'+i);
+  if(tag)tag.textContent=Math.round(next*100)+'%';
+  const slider=document.querySelector('#settings-'+i+' input[type="range"][oninput*="setEraserZoom"]');
+  if(slider)slider.value=Math.round(next*100);
+  renderEmojiPreview(i);
+}
+function resetEmojiCanvas(i){
+  const emoji=state.emojis[i];
+  const img=state.originalImage;
+  const ci=emoji.cropInfo;
+  // 从原图重新裁取
+  const temp=document.createElement('canvas');
+  temp.width=Math.max(1,Math.round(ci.gridW));
+  temp.height=Math.max(1,Math.round(ci.gridH));
+  const tctx=temp.getContext('2d');
+  tctx.drawImage(img,ci.gridX,ci.gridY,ci.gridW,ci.gridH,0,0,temp.width,temp.height);
+  emoji.canvas=temp;
+  emoji.custom.undoStack=[];
+  // 重置缩放
+  emoji.custom.eraserZoom=1;
+  emoji.custom.eraserPanX=0;
+  emoji.custom.eraserPanY=0;
+  // 关闭橡皮擦模式
+  emoji.custom.eraserMode=false;
   const settings=$('settings-'+i);
   if(settings&&settings.classList.contains('open')){
     settings.innerHTML=renderSettings(i);
     settings.classList.add('open');
   }
-}
-function setCutoutVal(i,key,val){
-  state.emojis[i].custom[key]=val;
-}
-function getCutoutOpts(i){
-  const c=state.emojis[i].custom;
-  if(c.cutoutOverride){
-    return {
-      bgColor: c.cutoutBgColor?hexToRgb(c.cutoutBgColor):state.bgColor,
-      tolerance: c.cutoutTolerance!=null?c.cutoutTolerance:state.tolerance,
-      feather: c.cutoutFeather!=null?c.cutoutFeather:state.edgeFeather,
-    };
+  const container=$('preview-'+i);
+  if(container){
+    const cv=container.querySelector('canvas');
+    if(cv)cv.style.cursor='grab';
   }
-  return null;
+  renderEmojiPreview(i);
+  showToast('#'+(i+1)+' 已恢复原样');
 }
 
 function toggleFlip(i,dir){
@@ -1470,71 +1582,544 @@ function updateBadge(i){
   if(badge)badge.textContent=getBadgeText(state.emojis[i]);
 }
 
-async function recutoutEmoji(i){
-  showLoading('正在重新抠图...');
-  await new Promise(r=>setTimeout(r,50));
+
+// V5: 橡皮擦弹窗
+const eraserModalState={idx:-1,canvas:null,ctx:null,origData:null,undo:[],redo:[],size:20,tool:'erase',paintColor:'#000000',zoom:1,panX:0,panY:0,lassoPts:[],selX:0,selY:0,selW:0,selH:0,selActive:false,bgColor:null,tolerance:40,panDown:false};
+// 空格键状态 — 必须在所有函数之前声明避免TDZ
+let _spaceHeld=false,_spaceSavedTool=null,_spaceSavedLasso=null;
+
+function openEraserModal(i){
   const emoji=state.emojis[i];
+  if(!emoji||!emoji.canvas)return;
+  const src=emoji.canvas;
+  // 复制一份用于编辑
+  const copy=document.createElement('canvas');
+  copy.width=src.width;copy.height=src.height;
+  copy.getContext('2d').drawImage(src,0,0);
+  eraserModalState.idx=i;
+  eraserModalState.canvas=copy;
+  eraserModalState.ctx=copy.getContext('2d');
+  eraserModalState.origData=copy.getContext('2d').getImageData(0,0,copy.width,copy.height);
+  eraserModalState.undo=[];
+  eraserModalState.redo=[];
+  eraserModalState.size=20;
+  $('eraserModalTitle').textContent='表情 #'+(i+1);
+  $('eraserModal').classList.add('show');
+  setTimeout(drawEraserModal,50);
+}
+function closeEraserModal(cancel){
+  const ems=eraserModalState;
+  if(!cancel&&ems.canvas){
+    // 确认：写回
+    const emoji=state.emojis[ems.idx];
+    emoji.canvas=ems.canvas;
+    // 清空undo栈（设置修改了canvas引用）
+    emoji.custom.undoStack=[];
+    const settings=$('settings-'+ems.idx);
+    if(settings&&settings.classList.contains('open')){
+      settings.innerHTML=renderSettings(ems.idx);
+      settings.classList.add('open');
+    }
+    renderEmojiPreview(ems.idx);
+    showToast('#'+(ems.idx+1)+' 擦除已确认');
+  }
+  $('eraserModal').classList.remove('show');
+  ems.canvas=null;
+}
+function drawEraserModal(){
+  const ems=eraserModalState;
+  if(!ems.canvas)return;
+  const wrap=$('eraserCanvasWrap');
+  const canvas=$('eraserCanvas');
+  const w=wrap.clientWidth-4||750;
+  const h=wrap.clientHeight-4||500;
+  canvas.width=Math.round(w);
+  canvas.height=Math.round(h);
+  const ctx=canvas.getContext('2d');
+  // 棋盘格背景（显示透明区域）
+  ctx.fillStyle='#1a1a1a';
+  ctx.fillRect(0,0,w,h);
+  const cs=12;
+  for(let y=0;y<h;y+=cs)for(let x=0;x<w;x+=cs){
+    ctx.fillStyle=((Math.floor(x/cs)+Math.floor(y/cs))%2===0)?'#2a2a2a':'#3a3a3a';
+    ctx.fillRect(x,y,cs,cs);
+  }
+  const src=ems.canvas;
+  const baseFit=Math.min(w/src.width,h/src.height);
+  const finalScale=baseFit*ems.zoom;
+  const imgW=src.width*finalScale;
+  const imgH=src.height*finalScale;
+  const cx=w/2+ems.panX;
+  const cy=h/2+ems.panY;
+  const dx=cx-imgW/2;
+  const dy=cy-imgH/2;
+  ctx.save();
+  ctx.beginPath();ctx.rect(0,0,w,h);ctx.clip();
+  ctx.imageSmoothingEnabled=false;
+  ctx.drawImage(src,dx,dy,imgW,imgH);
+  ctx.restore();
+  ems._panOffX=dx;ems._panOffY=dy;
+  ems._dispW=imgW;ems._dispH=imgH;
+  ems._scale=src.width/imgW;
+  const pct=Math.round(ems.zoom*100);
+  $('eraserZoomLabel').textContent=pct+'%';
+  canvas.style.cursor=ems.tool==='pan'?'grab':ems.tool==='lasso'?'crosshair':'none';
+  const st=$('eraserStatus');if(st)st.textContent=_spaceHeld?'🖐 空格拖拽中 · 松开恢复':ems.tool==='pan'?'✋ 拖拽画布':ems.tool==='lasso'?'🔗 点击布点 · 闭合删除':ems.tool==='magic'?'⚡ 点击区域即擦除':ems.tool==='bgerase'?'🎯 取色后点击擦除背景':ems.tool==='sel'?'🔲 拖拽选框 · 所有操作限定框内':'🧹 ['+ems.size+']px笔刷';
+  if($('eraserZoomSlider'))$('eraserZoomSlider').value=Math.max(10,Math.min(800,pct));
+  updateEraserModalBtns();
+  // 绘制套索辅助线
+  if(ems.tool==='lasso'&&ems.lassoPts.length>0){
+    ctx.save();
+    ctx.strokeStyle='rgba(7,193,96,0.8)';
+    ctx.lineWidth=2;
+    ctx.setLineDash([6,4]);
+    ctx.beginPath();
+    ctx.moveTo((ems.lassoPts[0].x/ems.canvas.width)*imgW+dx,(ems.lassoPts[0].y/ems.canvas.height)*imgH+dy);
+    for(let i=1;i<ems.lassoPts.length;i++){
+      ctx.lineTo((ems.lassoPts[i].x/ems.canvas.width)*imgW+dx,(ems.lassoPts[i].y/ems.canvas.height)*imgH+dy);
+    }
+    ctx.stroke();
+    ctx.setLineDash([]);
+    // 原点高亮
+    if(ems.lassoPts.length>2){
+      const fx=(ems.lassoPts[0].x/ems.canvas.width)*imgW+dx;
+      const fy=(ems.lassoPts[0].y/ems.canvas.height)*imgH+dy;
+      ctx.beginPath();ctx.arc(fx,fy,8,0,Math.PI*2);
+      ctx.fillStyle='rgba(255,255,255,0.7)';
+      ctx.fill();
+      ctx.strokeStyle='rgba(7,193,96,0.9)';
+      ctx.lineWidth=2;
+      ctx.stroke();
+      // 提示文字
+      ctx.fillStyle='rgba(255,255,255,0.8)';
+      ctx.font='12px sans-serif';
+      ctx.textAlign='center';
+      ctx.fillText('点击此处闭合',fx,fy-14);
+    }
+    ctx.restore();
+  }
+  // 绘制选框
+  if(ems.selActive&&ems.selW>0&&ems.selH>0){
+    const sx=(ems.selX/ems.canvas.width)*imgW+dx;
+    const sy=(ems.selY/ems.canvas.height)*imgH+dy;
+    const sw=(ems.selW/ems.canvas.width)*imgW;
+    const sh=(ems.selH/ems.canvas.height)*imgH;
+    ctx.save();
+    // 外部遮罩
+    ctx.fillStyle='rgba(0,0,0,0.3)';
+    ctx.fillRect(0,0,w,sy);
+    ctx.fillRect(0,sy+sh,w,h-sy-sh);
+    ctx.fillRect(0,sy,sx,sh);
+    ctx.fillRect(sx+sw,sy,w-sx-sw,sh);
+    // 选框
+    ctx.strokeStyle='rgba(255,165,0,0.85)';
+    ctx.lineWidth=2;
+    ctx.setLineDash([6,4]);
+    ctx.strokeRect(sx,sy,sw,sh);
+    ctx.setLineDash([]);
+    // 尺寸标注
+    ctx.fillStyle='rgba(255,165,0,0.9)';
+    ctx.font='11px sans-serif';
+    ctx.textAlign='center';
+    ctx.textBaseline='bottom';
+    ctx.fillText(ems.selW+'×'+ems.selH,sx+sw/2,sy-4);
+    ctx.restore();
+  }
+  const circle=$('eraserHoverCircle');
+  if(circle&&ems.tool!=='pan'&&ems.tool!=='lasso'&&ems.tool!=='magic'&&ems.tool!=='bgerase'){
+    const bs=Math.round(ems.size*2*finalScale);
+    circle.style.width=bs+'px';circle.style.height=bs+'px';
+    circle.style.borderColor=ems.tool==='paint'?ems.paintColor:'rgba(7,193,96,0.9)';
+  }else if(circle&&(ems.tool==='pan'||ems.tool==='lasso'||ems.tool==='magic'||ems.tool==='bgerase')){
+    circle.style.display='none';
+  }
+}
+function clearSelection(){eraserModalState.selActive=false;eraserModalState.selW=0;eraserModalState.selH=0;drawEraserModal();}
+
+function setEraserTool(tool){
+  const ems=eraserModalState;
+  // 保存lassoPts - 切到pan时不清除
+  const prevTool=ems.tool;
+  if(tool!=='pan'&&tool!=='sel')ems.lassoPts=[];
+  ems.tool=tool;
+  document.querySelectorAll('.eraser-tool-btn').forEach(el=>el.classList.remove('active'));
+  const ids={erase:'eraserToolErase',paint:'eraserToolPaint',pan:'eraserToolPan',lasso:'eraserToolLasso',magic:'eraserToolMagic',bgerase:'eraserToolBgErase',sel:'eraserToolSel'};
+  const el=$(ids[tool]);
+  if(el)el.classList.add('active');
+  const cg=$('eraserColorGroup');if(cg)cg.style.display=tool==='paint'?'block':'none';
+  const bg=$('eraserBgColorGroup');if(bg)bg.style.display=tool==='bgerase'?'block':'none';
+  const circle=$('eraserHoverCircle');
+  if(tool==='pan'||tool==='lasso'||tool==='magic'||tool==='bgerase'||tool==='sel'){if(circle)circle.style.display='none'}
+  else if(circle){circle.style.display='block';circle.style.borderColor=tool==='paint'?ems.paintColor:'rgba(7,193,96,0.9)'}
+  drawEraserModal();
+}
+function eraserModalSizeChange(v){
+  eraserModalState.size=parseInt(v);
+  $('eraserModalSizeLabel').textContent=v;
+  drawEraserModal();
+}
+
+// V6: Canvas zoom/pan
+function eraserZoomChange(v){
+  const ems=eraserModalState;const oldZ=ems.zoom;
+  const newZ=Math.max(0.1,Math.min(8,parseInt(v)/100));
+  const ratio=newZ/oldZ;
+  ems.zoom=newZ;
+  ems.panX*=ratio;ems.panY*=ratio;
+  drawEraserModal();
+}
+function eraserZoomStep(dir){
+  const ems=eraserModalState;
+  const cur=Math.round(ems.zoom*100);
+  const next=Math.max(10,Math.min(800,cur+dir*10));
+  $('eraserZoomSlider').value=next;
+  eraserZoomChange(next);
+}
+function eraserZoomReset(){eraserModalState.zoom=1;eraserModalState.panX=0;eraserModalState.panY=0;$('eraserZoomSlider').value=100;drawEraserModal();}
+function eraserModalSizeStep(dir){
+  const ems=eraserModalState;
+  const v=Math.max(2,Math.min(200,ems.size+dir));
+  ems.size=v;
+  $('eraserModalSize').value=v;
+  eraserModalSizeChange(v);
+}
+
+function eraserModalSaveSnapshot(){
+  const ems=eraserModalState;
+  if(!ems.canvas)return;
+  const ctx=ems.canvas.getContext('2d');
+  const data=ctx.getImageData(0,0,ems.canvas.width,ems.canvas.height);
+  ems.undo.push({data:Array.from(data.data),w:ems.canvas.width,h:ems.canvas.height});
+  if(ems.undo.length>30)ems.undo.shift();
+  ems.redo=[];
+  updateEraserModalBtns();
+}
+function eraserModalUndo(){
+  const ems=eraserModalState;
+  if(!ems.undo.length||!ems.canvas)return;
+  // 保存当前到redo
+  const ctx=ems.canvas.getContext('2d');
+  const cur=ctx.getImageData(0,0,ems.canvas.width,ems.canvas.height);
+  ems.redo.push({data:Array.from(cur.data),w:ems.canvas.width,h:ems.canvas.height});
+  const prev=ems.undo.pop();
+  ctx.putImageData(new ImageData(new Uint8ClampedArray(prev.data),prev.w,prev.h),0,0);
+  drawEraserModal();
+  updateEraserModalBtns();
+}
+function eraserModalRedo(){
+  const ems=eraserModalState;
+  if(!ems.redo.length||!ems.canvas)return;
+  const ctx=ems.canvas.getContext('2d');
+  const cur=ctx.getImageData(0,0,ems.canvas.width,ems.canvas.height);
+  ems.undo.push({data:Array.from(cur.data),w:ems.canvas.width,h:ems.canvas.height});
+  const next=ems.redo.pop();
+  ctx.putImageData(new ImageData(new Uint8ClampedArray(next.data),next.w,next.h),0,0);
+  drawEraserModal();
+  updateEraserModalBtns();
+}
+function eraserModalReset(){
+  const ems=eraserModalState;
+  if(!ems.canvas||!ems.origData)return;
+  const ctx=ems.canvas.getContext('2d');
+  ems.undo=[];
+  ems.redo=[];
+  const data=ems.origData;
+  ctx.putImageData(new ImageData(new Uint8ClampedArray(data.data),data.w,data.h),0,0);
+  drawEraserModal();
+  updateEraserModalBtns();
+  showToast('已恢复原图');
+}
+function updateEraserModalBtns(){
+  const u=$('eraserModalUndoBtn');if(u)u.disabled=!eraserModalState.undo.length;
+  const r=$('eraserModalRedoBtn');if(r)r.disabled=!eraserModalState.redo.length;
+}
+
+function bindEraserModalEvents(){
+  const canvas=$('eraserCanvas');
+  if(!canvas)return;
+  if(canvas._erBound)return;
+  canvas._erBound=true;
+  const wrap=$('eraserCanvasWrap');
+  const circle=$('eraserHoverCircle');
+  let brushDown=false;
+  const getPos=(e)=>{
+    const r=canvas.getBoundingClientRect();
+    return{x:(e.clientX-r.left)/r.width*canvas.width,y:(e.clientY-r.top)/r.height*canvas.height};
+  };
+  const toSrc=(sx,sy)=>{
+    const ems=eraserModalState;if(!ems.canvas)return null;
+    return{x:Math.round((sx-ems._panOffX)/ems._dispW*ems.canvas.width),y:Math.round((sy-ems._panOffY)/ems._dispH*ems.canvas.height)};
+  };
+  const hitImg=(x,y)=>{
+    const ems=eraserModalState;
+    return x>=ems._panOffX&&x<=ems._panOffX+ems._dispW&&y>=ems._panOffY&&y<=ems._panOffY+ems._dispH;
+  };
+  const isInSel=(x,y)=>{
+    const s=eraserModalState;if(!s.selActive)return true;
+    return x>=s.selX&&x<=s.selX+s.selW&&y>=s.selY&&y<=s.selY+s.selH;
+  };
+  const applyBrush=(sx,sy,start)=>{
+    const s=eraserModalState;if(!s.canvas)return;
+    if(s.selActive&&!isInSel(sx,sy)){if(start)showToast('请在选框中绘制');return}
+    const ctx=s.canvas.getContext('2d');ctx.save();
+    if(s.selActive){ctx.beginPath();ctx.rect(s.selX,s.selY,s.selW,s.selH);ctx.clip();}
+    if(s.tool==='erase')ctx.globalCompositeOperation='destination-out'
+    else{ctx.globalCompositeOperation='source-over';ctx.fillStyle=s.paintColor;ctx.strokeStyle=s.paintColor}
+    if(start){ctx.beginPath();ctx.arc(sx,sy,s.size,0,Math.PI*2);ctx.fill()}
+    else{ctx.lineWidth=s.size*2;ctx.lineCap='round';ctx.beginPath();ctx.moveTo(s._lastSX,s._lastSY);ctx.lineTo(sx,sy);ctx.stroke()}
+    ctx.restore();s._lastSX=sx;s._lastSY=sy;
+  };
+  canvas.addEventListener('mousedown',e=>{
+    const p=getPos(e);if(!p)return;const ems=eraserModalState;if(!ems.canvas)return;
+    // 拖拽工具 → 总是平移
+    if(ems.tool==='pan'||_spaceHeld||!hitImg(p.x,p.y)){
+      ems.panDown=true;ems._panSX=e.clientX;ems._panSY=e.clientY;ems._panPX=ems.panX;ems._panPY=ems.panY;return
+    }
+    if(ems.tool==='lasso'){
+      const ci=toSrc(p.x,p.y);if(!ci)return;
+      if(ems.lassoPts.length>2){const f=ems.lassoPts[0];if(Math.hypot(ci.x-f.x,ci.y-f.y)<ems.size*2){closeLasso();return}}
+      ems.lassoPts.push({x:ci.x,y:ci.y});drawEraserModal();return;
+    }
+    if(ems.tool==='magic'){
+      const ci=toSrc(p.x,p.y);if(!ci||ci.x<0||ci.x>=ems.canvas.width||ci.y<0||ci.y>=ems.canvas.height)return;
+      eraserModalSaveSnapshot();magicEraseAt(ems.canvas,ci.x,ci.y);drawEraserModal();showToast('魔力擦完成');return;
+    }
+    if(ems.tool==='bgerase'){
+      const ci=toSrc(p.x,p.y);if(!ci||ci.x<0||ci.x>=ems.canvas.width||ci.y<0||ci.y>=ems.canvas.height)return;
+      eraserModalSaveSnapshot();bgEraseAt(ems.canvas,ci.x,ci.y);drawEraserModal();return;
+    }
+    if(ems.tool==='sel'){
+      ems._selOrigX=p.x;ems._selOrigY=p.y;
+      ems._selDrawing=true;
+      return;
+    }
+    brushDown=true;
+    eraserModalSaveSnapshot();
+    const ci=toSrc(p.x,p.y);
+    applyBrush(ci.x,ci.y,true);
+  });
+  document.addEventListener('mousemove',e=>{
+    const ce=$('eraserCanvas');
+    const s=eraserModalState;
+    // 空格按下时暂停画笔
+    if(_spaceHeld&&brushDown)brushDown=false;
+    if(ce&&!s.panDown&&s.tool!=='pan'&&!_spaceHeld){
+      const r=ce.getBoundingClientRect();const hx=e.clientX-r.left,hy=e.clientY-r.top;
+      if(hx>=0&&hx<=r.width&&hy>=0&&hy<=r.height){circle.style.display='block';circle.style.left=(e.clientX-r.left)+'px';circle.style.top=(e.clientY-r.top)+'px'}
+      else{circle.style.display='none'}
+    }
+    if(s._selDrawing){
+      const mp=getPos(e);if(!mp)return;
+      const sx=Math.min(s._selOrigX,mp.x),sy=Math.min(s._selOrigY,mp.y);
+      const ex=Math.max(s._selOrigX,mp.x),ey=Math.max(s._selOrigY,mp.y);
+      const tl=toSrc(sx,sy),br=toSrc(ex,ey);
+      if(tl&&br){s.selX=tl.x;s.selY=tl.y;s.selW=br.x-tl.x;s.selH=br.y-tl.y;s.selActive=true;}
+      drawEraserModal();return;
+    }
+    if(s.panDown||_spaceHeld){
+      if(!s.panDown&&_spaceHeld){s._panSX=e.clientX;s._panSY=e.clientY;s._panPX=s.panX;s._panPY=s.panY;s.panDown=true}
+      s.panX=s._panPX+(e.clientX-s._panSX);s.panY=s._panPY+(e.clientY-s._panSY);
+      drawEraserModal();return
+    }
+    if(!brushDown||!s.canvas)return;
+    const p=getPos(e);if(!p)return;const ci=toSrc(p.x,p.y);
+    applyBrush(ci.x,ci.y,false);drawEraserModal();
+  });
+  document.addEventListener('mouseup',()=>{brushDown=false;eraserModalState.panDown=false;if(eraserModalState._selDrawing)eraserModalState._selDrawing=false;});
+  
+// 魔力擦：从点击点边缘感知洪水填充
+function magicEraseAt(canvas,cx,cy){
+  const ems=eraserModalState;
+  const bx=ems.selActive?ems.selX:0,by=ems.selActive?ems.selY:0;
+  const bw=ems.selActive?ems.selX+ems.selW:canvas.width,bh=ems.selActive?ems.selY+ems.selH:canvas.height;
+  if(ems.selActive&&(cx<bx||cx>bw||cy<by||cy>bh)){showToast('请在选框中点击');return;}
+  const ctx=canvas.getContext('2d');
+  const imgData=ctx.getImageData(0,0,canvas.width,canvas.height);
+  const d=imgData.data,W=canvas.width,H=canvas.height;
+  // 计算梯度
+  const grad=new Float32Array(W*H);
+  for(let y=0;y<H;y++)for(let x=0;x<W;x++){
+    const p=(y*W+x)*4;let mg=0;
+    if(x>0){const g=Math.abs(d[p]-d[p-4])+Math.abs(d[p+1]-d[p-3])+Math.abs(d[p+2]-d[p-2]);if(g>mg)mg=g}
+    if(y>0){const g=Math.abs(d[p]-d[p-W*4])+Math.abs(d[p+1]-d[p-W*4+1])+Math.abs(d[p+2]-d[p-W*4+2]);if(g>mg)mg=g}
+    grad[y*W+x]=mg;
+  }
+  // 自动边缘阈值
+  let s1=0,s2=0;
+  for(let i=0;i<W*H;i++){s1+=grad[i];s2+=grad[i]*grad[i]}
+  const edgeTh=Math.max(45,s1/(W*H)+Math.sqrt(Math.max(0,s2/(W*H)-(s1/(W*H))**2))*0.6);
+  // 种子颜色
+  const si=(cy*W+cx)*4;
+  const sr=d[si],sg=d[si+1],sb=d[si+2];
+  const tol=60;
+  const visited=new Uint8Array(W*H);
+  const q=[cy*W+cx];visited[cy*W+cx]=1;
+  let head=0;
+  while(head<q.length){
+    const pos=q[head++];const px=pos%W,py=(pos-px)/W;
+    d[pos*4+3]=0;
+    const check=(ni,nx,ny)=>{
+      if(visited[ni]||nx<0||nx>=W||ny<0||ny>=H)return;
+      const ni4=ni*4;
+      if(Math.abs(d[ni4]-sr)>tol||Math.abs(d[ni4+1]-sg)>tol||Math.abs(d[ni4+2]-sb)>tol)return;
+      if(Math.max(grad[pos],grad[ni])>edgeTh)return;
+      // 选区边界约束
+      if(ems.selActive&&(nx<bx||nx>bw||ny<by||ny>bh))return;
+      visited[ni]=1;q.push(ni);
+    };
+    if(px>0)check(pos-1,px-1,py);
+    if(px<W-1)check(pos+1,px+1,py);
+    if(py>0)check(pos-W,px,py-1);
+    if(py<H-1)check(pos+W,px,py+1);
+  }
+  ctx.putImageData(imgData,0,0);
+}
+
+// 背景色擦：选择器取色 + 边缘感知填充
+function bgEraseAt(canvas,cx,cy){
+  const ems=eraserModalState;
+  const bx=ems.selActive?ems.selX:0,by=ems.selActive?ems.selY:0;
+  const bw=ems.selActive?ems.selX+ems.selW:canvas.width,bh=ems.selActive?ems.selY+ems.selH:canvas.height;
+  if(ems.selActive&&(cx<bx||cx>bw||cy<by||cy>bh)){showToast('请在选框中点击');return;}
+  const pc=$('eraserBgColor');
+  const bgHex=pc?pc.value:'#ffffff';
+  const bgR=parseInt(bgHex.slice(1,3),16),bgG=parseInt(bgHex.slice(3,5),16),bgB=parseInt(bgHex.slice(5,7),16);
+  const tolSlider=$('eraserTolerance');
+  const tol=tolSlider?parseInt(tolSlider.value):40;
+  const ctx=canvas.getContext('2d');
+  const imgData=ctx.getImageData(0,0,canvas.width,canvas.height);
+  const d=imgData.data,W=canvas.width,H=canvas.height;
+  // 梯度
+  const grad=new Float32Array(W*H);
+  for(let y=0;y<H;y++)for(let x=0;x<W;x++){
+    const p=(y*W+x)*4;let mg=0;
+    if(x>0){const g=Math.abs(d[p]-d[p-4])+Math.abs(d[p+1]-d[p-3])+Math.abs(d[p+2]-d[p-2]);if(g>mg)mg=g}
+    if(y>0){const g=Math.abs(d[p]-d[p-W*4])+Math.abs(d[p+1]-d[p-W*4+1])+Math.abs(d[p+2]-d[p-W*4+2]);if(g>mg)mg=g}
+    grad[y*W+x]=mg;
+  }
+  let s1=0,s2=0;
+  for(let i=0;i<W*H;i++){s1+=grad[i];s2+=grad[i]*grad[i]}
+  const edgeTh=Math.max(45,s1/(W*H)+Math.sqrt(Math.max(0,s2/(W*H)-(s1/(W*H))**2))*0.6);
+  const visited=new Uint8Array(W*H);
+  const q=[cy*W+cx];visited[cy*W+cx]=1;
+  let head=0;
+  while(head<q.length){
+    const pos=q[head++];const px=pos%W,py=(pos-px)/W;
+    d[pos*4+3]=0;
+    const check=(ni,nx,ny)=>{
+      if(visited[ni]||nx<0||nx>=W||ny<0||ny>=H)return;
+      const ni4=ni*4;
+      if(Math.abs(d[ni4]-bgR)>tol||Math.abs(d[ni4+1]-bgG)>tol||Math.abs(d[ni4+2]-bgB)>tol)return;
+      if(Math.max(grad[pos],grad[ni])>edgeTh)return;
+      // 选区边界约束
+      if(ems.selActive&&(nx<bx||nx>bw||ny<by||ny>bh))return;
+      visited[ni]=1;q.push(ni);
+    };
+    if(px>0)check(pos-1,px-1,py);
+    if(px<W-1)check(pos+1,px+1,py);
+    if(py>0)check(pos-W,px,py-1);
+    if(py<H-1)check(pos+W,px,py+1);
+  }
+  ctx.putImageData(imgData,0,0);
+}
+
+function closeLasso(){
+  const ems=eraserModalState;
+  if(!ems.canvas||ems.lassoPts.length<3)return;
+  eraserModalSaveSnapshot();
+  const pts=ems.lassoPts;
+  const ctx=ems.canvas.getContext('2d');
+  ctx.save();
+  ctx.globalCompositeOperation='destination-out';
+  ctx.beginPath();
+  ctx.moveTo(pts[0].x,pts[0].y);
+  for(let i=1;i<pts.length;i++)ctx.lineTo(pts[i].x,pts[i].y);
+  ctx.closePath();
+  ctx.fill();
+  ctx.restore();
+  ems.lassoPts=[];
+  drawEraserModal();
+  showToast('套索区域已删除');
+}
+  canvas.addEventListener('wheel',e=>{e.preventDefault();const ems=eraserModalState;const cur=Math.round(ems.zoom*100);const next=Math.max(10,Math.min(800,cur+(e.deltaY>0?-10:10)));const s=$('eraserZoomSlider');if(s)s.value=next;eraserZoomChange(next)},{passive:false});
+  if(wrap){wrap.addEventListener('mouseleave',()=>{circle.style.display='none'});wrap.addEventListener('mouseenter',()=>{circle.style.display='block'})}
+  const pc=$('eraserPaintColor');if(pc)pc.addEventListener('input',function(){eraserModalState.paintColor=this.value;if(eraserModalState.tool==='paint')circle.style.borderColor=this.value});
+}
+(function(){const tb=()=>{const c=$('eraserCanvas');if(c&&!c._erBound){bindEraserModalEvents()}};tb();new MutationObserver(tb).observe(document.body,{childList:true,subtree:true})})();
+// V6: 键盘快捷键 [ ] 调整笔刷大小 + 空格临时拖拽
+document.addEventListener('keydown',function(e){
+  const ems=eraserModalState;
+  if(!ems.canvas)return;
+  // 空格临时切拖拽
+  if(e.code==='Space'&&!_spaceHeld){
+    e.preventDefault();
+    _spaceHeld=true;
+    _spaceSavedTool=ems.tool;
+    _spaceSavedLasso=ems.lassoPts.slice();
+    ems.tool='pan';
+    document.querySelectorAll('.eraser-tool-btn').forEach(el=>el.classList.remove('active'));
+    const pel=$('eraserToolPan');if(pel)pel.classList.add('active');
+    const cv=$('eraserCanvas');
+    if(cv)cv.style.cursor='grab';
+    return;
+  }
+  if(e.key==='['||e.key===']'||e.key==='('||e.key===')'){
+    e.preventDefault();
+    const dir=(e.key===']'||e.key===')')?1:-1;
+    const v=Math.max(2,Math.min(200,ems.size+dir*2));
+    ems.size=v;
+    $('eraserModalSize').value=v;
+    $('eraserModalSizeLabel').textContent=v;
+    drawEraserModal();
+  }
+});
+
+// 空格松开恢复工具
+document.addEventListener('keyup',function(e){
+  if(e.code==='Space'&&_spaceHeld){
+    e.preventDefault();
+    _spaceHeld=false;
+    eraserModalState.panDown=false;
+    const ems=eraserModalState;
+    if(ems&&_spaceSavedTool&&ems.canvas){
+      ems.tool=_spaceSavedTool;
+      if(_spaceSavedLasso)ems.lassoPts=_spaceSavedLasso;
+      const cv=$('eraserCanvas');
+      if(cv)cv.style.cursor=ems.tool==='pan'?'grab':ems.tool==='lasso'?'crosshair':'none';
+      _spaceSavedTool=null;
+      _spaceSavedLasso=null;
+      // 刷新UI但不调用setEraserTool以免清掉lassoPts
+      document.querySelectorAll('.eraser-tool-btn').forEach(function(el){el.classList.remove('active')});
+      const ids={erase:'eraserToolErase',paint:'eraserToolPaint',pan:'eraserToolPan',lasso:'eraserToolLasso',magic:'eraserToolMagic',bgerase:'eraserToolBgErase',sel:'eraserToolSel'};
+      const rel=$(ids[ems.tool]);if(rel)rel.classList.add('active');
+      drawEraserModal();
+    }
+  }
+});
+
+// V5: resetEmojiCanvas 保留
+function resetEmojiCanvas(i){
+  const emoji=state.emojis[i];
+  const img=state.originalImage;
   const ci=emoji.cropInfo;
-  const opts=getCutoutOpts(i);
-  const result=processCell(state.originalImage,ci.gridX,ci.gridY,ci.gridW,ci.gridH,opts);
-  emoji.canvas=result.canvas;
-  hideLoading();
-  renderEmojiPreview(i);
-  showToast(`#${i+1} 已重新抠图`);
-}
-
-// V5: 单独抠图按钮
-function doPerCutout(i){
-  const c=state.emojis[i].custom;
-  if(!c.cutoutOverride){showToast('请先开启单独抠图');return}
-  c.cutoutBgColor=$('cutoutColor-'+i).value;
-  recutoutEmoji(i);
-}
-
-// V5: 橡皮擦
-function toggleEraser(i){
-  const c=state.emojis[i].custom;
-  c.eraserMode=!c.eraserMode;
-  const settings=$('settings-'+i);
-  if(settings&&settings.classList.contains('open')){
-    settings.innerHTML=renderSettings(i);
-    settings.classList.add('open');
-  }
-  const container=$('preview-'+i);
-  if(container){
-    const canvas=container.querySelector('canvas');
-    if(canvas)canvas.style.cursor=c.eraserMode?'crosshair':'grab';
-  }
-  showToast(c.eraserMode?'橡皮擦已开启，点击预览擦除':'橡皮擦已关闭');
-}
-function eraserSizeSet(i,v){
-  state.emojis[i].custom.eraserSize=parseInt(v);
-}
-function eraserSizeStep(i,dir){
-  const c=state.emojis[i].custom;
-  c.eraserSize=Math.max(2,Math.min(80,c.eraserSize+dir));
-  const tag=$('eraserSizeTag-'+i);
-  if(tag)tag.textContent=c.eraserSize;
-  const slider=document.querySelector('#settings-'+i+' input[type="range"][oninput*="eraserSizeSet"]');
-  if(slider)slider.value=c.eraserSize;
-}
-function undoEraser(i){
-  const emoji=state.emojis[i];
-  const stack=emoji.custom.undoStack;
-  if(!stack.length){showToast('没有可撤销的操作');return}
-  const prev=stack.pop();
-  const imgData=new ImageData(new Uint8ClampedArray(prev.data),prev.w,prev.h);
-  emoji.canvas.width=prev.w;
-  emoji.canvas.height=prev.h;
-  emoji.canvas.getContext('2d').putImageData(imgData,0,0);
+  const temp=document.createElement('canvas');
+  temp.width=Math.max(1,Math.round(ci.gridW));
+  temp.height=Math.max(1,Math.round(ci.gridH));
+  temp.getContext('2d').drawImage(img,ci.gridX,ci.gridY,ci.gridW,ci.gridH,0,0,temp.width,temp.height);
+  emoji.canvas=temp;
+  emoji.custom.undoStack=[];
   const settings=$('settings-'+i);
   if(settings&&settings.classList.contains('open')){
     settings.innerHTML=renderSettings(i);
     settings.classList.add('open');
   }
   renderEmojiPreview(i);
-  showToast('已撤销上一步擦除');
+  showToast('#'+(i+1)+' 已恢复原样');
 }
+
+// V5: 移除 doEraserClick，旧Zoom函数
+function setEraserZoom(i,v){}
+function previewZoomStep(i,dir){}
 
 // ============ V2: Preview with Drag ============
 function renderEmojiPreview(idx){
@@ -1542,25 +2127,21 @@ function renderEmojiPreview(idx){
   if(!emoji)return;
   const container=$('preview-'+idx);
   if(!container)return;
-  // V3: 预览背景色
   container.style.background=state.previewBg||'';
-  // 保留drag-hint
   const hint=container.querySelector('.drag-hint');
   container.innerHTML='';
-  const previewSize=200;
+  const PS=200;
   const canvas=document.createElement('canvas');
-  canvas.width=previewSize;
-  canvas.height=previewSize;
+  canvas.width=PS;canvas.height=PS;
   const ctx=canvas.getContext('2d');
-  drawEmojiOnCanvas(ctx,emoji,previewSize,previewSize);
-  const styles=getEffectiveStyles(emoji,previewSize/240);
-  drawTextOnCanvas(ctx,emoji.text,previewSize,previewSize,styles);
+  drawEmojiOnCanvas(ctx,emoji,PS,PS);
+  const styles=getEffectiveStyles(emoji,PS/240);
+  drawTextOnCanvas(ctx,emoji.text,PS,PS,styles);
   container.appendChild(canvas);
   if(hint)container.appendChild(hint);
   setupPreviewDrag(idx);
 }
 
-// V2核心：图片100%填满画布（cover模式）
 function drawEmojiOnCanvas(ctx,emoji,w,h){
   const src=emoji.canvas;
   const c=emoji.custom;
@@ -1652,12 +2233,14 @@ function doEraserClick(idx,e){
   const srcCanvas=emoji.canvas;
   if(!srcCanvas)return;
   const rect=pvCanvas.getBoundingClientRect();
-  const px=e.clientX-rect.left;
-  const py=e.clientY-rect.top;
-  const sx=Math.round(px/pvCanvas.offsetWidth*srcCanvas.width);
-  const sy=Math.round(py/pvCanvas.offsetHeight*srcCanvas.height);
+  const px=(e.clientX-rect.left)/rect.width*pvCanvas.width;
+  const py=(e.clientY-rect.top)/rect.height*pvCanvas.height;
+  // 通过缓存绘制区域反向映射到源图坐标
+  const dc=emojiDrawCache;
+  if(dc.idx!==idx){renderEmojiPreview(idx);return}
+  const sx=Math.round((px-dc.dx)/dc.dw*dc.srcW);
+  const sy=Math.round((py-dc.dy)/dc.dh*dc.srcH);
   if(sx<0||sx>=srcCanvas.width||sy<0||sy>=srcCanvas.height)return;
-  // 保存撤销快照（仅保存一次连续擦除后的状态）
   const c=emoji.custom;
   if(!c._undoCapture){
     const imgData=srcCanvas.getContext('2d').getImageData(0,0,srcCanvas.width,srcCanvas.height);
@@ -1667,12 +2250,11 @@ function doEraserClick(idx,e){
     setTimeout(()=>{c._undoCapture=false},300);
   }
   const ctx=srcCanvas.getContext('2d');
-  const radius=c.eraserSize;
+  const radius=Math.max(1,Math.round(c.eraserSize));
   ctx.save();
   ctx.beginPath();
   ctx.arc(sx,sy,radius,0,Math.PI*2);
   ctx.globalCompositeOperation='destination-out';
-  ctx.fillStyle='rgba(0,0,0,1)';
   ctx.fill();
   ctx.restore();
   renderEmojiPreview(idx);
