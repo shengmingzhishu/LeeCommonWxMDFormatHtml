@@ -239,6 +239,7 @@ body {
   animation: spin 0.8s linear infinite;
 }
 @keyframes spin { to { transform: rotate(360deg); } }
+@keyframes pulse { 0%,100% { box-shadow: 0 0 0 0 rgba(255,50,50,.4); } 50% { box-shadow: 0 0 0 8px rgba(255,50,50,0); } }
 
 /* Tags */
 .tags-container { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 8px; }
@@ -484,7 +485,7 @@ body {
         </div>
         <div class="config-field">
           <label>API Key</label>
-          <input type="password" id="apiKey" value="sk-fb12fd94503641c8afc5e33323452401" />
+          <input type="password" id="apiKey" value="" placeholder="输入你的 API Key（本地保存）" oninput="saveApiKey(this.value)" />
         </div>
         <div class="config-field">
           <label>模型</label>
@@ -2141,7 +2142,7 @@ const API_PLATFORMS = {
   deepseek: {
     name: 'DeepSeek',
     baseUrl: 'https://api.deepseek.com/v1',
-    apiKey: 'sk-fb12fd94503641c8afc5e33323452401',
+    apiKey: '',
     models: [
       { value: 'deepseek-chat', label: 'deepseek-chat (V4，快速)' },
       { value: 'deepseek-reasoner', label: 'deepseek-reasoner (R1，深度思考)' }
@@ -2152,7 +2153,7 @@ const API_PLATFORMS = {
   ark: {
     name: '火山引擎ARK',
     baseUrl: 'http://127.0.0.1:18892',
-    apiKey: 'ark-cc6dfb2d-34f9-4412-8ff6-3481a8d536fe-f0a41',
+    apiKey: '',
     models: [
       { value: 'doubao-seed-2.0-pro', label: 'doubao-seed-2.0-pro (推荐)' },
       { value: 'doubao-seed-2.0-mini', label: 'doubao-seed-2.0-mini (快速)' },
@@ -2169,12 +2170,37 @@ const API_PLATFORMS = {
   }
 };
 
+// 本地保存/读取 API Key，避免硬编码在源码中
+function saveApiKey(val){
+  try{ localStorage.setItem('article_apiKey', val); }catch(e){}
+}
+function loadApiKey(){
+  try{
+    const saved = localStorage.getItem('article_apiKey');
+    const el = document.getElementById('apiKey');
+    if(saved && el) el.value = saved;
+  }catch(e){}
+}
+function loadApiKeyFromStorage(){
+  try{ return localStorage.getItem('article_apiKey') || ''; }catch(e){ return ''; }
+}
+
 const AppConfig = {
   getConfig() {
     const platform = document.getElementById('apiPlatform')?.value || 'deepseek';
+    let apiKey = document.getElementById('apiKey')?.value || '';
+    // 没有 Key 时提示用户填写
+    if (!apiKey) {
+      apiKey = prompt('请输入你的 API Key（不会提交到源码，仅本地保存）：');
+      if (apiKey) {
+        const el = document.getElementById('apiKey');
+        if (el) el.value = apiKey;
+        saveApiKey(apiKey);
+      }
+    }
     return {
       platform: platform,
-      apiKey: document.getElementById('apiKey')?.value || '',
+      apiKey: apiKey,
       model: document.getElementById('modelSelect')?.value || 'deepseek-chat',
       baseUrl: (document.getElementById('baseUrl')?.value || 'https://api.deepseek.com/v1').replace(/\/$/, ''),
       defaultImage: document.getElementById('defaultImageUrl')?.value || '',
@@ -2197,8 +2223,9 @@ const AppConfig = {
     const config = API_PLATFORMS[platform];
     if (!config) return;
 
-    // 更新API Key
-    document.getElementById('apiKey').value = config.apiKey;
+    // 更新API Key（优先使用用户本地保存的Key）
+    const savedKey = loadApiKeyFromStorage(platform);
+    document.getElementById('apiKey').value = savedKey || config.apiKey;
 
     // 更新Base URL
     document.getElementById('baseUrl').value = config.baseUrl;
@@ -3401,6 +3428,17 @@ async function executeStep1() {
   const keywords = document.getElementById('step1Keywords').value.trim();
   const description = document.getElementById('step1Description').value.trim();
   const supplement = StepsUI.getSupplementKeywords(1);
+
+  // 检查 API Key
+  const key = document.getElementById('apiKey')?.value?.trim();
+  if (!key) {
+    StepsUI.showStatus('⚠️ 请先在设置面板中填写 API Key', 'error');
+    // 闪烁提醒设置按钮
+    const cfgBtn = document.querySelector('[onclick*="toggleConfig"]') || document.querySelector('.config-toggle');
+    if(cfgBtn) cfgBtn.style.animation = 'pulse 0.6s ease 3';
+    setTimeout(() => { if(cfgBtn) cfgBtn.style.animation = ''; }, 2000);
+    return;
+  }
 
   if (!keywords) {
     StepsUI.showStatus('请输入关键词或主题方向', 'error');
@@ -5730,7 +5768,7 @@ const API_PLATFORMS = {
   deepseek: {
     name: 'DeepSeek',
     baseUrl: 'https://api.deepseek.com/v1',
-    apiKey: 'sk-fb12fd94503641c8afc5e33323452401',
+    apiKey: '',
     models: [
       { value: 'deepseek-chat', label: 'deepseek-chat (V4，快速)' },
       { value: 'deepseek-reasoner', label: 'deepseek-reasoner (R1，深度思考)' }
@@ -5741,7 +5779,7 @@ const API_PLATFORMS = {
   ark: {
     name: '火山引擎ARK',
     baseUrl: 'http://127.0.0.1:18892',
-    apiKey: 'ark-cc6dfb2d-34f9-4412-8ff6-3481a8d536fe-f0a41',
+    apiKey: '',
     models: [
       { value: 'doubao-seed-2.0-pro', label: 'doubao-seed-2.0-pro (推荐)' },
       { value: 'doubao-seed-2.0-mini', label: 'doubao-seed-2.0-mini (快速)' },
@@ -5758,12 +5796,37 @@ const API_PLATFORMS = {
   }
 };
 
+// 本地保存/读取 API Key，避免硬编码在源码中
+function saveApiKey(val){
+  try{ localStorage.setItem('article_apiKey', val); }catch(e){}
+}
+function loadApiKey(){
+  try{
+    const saved = localStorage.getItem('article_apiKey');
+    const el = document.getElementById('apiKey');
+    if(saved && el) el.value = saved;
+  }catch(e){}
+}
+function loadApiKeyFromStorage(){
+  try{ return localStorage.getItem('article_apiKey') || ''; }catch(e){ return ''; }
+}
+
 const AppConfig = {
   getConfig() {
     const platform = document.getElementById('apiPlatform')?.value || 'deepseek';
+    let apiKey = document.getElementById('apiKey')?.value || '';
+    // 没有 Key 时提示用户填写
+    if (!apiKey) {
+      apiKey = prompt('请输入你的 API Key（不会提交到源码，仅本地保存）：');
+      if (apiKey) {
+        const el = document.getElementById('apiKey');
+        if (el) el.value = apiKey;
+        saveApiKey(apiKey);
+      }
+    }
     return {
       platform: platform,
-      apiKey: document.getElementById('apiKey')?.value || '',
+      apiKey: apiKey,
       model: document.getElementById('modelSelect')?.value || 'deepseek-chat',
       baseUrl: (document.getElementById('baseUrl')?.value || 'https://api.deepseek.com/v1').replace(/\/$/, ''),
       defaultImage: document.getElementById('defaultImageUrl')?.value || '',
@@ -5786,8 +5849,9 @@ const AppConfig = {
     const config = API_PLATFORMS[platform];
     if (!config) return;
 
-    // 更新API Key
-    document.getElementById('apiKey').value = config.apiKey;
+    // 更新API Key（优先使用用户本地保存的Key）
+    const savedKey = loadApiKeyFromStorage(platform);
+    document.getElementById('apiKey').value = savedKey || config.apiKey;
 
     // 更新Base URL
     document.getElementById('baseUrl').value = config.baseUrl;
@@ -6990,6 +7054,17 @@ async function executeStep1() {
   const keywords = document.getElementById('step1Keywords').value.trim();
   const description = document.getElementById('step1Description').value.trim();
   const supplement = StepsUI.getSupplementKeywords(1);
+
+  // 检查 API Key
+  const key = document.getElementById('apiKey')?.value?.trim();
+  if (!key) {
+    StepsUI.showStatus('⚠️ 请先在设置面板中填写 API Key', 'error');
+    // 闪烁提醒设置按钮
+    const cfgBtn = document.querySelector('[onclick*="toggleConfig"]') || document.querySelector('.config-toggle');
+    if(cfgBtn) cfgBtn.style.animation = 'pulse 0.6s ease 3';
+    setTimeout(() => { if(cfgBtn) cfgBtn.style.animation = ''; }, 2000);
+    return;
+  }
 
   if (!keywords) {
     StepsUI.showStatus('请输入关键词或主题方向', 'error');
@@ -9996,7 +10071,7 @@ const API_PLATFORMS = {
   deepseek: {
     name: 'DeepSeek',
     baseUrl: 'https://api.deepseek.com/v1',
-    apiKey: 'sk-fb12fd94503641c8afc5e33323452401',
+    apiKey: '',
     models: [
       { value: 'deepseek-chat', label: 'deepseek-chat (V4，快速)' },
       { value: 'deepseek-reasoner', label: 'deepseek-reasoner (R1，深度思考)' }
@@ -10007,7 +10082,7 @@ const API_PLATFORMS = {
   ark: {
     name: '火山引擎ARK',
     baseUrl: 'http://127.0.0.1:18892',
-    apiKey: 'ark-cc6dfb2d-34f9-4412-8ff6-3481a8d536fe-f0a41',
+    apiKey: '',
     models: [
       { value: 'doubao-seed-2.0-pro', label: 'doubao-seed-2.0-pro (推荐)' },
       { value: 'doubao-seed-2.0-mini', label: 'doubao-seed-2.0-mini (快速)' },
@@ -10024,12 +10099,37 @@ const API_PLATFORMS = {
   }
 };
 
+// 本地保存/读取 API Key，避免硬编码在源码中
+function saveApiKey(val){
+  try{ localStorage.setItem('article_apiKey', val); }catch(e){}
+}
+function loadApiKey(){
+  try{
+    const saved = localStorage.getItem('article_apiKey');
+    const el = document.getElementById('apiKey');
+    if(saved && el) el.value = saved;
+  }catch(e){}
+}
+function loadApiKeyFromStorage(){
+  try{ return localStorage.getItem('article_apiKey') || ''; }catch(e){ return ''; }
+}
+
 const AppConfig = {
   getConfig() {
     const platform = document.getElementById('apiPlatform')?.value || 'deepseek';
+    let apiKey = document.getElementById('apiKey')?.value || '';
+    // 没有 Key 时提示用户填写
+    if (!apiKey) {
+      apiKey = prompt('请输入你的 API Key（不会提交到源码，仅本地保存）：');
+      if (apiKey) {
+        const el = document.getElementById('apiKey');
+        if (el) el.value = apiKey;
+        saveApiKey(apiKey);
+      }
+    }
     return {
       platform: platform,
-      apiKey: document.getElementById('apiKey')?.value || '',
+      apiKey: apiKey,
       model: document.getElementById('modelSelect')?.value || 'deepseek-chat',
       baseUrl: (document.getElementById('baseUrl')?.value || 'https://api.deepseek.com/v1').replace(/\/$/, ''),
       defaultImage: document.getElementById('defaultImageUrl')?.value || '',
@@ -10052,8 +10152,9 @@ const AppConfig = {
     const config = API_PLATFORMS[platform];
     if (!config) return;
 
-    // 更新API Key
-    document.getElementById('apiKey').value = config.apiKey;
+    // 更新API Key（优先使用用户本地保存的Key）
+    const savedKey = loadApiKeyFromStorage(platform);
+    document.getElementById('apiKey').value = savedKey || config.apiKey;
 
     // 更新Base URL
     document.getElementById('baseUrl').value = config.baseUrl;
@@ -11256,6 +11357,17 @@ async function executeStep1() {
   const keywords = document.getElementById('step1Keywords').value.trim();
   const description = document.getElementById('step1Description').value.trim();
   const supplement = StepsUI.getSupplementKeywords(1);
+
+  // 检查 API Key
+  const key = document.getElementById('apiKey')?.value?.trim();
+  if (!key) {
+    StepsUI.showStatus('⚠️ 请先在设置面板中填写 API Key', 'error');
+    // 闪烁提醒设置按钮
+    const cfgBtn = document.querySelector('[onclick*="toggleConfig"]') || document.querySelector('.config-toggle');
+    if(cfgBtn) cfgBtn.style.animation = 'pulse 0.6s ease 3';
+    setTimeout(() => { if(cfgBtn) cfgBtn.style.animation = ''; }, 2000);
+    return;
+  }
 
   if (!keywords) {
     StepsUI.showStatus('请输入关键词或主题方向', 'error');
@@ -13508,6 +13620,8 @@ window.addEventListener('DOMContentLoaded', () => {
 
   // 自动测试连接
   setTimeout(() => API.testConnection(), 1000);
+  // 从本地存储恢复 API Key
+  loadApiKey();
 });
 </script>
 <script>
@@ -13520,7 +13634,7 @@ const API_PLATFORMS = {
   deepseek: {
     name: 'DeepSeek',
     baseUrl: 'https://api.deepseek.com/v1',
-    apiKey: 'sk-fb12fd94503641c8afc5e33323452401',
+    apiKey: '',
     models: [
       { value: 'deepseek-chat', label: 'deepseek-chat (V4，快速)' },
       { value: 'deepseek-reasoner', label: 'deepseek-reasoner (R1，深度思考)' }
@@ -13531,7 +13645,7 @@ const API_PLATFORMS = {
   ark: {
     name: '火山引擎ARK',
     baseUrl: 'http://127.0.0.1:18892',
-    apiKey: 'ark-cc6dfb2d-34f9-4412-8ff6-3481a8d536fe-f0a41',
+    apiKey: '',
     models: [
       { value: 'doubao-seed-2.0-pro', label: 'doubao-seed-2.0-pro (推荐)' },
       { value: 'doubao-seed-2.0-mini', label: 'doubao-seed-2.0-mini (快速)' },
@@ -13548,12 +13662,37 @@ const API_PLATFORMS = {
   }
 };
 
+// 本地保存/读取 API Key，避免硬编码在源码中
+function saveApiKey(val){
+  try{ localStorage.setItem('article_apiKey', val); }catch(e){}
+}
+function loadApiKey(){
+  try{
+    const saved = localStorage.getItem('article_apiKey');
+    const el = document.getElementById('apiKey');
+    if(saved && el) el.value = saved;
+  }catch(e){}
+}
+function loadApiKeyFromStorage(){
+  try{ return localStorage.getItem('article_apiKey') || ''; }catch(e){ return ''; }
+}
+
 const AppConfig = {
   getConfig() {
     const platform = document.getElementById('apiPlatform')?.value || 'deepseek';
+    let apiKey = document.getElementById('apiKey')?.value || '';
+    // 没有 Key 时提示用户填写
+    if (!apiKey) {
+      apiKey = prompt('请输入你的 API Key（不会提交到源码，仅本地保存）：');
+      if (apiKey) {
+        const el = document.getElementById('apiKey');
+        if (el) el.value = apiKey;
+        saveApiKey(apiKey);
+      }
+    }
     return {
       platform: platform,
-      apiKey: document.getElementById('apiKey')?.value || '',
+      apiKey: apiKey,
       model: document.getElementById('modelSelect')?.value || 'deepseek-chat',
       baseUrl: (document.getElementById('baseUrl')?.value || 'https://api.deepseek.com/v1').replace(/\/$/, ''),
       defaultImage: document.getElementById('defaultImageUrl')?.value || '',
@@ -13576,8 +13715,9 @@ const AppConfig = {
     const config = API_PLATFORMS[platform];
     if (!config) return;
 
-    // 更新API Key
-    document.getElementById('apiKey').value = config.apiKey;
+    // 更新API Key（优先使用用户本地保存的Key）
+    const savedKey = loadApiKeyFromStorage(platform);
+    document.getElementById('apiKey').value = savedKey || config.apiKey;
 
     // 更新Base URL
     document.getElementById('baseUrl').value = config.baseUrl;
@@ -14780,6 +14920,17 @@ async function executeStep1() {
   const keywords = document.getElementById('step1Keywords').value.trim();
   const description = document.getElementById('step1Description').value.trim();
   const supplement = StepsUI.getSupplementKeywords(1);
+
+  // 检查 API Key
+  const key = document.getElementById('apiKey')?.value?.trim();
+  if (!key) {
+    StepsUI.showStatus('⚠️ 请先在设置面板中填写 API Key', 'error');
+    // 闪烁提醒设置按钮
+    const cfgBtn = document.querySelector('[onclick*="toggleConfig"]') || document.querySelector('.config-toggle');
+    if(cfgBtn) cfgBtn.style.animation = 'pulse 0.6s ease 3';
+    setTimeout(() => { if(cfgBtn) cfgBtn.style.animation = ''; }, 2000);
+    return;
+  }
 
   if (!keywords) {
     StepsUI.showStatus('请输入关键词或主题方向', 'error');
